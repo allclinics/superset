@@ -24,7 +24,7 @@ from textwrap import dedent
 import click
 os.chdir('/home/admin/minikube/superset')
 os.environ["DOCKERHUB_USER"] = "vadymyuzko"
-os.environ["DOCKERHUB_TOKEN"] = "dckr_pat_jHZstqxmbqQzs4RNDTm19FdFPkk"
+os.environ["DOCKERHUB_TOKEN"] = ""
 REPO = "vadymyuzko/superset"
 CACHE_REPO = f"{REPO}-cache"
 BASE_PY_IMAGE = "3.10-slim-bookworm"
