@@ -22,10 +22,14 @@ import subprocess
 from textwrap import dedent
 
 import click
-
-REPO = "apache/superset"
+os.chdir('/home/admin/minikube/superset')
+os.environ["DOCKERHUB_USER"] = "vadymyuzko"
+os.environ["DOCKERHUB_TOKEN"] = "dckr_pat_jHZstqxmbqQzs4RNDTm19FdFPkk"
+REPO = "vadymyuzko/superset"
 CACHE_REPO = f"{REPO}-cache"
-BASE_PY_IMAGE = "3.9-slim-bookworm"
+BASE_PY_IMAGE = "3.10-slim-bookworm"
+os.environ["GITHUB_HEAD_REF"] = "refs/tags/4.0.2"
+os.environ["GITHUB_TAG_NAME"] = "4.0.2"
 
 
 def run_cmd(command: str, raise_on_failure: bool = True) -> str:
@@ -82,7 +86,7 @@ def is_latest_release(release: str) -> bool:
     return "SKIP_TAG::false" in output
 
 
-def make_docker_tag(l: list[str]) -> str:
+def make_docker_tag(l: list[str]) -> str:  # noqa: E741
     return f"{REPO}:" + "-".join([o for o in l if o])
 
 
@@ -99,11 +103,12 @@ def get_docker_tags(
     """
     tags: set[str] = set()
     tag_chunks: list[str] = []
-
+    build_context_ref = '4.0.2'
     is_latest = is_latest_release(build_context_ref)
 
     if build_preset != "lean":
         # Always add the preset_build name if different from default (lean)
+        print('ASFKLJASDKJASHDJKASDHJKASDHJSAKDHJAKSDHJKASDHJKASD' + build_preset)
         tag_chunks += [build_preset]
 
     if len(build_platforms) == 1:
@@ -140,7 +145,7 @@ def get_docker_command(
     build_context_ref: str,
     force_latest: bool = False,
 ) -> str:
-    tag = ""
+    tag = ""  # noqa: F841
     build_target = ""
     py_ver = BASE_PY_IMAGE
     docker_context = "."
@@ -149,9 +154,9 @@ def get_docker_command(
         build_target = "dev"
     elif build_preset == "lean":
         build_target = "lean"
-    elif build_preset == "py310":
+    elif build_preset == "py311":
         build_target = "lean"
-        py_ver = "3.10-slim-bookworm"
+        py_ver = "3.11-slim-bookworm"
     elif build_preset == "websocket":
         build_target = ""
         docker_context = "superset-websocket"
@@ -200,8 +205,6 @@ def get_docker_command(
         docker buildx build \\
         {docker_args} \\
         {docker_tags} \\
-        {cache_from_arg} \\
-        {cache_to_arg} \\
         {build_arg} \\
         {platform_arg} \\
         {target_argument} \\
@@ -210,6 +213,7 @@ def get_docker_command(
         --label build_trigger={build_context} \\
         --label base={py_ver} \\
         --label build_actor={actor} \\
+        --no-cache \\
         {docker_context}"""
     )
 
@@ -217,7 +221,7 @@ def get_docker_command(
 @click.command()
 @click.argument(
     "build_preset",
-    type=click.Choice(["lean", "dev", "dockerize", "websocket", "py310", "ci"]),
+    type=click.Choice(["lean", "dev", "dockerize", "websocket", "py311", "ci"]),
 )
 @click.argument("build_context", type=click.Choice(["push", "pull_request", "release"]))
 @click.option(
@@ -255,9 +259,9 @@ def main(
         )
         exit(1)
 
-    if build_context == "release" and not build_context_ref.strip():
-        print("Release number has to be provided")
-        exit(1)
+    # if build_context == "release":
+    #     print("Release number has to be provided")
+    #     exit(1)
 
     docker_build_command = get_docker_command(
         build_preset,
@@ -284,7 +288,7 @@ def main(
         script = script + docker_build_command
         if verbose:
             run_cmd("cat Dockerfile")
-        stdout = run_cmd(script)
+        stdout = run_cmd(script)  # noqa: F841
     else:
         print("Dry Run - Docker Build Command:")
         print(docker_build_command)
