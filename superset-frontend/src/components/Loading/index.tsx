@@ -41,11 +41,11 @@ const LoaderImg = styled.img`
   margin: 10px;
   &.inline {
     margin: 0px;
-    width: 60px;
+    width: 100px;
   }
   &.inline-centered {
     margin: 0 auto;
-    width: 60px;
+    width: 100px;
     display: block;
   }
   &.floating {
