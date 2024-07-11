@@ -35,17 +35,19 @@ export interface Props {
 
 const LoaderImg = styled.img`
   z-index: 99;
-  width: 100px;
-  height: unset;
+  width: 50px;
+  height: 50px;
   position: relative;
   margin: 10px;
   &.inline {
     margin: 0px;
-    width: 100px;
+    width: 40px;
+    height: 40px;
   }
   &.inline-centered {
     margin: 0 auto;
-    width: 100px;
+    width: 40px;
+    height: 40px;
     display: block;
   }
   &.floating {
