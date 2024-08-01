@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -45,12 +46,57 @@ export const StyledSelect = styled(AntdSelect, {
   ${({ theme, headerPosition, oneLine }) => `
     flex: ${headerPosition === 'left' ? 1 : 0};
     && .ant-select-selector {
-      border-radius: ${theme.gridUnit}px;
+    border-color: #3876F6;
+    border: 1px solid #D9E1EC;
+    border-radius: 10px;
+    padding: 0px 12px;
+    height: 34px;
+     &:hover {
+        border: 1px solid #3876F6;
+        border-color: #3876F6 !important;
+      }
     }
-    // Open the dropdown when clicking on the suffix
-    // This is fixed in version 4.16
+    && .ant-select-selection-placeholder {
+    color: #A1A7C4;
+    }
+    && .anticon-close-circle {
+     color: #7E84A3;
+    }
+    && .ant-select-arrow {
+      color: #7E84A3;
+     }
+    && .close-circle {
+      color: #7E84A3;
+      }
+    && .ant-select-focused: {
+    border-color: #3876F6;
+    border-right-width: 1px !important;
+    outline: 0;
+    box-shadow: none;
+    }
+    .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    background-color: #3876F6;
+    color: #fff;
+
+    .anticon-check {
+    color: #fff;
+    }
+    }
     .ant-select-arrow .anticon:not(.ant-select-suffix) {
       pointer-events: none;
+    }
+    .ant-select-selection-item {
+      background: #E6E9F4;
+      color: #5A607F;
+      border-radius: 10px;
+      padding: 0px 6px 0px 12px;
+
+      .ant-tag-close-icon {
+       color: #7E84A3;
+     }
+      }
     }
     .select-all {
       border-bottom: 1px solid ${theme.colors.grayscale.light3};

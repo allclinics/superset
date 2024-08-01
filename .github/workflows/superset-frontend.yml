@@ -84,6 +84,7 @@ jobs:
         working-directory: ./superset-frontend/packages/generator-superset
         run: npx jest
       - name: Upload code coverage
+        if: steps.check.outcome == 'failure'
         uses: codecov/codecov-action@v4
         with:
           flags: javascript
