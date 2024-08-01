@@ -73,8 +73,16 @@ const ChartHeaderStyles = styled.div`
     max-width: 100%;
     align-items: flex-start;
     min-height: 0;
+    flex-direction: column;
+    row-gap: 6px;
+
+    & > .header {
+      display: flex;
+      width: 100%;
+    }
 
     & > .header-title {
+      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
@@ -197,104 +205,104 @@ const SliceHeader: FC<SliceHeaderProps> = ({
 
   return (
     <ChartHeaderStyles data-test="slice-header" ref={innerRef}>
-      <div className="header-title" ref={headerRef}>
-        <Tooltip title={headerTooltip}>
-          <EditableTitle
-            title={
-              sliceName ||
-              (editMode
-                ? '---' // this makes an empty title clickable
-                : '')
-            }
-            canEdit={editMode}
-            onSaveTitle={updateSliceName}
-            showTooltip={false}
-            url={canExplore ? exploreUrl : undefined}
-          />
-        </Tooltip>
-        {!!Object.values(annotationQuery).length && (
-          <Tooltip
-            id="annotations-loading-tooltip"
-            placement="top"
-            title={annotationsLoading}
-          >
-            <i
-              role="img"
-              aria-label={annotationsLoading}
-              className="fa fa-refresh warning"
+      <div className="header">
+        <div className="header-title" ref={headerRef} style={{ width: '100%' }}>
+          <Tooltip title={headerTooltip}>
+            <EditableTitle
+              title={
+                sliceName ||
+                (editMode
+                  ? '---' // this makes an empty title clickable
+                  : '')
+              }
+              canEdit={editMode}
+              onSaveTitle={updateSliceName}
+              showTooltip={false}
+              url={canExplore ? exploreUrl : undefined}
             />
           </Tooltip>
-        )}
-        {!!Object.values(annotationError).length && (
-          <Tooltip
-            id="annotation-errors-tooltip"
-            placement="top"
-            title={annotationsError}
-          >
-            <i
-              role="img"
-              aria-label={annotationsError}
-              className="fa fa-exclamation-circle danger"
-            />
-          </Tooltip>
-        )}
-      </div>
-      <div className="header-controls">
-        {!editMode && (
-          <>
-            {SliceHeaderExtension && (
-              <SliceHeaderExtension
-                sliceId={slice.slice_id}
-                dashboardId={dashboardId}
+          {!!Object.values(annotationQuery).length && (
+            <Tooltip
+              id="annotations-loading-tooltip"
+              placement="top"
+              title={annotationsLoading}
+            >
+              <i
+                role="img"
+                aria-label={annotationsLoading}
+                className="fa fa-refresh warning"
               />
-            )}
-            {crossFilterValue && (
-              <Tooltip
-                placement="top"
-                title={t(
-                  'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
-                )}
-              >
-                <CrossFilterIcon iconSize="m" />
-              </Tooltip>
-            )}
-            {!uiConfig.hideChartControls && (
-              <FiltersBadge chartId={slice.slice_id} />
-            )}
-            {!uiConfig.hideChartControls && (
-              <SliceHeaderControls
-                slice={slice}
-                isCached={isCached}
-                isExpanded={isExpanded}
-                cachedDttm={cachedDttm}
-                updatedDttm={updatedDttm}
-                toggleExpandSlice={toggleExpandSlice}
-                forceRefresh={forceRefresh}
-                logExploreChart={logExploreChart}
-                logEvent={logEvent}
-                exportCSV={exportCSV}
-                exportFullCSV={exportFullCSV}
-                exportXLSX={exportXLSX}
-                exportFullXLSX={exportFullXLSX}
-                supersetCanExplore={supersetCanExplore}
-                supersetCanShare={supersetCanShare}
-                supersetCanCSV={supersetCanCSV}
-                componentId={componentId}
-                dashboardId={dashboardId}
-                addSuccessToast={addSuccessToast}
-                addDangerToast={addDangerToast}
-                handleToggleFullSize={handleToggleFullSize}
-                isFullSize={isFullSize}
-                isDescriptionExpanded={isExpanded}
-                chartStatus={chartStatus}
-                formData={formData}
-                exploreUrl={exploreUrl}
-                crossFiltersEnabled={isCrossFiltersEnabled}
+            </Tooltip>
+          )}
+          {!!Object.values(annotationError).length && (
+            <Tooltip
+              id="annotation-errors-tooltip"
+              placement="top"
+              title={annotationsError}
+            >
+              <i
+                role="img"
+                aria-label={annotationsError}
+                className="fa fa-exclamation-circle danger"
               />
-            )}
-          </>
-        )}
+            </Tooltip>
+          )}
+        </div>
+        <div className="header-controls">
+          {!editMode && (
+            <>
+              {SliceHeaderExtension && (
+                <SliceHeaderExtension
+                  sliceId={slice.slice_id}
+                  dashboardId={dashboardId}
+                />
+              )}
+              {crossFilterValue && (
+                <Tooltip
+                  placement="top"
+                  title={t(
+                    'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
+                  )}
+                >
+                  <CrossFilterIcon iconSize="m" />
+                </Tooltip>
+              )}
+              {!uiConfig.hideChartControls && (
+                <SliceHeaderControls
+                  slice={slice}
+                  isCached={isCached}
+                  isExpanded={isExpanded}
+                  cachedDttm={cachedDttm}
+                  updatedDttm={updatedDttm}
+                  toggleExpandSlice={toggleExpandSlice}
+                  forceRefresh={forceRefresh}
+                  logExploreChart={logExploreChart}
+                  logEvent={logEvent}
+                  exportCSV={exportCSV}
+                  exportFullCSV={exportFullCSV}
+                  exportXLSX={exportXLSX}
+                  exportFullXLSX={exportFullXLSX}
+                  supersetCanExplore={supersetCanExplore}
+                  supersetCanShare={supersetCanShare}
+                  supersetCanCSV={supersetCanCSV}
+                  componentId={componentId}
+                  dashboardId={dashboardId}
+                  addSuccessToast={addSuccessToast}
+                  addDangerToast={addDangerToast}
+                  handleToggleFullSize={handleToggleFullSize}
+                  isFullSize={isFullSize}
+                  isDescriptionExpanded={isExpanded}
+                  chartStatus={chartStatus}
+                  formData={formData}
+                  exploreUrl={exploreUrl}
+                  crossFiltersEnabled={isCrossFiltersEnabled}
+                />
+              )}
+            </>
+          )}
+        </div>
       </div>
+      {!uiConfig.hideChartControls && <FiltersBadge chartId={slice.slice_id} />}
     </ChartHeaderStyles>
   );
 };

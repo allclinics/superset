@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -50,11 +51,14 @@ const StyledFilterCount = styled.div`
     align-items: center;
     cursor: pointer;
     margin-right: ${theme.gridUnit}px;
-    padding-left: ${theme.gridUnit * 2}px;
-    padding-right: ${theme.gridUnit * 2}px;
-    background: ${theme.colors.grayscale.light4};
-    border-radius: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background: #E6E9F4;
+    border-radius: 10px;
     height: 100%;
+    width: 100%;
+    max-width: 198px;
+    position: relative;
     .anticon {
       vertical-align: middle;
       color: ${theme.colors.grayscale.base};
@@ -66,13 +70,27 @@ const StyledFilterCount = styled.div`
     .incompatible-count {
       font-size: ${theme.typography.sizes.s}px;
     }
+
+      & > .filters-text {
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.04em;
+    }
+
+     & > .dropdown {
+      position: absolute;
+      right: -10px;
+      top: 9px;
+      font-size: 30px;
+     }
   `}
 `;
 
 const StyledBadge = styled(Badge)`
   ${({ theme }) => `
     vertical-align: middle;
-    margin-left: ${theme.gridUnit * 2}px;
+    margin-left: 4px;
     &>sup {
       padding: 0 ${theme.gridUnit}px;
       min-width: ${theme.gridUnit * 4}px;
@@ -267,13 +285,14 @@ export const FiltersBadge = ({ chartId }: FiltersBadgeProps) => {
           !!appliedCrossFilterIndicators.length && 'has-cross-filters',
         )}
       >
-        <Icons.Filter iconSize="m" />
+        <span className="filters-text">Filters</span>
         <StyledBadge
           data-test="applied-filter-count"
           className="applied-count"
           count={appliedIndicators.length + appliedCrossFilterIndicators.length}
           showZero
         />
+        <Icons.Dropdown iconSize="xl" className="dropdown" />
       </StyledFilterCount>
     </DetailsPanelPopover>
   );

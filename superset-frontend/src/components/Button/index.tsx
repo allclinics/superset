@@ -36,9 +36,11 @@ export type ButtonStyle =
   | 'danger'
   | 'default'
   | 'link'
-  | 'dashed';
+  | 'dashed'
+  | 'custom_primary'
+  | 'custom_secondary';
 
-export type ButtonSize = 'default' | 'small' | 'xsmall';
+export type ButtonSize = 'default' | 'small' | 'xsmall' | 'medium';
 
 export type ButtonProps = Omit<AntdButtonProps, 'css'> &
   Pick<TooltipProps, 'placement'> & {
@@ -66,12 +68,18 @@ export default function Button(props: ButtonProps) {
   } = props;
 
   const theme = useTheme();
-  const { colors, transitionTiming, borderRadius, typography } = theme;
+  const { colors, transitionTiming, typography } = theme;
   const { primary, grayscale, success, warning, error } = colors;
 
   let height = 32;
   let padding = 18;
-  if (buttonSize === 'xsmall') {
+  let width = 'unset';
+  let maxWidth = 'unset';
+
+  if (buttonSize === 'medium') {
+    height = 48;
+    padding = 40;
+  } else if (buttonSize === 'xsmall') {
     height = 22;
     padding = 5;
   } else if (buttonSize === 'small') {
@@ -90,6 +98,29 @@ export default function Button(props: ButtonProps) {
   let borderColor = 'transparent';
   let borderColorHover = 'transparent';
   let borderColorDisabled = 'transparent';
+  let borderRadius = '4px';
+
+  if (buttonStyle === 'custom_primary') {
+    color = '#fff';
+    borderRadius = '20px';
+    backgroundColorHover = 'rgb(79, 129, 255)';
+    backgroundColor = '#3876F6';
+    maxWidth = '212px';
+    width = '100%';
+    colorHover = '#fff';
+  }
+  if (buttonStyle === 'custom_secondary') {
+    color = '#3876F6 !important';
+    borderRadius = '20px';
+    backgroundColorHover = 'rgb(245, 246, 250) !important';
+    backgroundColor = '#fff';
+    borderWidth = 1;
+    borderColor = '#3876F6';
+    borderStyle = 'solid';
+    maxWidth = '212px';
+    width = '100%';
+    colorHover = '#3876F6 !important';
+  }
 
   if (buttonStyle === 'primary') {
     backgroundColor = primary.base;
@@ -163,6 +194,8 @@ export default function Button(props: ButtonProps) {
         fontSize: typography.sizes.s,
         fontWeight: typography.weights.bold,
         height,
+        width,
+        maxWidth,
         textTransform: 'uppercase',
         padding: `0px ${padding}px`,
         transition: `all ${transitionTiming}s`,
@@ -189,14 +222,27 @@ export default function Button(props: ButtonProps) {
           backgroundColor,
           borderColor,
         },
-        '&[disabled], &[disabled]:hover': {
-          color: grayscale.base,
-          backgroundColor:
-            buttonStyle === 'link' ? 'transparent' : backgroundColorDisabled,
-          borderColor:
-            buttonStyle === 'link' ? 'transparent' : borderColorDisabled,
-          pointerEvents: 'none',
-        },
+        '&[disabled], &[disabled]:hover':
+          buttonStyle === 'custom_primary' || buttonStyle === 'custom_secondary'
+            ? {
+                opacity: 0.7,
+                pointerEvents: 'none',
+                backgroundColor:
+                  buttonStyle === 'custom_primary' ? '#3876F6' : '#fff',
+                color: buttonStyle === 'custom_primary' ? '#fff' : '#3876F6',
+                borderColor:
+                  buttonStyle === 'custom_secondary' ? '#3876F6' : '',
+              }
+            : {
+                color: grayscale.base,
+                backgroundColor:
+                  buttonStyle === 'link'
+                    ? 'transparent'
+                    : backgroundColorDisabled,
+                borderColor:
+                  buttonStyle === 'link' ? 'transparent' : borderColorDisabled,
+                pointerEvents: 'none',
+              },
         marginLeft: 0,
         '& + .superset-button': {
           marginLeft: theme.gridUnit * 2,
@@ -214,8 +260,6 @@ export default function Button(props: ButtonProps) {
   if (tooltip) {
     return (
       <Tooltip placement={placement} title={tooltip}>
-        {/* wrap the button in a span so that the tooltip shows up
-        when the button is disabled. */}
         {disabled ? (
           <span
             css={{

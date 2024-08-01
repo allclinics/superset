@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -76,20 +77,25 @@ const MENU_KEYS = {
   CROSS_FILTER_SCOPING: 'cross_filter_scoping',
 };
 
-// TODO: replace 3 dots with an icon
-const VerticalDotsContainer = styled.div`
-  padding: ${({ theme }) => theme.gridUnit / 4}px
-    ${({ theme }) => theme.gridUnit * 1.5}px;
+const HorizontalDotsContainer = styled.div`
+  display: flex;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #a8adc6;
+  padding: 0px;
+  align-items: center;
+  justify-content: center;
+  column-gap: 2px;
 
   .dot {
     display: block;
 
-    height: ${({ theme }) => theme.gridUnit}px;
-    width: ${({ theme }) => theme.gridUnit}px;
-    border-radius: 50%;
+    height: 2px;
+    width: 2px;
     margin: ${({ theme }) => theme.gridUnit / 2}px 0;
 
-    background-color: ${({ theme }) => theme.colors.text.label};
+    background-color: #a8adc6;
   }
 
   &:hover {
@@ -111,12 +117,12 @@ const RefreshTooltip = styled.div`
 const getScreenshotNodeSelector = (chartId: string | number) =>
   `.dashboard-chart-id-${chartId}`;
 
-const VerticalDotsTrigger = () => (
-  <VerticalDotsContainer>
+const HorizontalDotsTrigger = () => (
+  <HorizontalDotsContainer>
     <span className="dot" />
     <span className="dot" />
     <span className="dot" />
-  </VerticalDotsContainer>
+  </HorizontalDotsContainer>
 );
 
 export interface SliceHeaderControlsProps {
@@ -583,7 +589,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
           role="button"
           aria-label="More Options"
         >
-          <VerticalDotsTrigger />
+          <HorizontalDotsTrigger />
         </span>
       </NoAnimationDropdown>
       {canEditCrossFilters && scopingModal}
