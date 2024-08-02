@@ -137,7 +137,6 @@ export default function transformProps(
     dateFormat,
     showLabels,
     showUpperLabels,
-    dashboardId,
     sliceId,
   }: EchartsTreemapFormData = {
     ...DEFAULT_TREEMAP_FORM_DATA,
@@ -250,7 +249,7 @@ export default function transformProps(
       width: '100%',
       height: '100%',
       nodeClick: undefined,
-      roam: !dashboardId,
+      roam: true,
       breadcrumb: {
         show: false,
         emptyItemWidth: 25,
