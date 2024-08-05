@@ -33,6 +33,11 @@ import DragDroppable, {
 } from 'src/dashboard/components/dnd/DragDroppable';
 import { componentShape } from 'src/dashboard/util/propShapes';
 import { TAB_TYPE } from 'src/dashboard/util/componentTypes';
+import {
+  GRID_COLUMN_COUNT,
+  GRID_GUTTER_SIZE,
+  GRID_HORIZINTAL_PADDING,
+} from 'src/dashboard/util/constants';
 
 export const RENDER_TAB = 'RENDER_TAB';
 export const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
@@ -144,6 +149,17 @@ class Tab extends React.PureComponent {
     return item.type !== TAB_TYPE;
   }
 
+  calculateNewColumnWidth = oldColumnWidth => {
+    const width =
+      (oldColumnWidth + GRID_GUTTER_SIZE) * GRID_COLUMN_COUNT -
+      GRID_GUTTER_SIZE;
+
+    return (
+      (width + GRID_GUTTER_SIZE - GRID_HORIZINTAL_PADDING) / GRID_COLUMN_COUNT -
+      GRID_GUTTER_SIZE
+    );
+  };
+
   renderTabContent() {
     const {
       component: tabComponent,
@@ -232,7 +248,7 @@ class Tab extends React.PureComponent {
               onDrop={this.handleDrop}
               onHover={this.handleOnHover}
               availableColumnCount={availableColumnCount}
-              columnWidth={columnWidth}
+              columnWidth={this.calculateNewColumnWidth(columnWidth)}
               onResizeStart={onResizeStart}
               onResize={onResize}
               onResizeStop={onResizeStop}
@@ -304,7 +320,6 @@ class Tab extends React.PureComponent {
                 placement={index >= 5 ? 'left' : 'right'}
               />
             )}
-
             {dropIndicatorProps && <div {...dropIndicatorProps} />}
           </TabTitleContainer>
         )}

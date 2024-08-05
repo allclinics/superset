@@ -89,6 +89,7 @@ const StyledTabsContainer = styled.div`
     min-height: ${({ theme }) => theme.gridUnit * 12}px;
     margin-top: ${({ theme }) => theme.gridUnit / 4}px;
     position: relative;
+    padding: 0px 24px;
   }
 
   .ant-tabs {

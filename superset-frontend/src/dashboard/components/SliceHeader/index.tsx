@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -68,11 +69,14 @@ const ChartHeaderStyles = styled.div`
   ${({ theme }) => css`
     font-size: ${theme.typography.sizes.l}px;
     font-weight: ${theme.typography.weights.bold};
-    margin-bottom: ${theme.gridUnit}px;
+    background: #f5f6fa;
     display: flex;
     max-width: 100%;
+    min-height: 88px;
     align-items: flex-start;
-    min-height: 0;
+    padding: 20px 20px 12px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     flex-direction: column;
     row-gap: 6px;
 

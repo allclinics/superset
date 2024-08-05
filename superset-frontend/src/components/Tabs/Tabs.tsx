@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -44,7 +45,7 @@ const StyledTabs = ({
       .ant-tabs-tab {
         flex: 1 1 auto;
         &.ant-tabs-tab-active .ant-tabs-tab-btn {
-          color: inherit;
+          color: #3876f6;
         }
         &:hover {
           .anchor-link-container {
@@ -83,7 +84,7 @@ const StyledTabs = ({
         }
       }
       .ant-tabs-ink-bar {
-        background: ${theme.colors.secondary.base};
+        background: ${theme.colors.primary.base};
       }
     `}
   />
@@ -142,10 +143,14 @@ EditableTabs.TabPane.defaultProps = {
 
 export const StyledLineEditableTabs = styled(EditableTabs)`
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
-    margin: 0 ${({ theme }) => theme.gridUnit * 4}px;
+    margin: 0 ${({ theme }) => theme.gridUnit * 6}px;
     padding: ${({ theme }) => `${theme.gridUnit * 3}px ${theme.gridUnit}px`};
     background: transparent;
     border: none;
+
+    &:hover {
+      color: #3876f6 !important;
+    }
   }
 
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-ink-bar {

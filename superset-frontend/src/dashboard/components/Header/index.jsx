@@ -115,9 +115,7 @@ const defaultProps = {
   colorScheme: undefined,
 };
 
-const headerContainerStyle = theme => css`
-  border-bottom: 1px solid ${theme.colors.grayscale.light2};
-`;
+const headerContainerStyle = () => css``;
 
 const editButtonStyle = theme => css`
   color: ${theme.colors.primary.dark2};
@@ -464,6 +462,8 @@ class Header extends React.PureComponent {
       setRefreshFrequency,
       lastModifiedTime,
       logEvent,
+      toggleFiltersBar,
+      isFiltersOpen,
     } = this.props;
 
     const userCanEdit =
@@ -505,6 +505,8 @@ class Header extends React.PureComponent {
         className="dashboard-header-container"
       >
         <PageHeaderWithActions
+          isFiltersOpen={isFiltersOpen}
+          toggleFiltersBar={toggleFiltersBar}
           editableTitleProps={{
             title: dashboardTitle,
             canEdit: userCanEdit && editMode,

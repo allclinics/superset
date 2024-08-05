@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -33,27 +34,42 @@ export const menuTriggerStyles = (theme: SupersetTheme) => css`
   width: ${theme.gridUnit * 8}px;
   height: ${theme.gridUnit * 8}px;
   padding: 0;
-  border: 1px solid ${theme.colors.primary.dark2};
+  border-radius: 20px;
+  max-width: 178px;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 48px;
 
   &.ant-btn > span.anticon {
     line-height: 0;
     transition: inherit;
+    margin-right: 0px;
   }
 
   &:hover:not(:focus) > span.anticon {
     color: ${theme.colors.primary.light1};
   }
+
+  .manage-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #3876f6;
+    text-transform: capitalize;
+  }
 `;
 
-const headerStyles = (theme: SupersetTheme) => css`
+const headerStyles = (theme: SupersetTheme, isFiltersOpen: boolean) => css`
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
   justify-content: space-between;
-  background-color: ${theme.colors.grayscale.light5};
-  height: ${theme.gridUnit * 16}px;
-  padding: 0 ${theme.gridUnit * 4}px;
+  background-color: #f5f6fa;
+  height: ${theme.gridUnit * 24}px;
+  padding: ${theme.gridUnit * 6}px;
+  padding-left: ${theme.gridUnit * (isFiltersOpen ? 6 : 14.5)}px;
 
   .editable-title {
     overflow: hidden;
@@ -82,6 +98,22 @@ const headerStyles = (theme: SupersetTheme) => css`
   .right-button-panel {
     display: flex;
     align-items: center;
+  }
+
+  .collapse-button {
+    background: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 24px;
+    cusrsor: pointer;
+  }
+
+  .expend {
+    transform: scaleX(-1);
   }
 `;
 
@@ -118,6 +150,8 @@ export type PageHeaderWithActionsProps = {
     text?: string;
     placement?: TooltipPlacement;
   };
+  isFiltersOpen?: boolean;
+  toggleFiltersBar?: () => void;
 };
 
 export const PageHeaderWithActions = ({
@@ -132,11 +166,29 @@ export const PageHeaderWithActions = ({
   menuDropdownProps,
   showMenuDropdown = true,
   tooltipProps,
+  isFiltersOpen,
+  toggleFiltersBar,
 }: PageHeaderWithActionsProps) => {
   const theme = useTheme();
   return (
-    <div css={headerStyles} className="header-with-actions">
+    <div
+      css={headerStyles(theme, !!isFiltersOpen)}
+      className="header-with-actions"
+    >
       <div className="title-panel">
+        {!isFiltersOpen && (
+          <div
+            role="button"
+            tabIndex={0}
+            className="collapse-button"
+            onClick={toggleFiltersBar}
+          >
+            <Icons.Expand
+              iconColor={theme.colors.grayscale.base}
+              className="expend"
+            />
+          </div>
+        )}
         <DynamicEditableTitle {...editableTitleProps} />
         {showTitlePanelItems && (
           <div css={buttonsStyles}>
@@ -159,16 +211,17 @@ export const PageHeaderWithActions = ({
             >
               <Button
                 css={menuTriggerStyles}
-                buttonStyle="tertiary"
+                buttonStyle="custom_secondary"
                 aria-label={t('Menu actions trigger')}
                 tooltip={tooltipProps?.text}
                 placement={tooltipProps?.placement}
                 data-test="actions-trigger"
               >
-                <Icons.MoreHoriz
-                  iconColor={theme.colors.primary.dark2}
-                  iconSize="l"
+                <Icons.Setting
+                  iconColor={theme.colors.primary.base}
+                  iconSize="xl"
                 />
+                <span className="manage-text">Manage</span>
               </Button>
             </AntdDropdown>
           )}

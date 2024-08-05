@@ -82,7 +82,7 @@ const GridRow = styled.div`
     height: fit-content;
 
     & > :not(:last-child):not(.hover-menu) {
-      ${!editMode && `margin-right: ${theme.gridUnit * 4}px;`}
+      ${!editMode && `margin-right: ${theme.gridUnit * 3}px;`}
     }
 
     & .empty-droptarget {

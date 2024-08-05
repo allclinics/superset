@@ -238,7 +238,7 @@ class Chart extends React.Component {
   getChartHeight() {
     const headerHeight = this.getHeaderHeight();
     return Math.max(
-      this.state.height - headerHeight - this.state.descriptionHeight,
+      this.state.height - headerHeight - this.state.descriptionHeight - 24,
       20,
     );
   }
