@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -125,7 +126,7 @@ const StyledHeader = styled.div`
       left: ${theme.gridUnit}px;
       top: ${theme.gridUnit}px;
       border: 1px dashed transparent;
-      border-radius: ${theme.gridUnit}px;
+      border-radius: 20px;
       opacity: 0.5;
     }
   `}
@@ -262,8 +263,8 @@ const DashboardContentWrapper = styled.div`
     }
 
     & .dashboard-component-tabs-content {
-      & > div:not(:last-child):not(.empty-droptarget) {
-        margin-bottom: ${theme.gridUnit * 4}px;
+      & > div:not(.empty-droptarget) {
+        margin-bottom: ${theme.gridUnit * 6}px;
       }
 
       & > .empty-droptarget {
@@ -289,7 +290,7 @@ const StyledDashboardContent = styled.div<{
   editMode: boolean;
   marginLeft: number;
 }>`
-  ${({ theme, editMode, marginLeft }) => css`
+  ${({ theme, editMode }) => css`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -306,10 +307,7 @@ const StyledDashboardContent = styled.div<{
       width: 0;
       flex: 1;
       position: relative;
-      margin-top: ${theme.gridUnit * 6}px;
-      margin-right: ${theme.gridUnit * 8}px;
-      margin-bottom: ${theme.gridUnit * 6}px;
-      margin-left: ${marginLeft}px;
+      margin: 0px 24px 24px 24px;
 
       ${editMode &&
       `
@@ -334,8 +332,9 @@ const StyledDashboardContent = styled.div<{
       height: 100%;
       background-color: ${theme.colors.grayscale.light5};
       position: relative;
-      padding: ${theme.gridUnit * 4}px;
+      padding: 0px;
       overflow-y: visible;
+      border: 1px solid #e6e9f4;
 
       // transitionable traits to show filter relevance
       transition:
@@ -344,7 +343,7 @@ const StyledDashboardContent = styled.div<{
         box-shadow ${theme.transitionTiming}s ease-in-out;
 
       &.fade-in {
-        border-radius: ${theme.borderRadius}px;
+        border-radius: 21px;
         box-shadow:
           inset 0 0 0 2px ${theme.colors.primary.base},
           0 0 0 3px
@@ -355,7 +354,7 @@ const StyledDashboardContent = styled.div<{
       }
 
       &.fade-out {
-        border-radius: ${theme.borderRadius}px;
+        border-radius: 21px;
         box-shadow: none;
       }
 
@@ -530,7 +529,13 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
   const renderDraggableContent = useCallback(
     ({ dropIndicatorProps }: { dropIndicatorProps: JsonObject }) => (
       <div>
-        {!hideDashboardHeader && <DashboardHeader />}
+        {!hideDashboardHeader && (
+          <DashboardHeader
+            // @ts-ignore
+            isFiltersOpen={dashboardFiltersOpen}
+            toggleFiltersBar={toggleDashboardFiltersOpen}
+          />
+        )}
         {showFilterBar &&
           filterBarOrientation === FilterBarOrientation.Horizontal && (
             <FilterBar
@@ -566,15 +571,17 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
       </div>
     ),
     [
-      nativeFiltersEnabled,
-      filterBarOrientation,
-      editMode,
-      handleChangeTab,
-      handleDeleteTopLevelTabs,
       hideDashboardHeader,
+      dashboardFiltersOpen,
+      toggleDashboardFiltersOpen,
+      showFilterBar,
+      filterBarOrientation,
       isReport,
       topLevelTabs,
       uiConfig.hideNav,
+      handleDeleteTopLevelTabs,
+      editMode,
+      handleChangeTab,
     ],
   );
 
@@ -588,7 +595,8 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
 
   return (
     <DashboardWrapper>
-      {showFilterBar &&
+      {dashboardFiltersOpen &&
+        showFilterBar &&
         filterBarOrientation === FilterBarOrientation.Vertical && (
           <>
             <ResizableSidebar

@@ -225,10 +225,10 @@ export default function Button(props: ButtonProps) {
         '&[disabled], &[disabled]:hover':
           buttonStyle === 'custom_primary' || buttonStyle === 'custom_secondary'
             ? {
-                opacity: 0.7,
+                opacity: buttonStyle === 'custom_primary' ? 1 : 0.7,
                 pointerEvents: 'none',
                 backgroundColor:
-                  buttonStyle === 'custom_primary' ? '#3876F6' : '#fff',
+                  buttonStyle === 'custom_primary' ? '#D7DBEC' : '#fff',
                 color: buttonStyle === 'custom_primary' ? '#fff' : '#3876F6',
                 borderColor:
                   buttonStyle === 'custom_secondary' ? '#3876F6' : '',

@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -27,7 +28,6 @@ import {
 } from '@superset-ui/core';
 import Button from 'src/components/Button';
 import { OPEN_FILTER_BAR_WIDTH } from 'src/dashboard/constants';
-import { rgba } from 'emotion-rgba';
 import { FilterBarOrientation } from 'src/dashboard/types';
 import { getFilterBarTestId } from '../utils';
 
@@ -72,10 +72,7 @@ const verticalStyle = (theme: SupersetTheme, width: number) => css`
   padding: ${theme.gridUnit * 4}px;
   padding-top: ${theme.gridUnit * 6}px;
 
-  background: linear-gradient(
-    ${rgba(theme.colors.grayscale.light5, 0)},
-    ${theme.colors.grayscale.light5} ${theme.opacity.mediumLight}
-  );
+  background: white;
 
   & > button {
     pointer-events: auto;
