@@ -752,8 +752,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         serverPagination={serverPagination}
         onServerPaginationChange={handleServerPaginationChange}
         onColumnOrderChange={() => setColumnOrderToggle(!columnOrderToggle)}
-        // 9 page items in > 340px works well even for 100+ pages
-        maxPageItemCount={width > 340 ? 9 : 7}
+        maxPageItemCount={5}
         noResults={getNoResultsMessage}
         searchInput={includeSearch && SearchInput}
         selectPageSize={pageSize !== null && SelectPageSize}

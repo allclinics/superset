@@ -56,9 +56,9 @@ const StyledTabs = ({
           }
         }
         .short-link-trigger.btn {
-          padding: 0 ${theme.gridUnit}px;
-          & > .fa.fa-link {
-            top: 0;
+          padding: 0px 0px 0px 6px;
+          & > .anticon {
+            margin: 0px;
           }
         }
       }
@@ -78,6 +78,7 @@ const StyledTabs = ({
         text-align: center;
         text-transform: uppercase;
         user-select: none;
+        color: #5a607f;
         .required {
           margin-left: ${theme.gridUnit / 2}px;
           color: ${theme.colors.error.base};

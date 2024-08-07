@@ -46,7 +46,7 @@ export const StyledSelect = styled(AntdSelect, {
   ${({ theme, headerPosition, oneLine }) => `
     flex: ${headerPosition === 'left' ? 1 : 0};
     && .ant-select-selector {
-    border-color: #3876F6;
+    border-color: #3876F6 !important;
     border: 1px solid #D9E1EC;
     border-radius: 10px;
     padding: 0px 12px;
@@ -91,13 +91,24 @@ export const StyledSelect = styled(AntdSelect, {
       background: #E6E9F4;
       color: #5A607F;
       border-radius: 10px;
-      padding: 0px 6px 0px 12px;
+      max-width: 120px;
+      padding: 0px 6px 0px 12px !important;
+      height: 24px !important;
+      line-height: 22px !important;
+      font-size: 12px !important;
 
       .ant-tag-close-icon {
        color: #7E84A3;
      }
       }
     }
+
+    .ant-select-single {
+     .ant-select-selection-item {
+      margin: auto 0px;
+     }
+    }
+     
     .select-all {
       border-bottom: 1px solid ${theme.colors.grayscale.light3};
     }

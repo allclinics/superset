@@ -24,6 +24,7 @@ import { getDashboardPermalink } from 'src/utils/urlUtils';
 import { useToasts } from 'src/components/MessageToasts/withToasts';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/dashboard/types';
+import Icons from 'src/components/Icons';
 import { getClientErrorObject } from 'src/utils/getClientErrorObject';
 
 export type URLShortLinkButtonProps = {
@@ -105,8 +106,7 @@ export default function URLShortLinkButton({
           getCopyUrl();
         }}
       >
-        <i className="short-link-trigger fa fa-link" />
-        &nbsp;
+        <Icons.Information />
       </span>
     </Popover>
   );
