@@ -93,7 +93,7 @@ const StyledTabsContainer = styled.div`
   }
 
   .ant-tabs {
-    overflow: visible;
+    border-radius: 20px;
 
     .ant-tabs-nav-wrap {
       min-height: ${({ theme }) => theme.gridUnit * 12.5}px;
@@ -101,6 +101,8 @@ const StyledTabsContainer = styled.div`
 
     .ant-tabs-content-holder {
       overflow: visible;
+      padding-top: 24px;
+      border-radius: 20px;
     }
   }
 

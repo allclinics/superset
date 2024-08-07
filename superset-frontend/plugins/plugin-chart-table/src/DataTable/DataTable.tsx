@@ -88,7 +88,7 @@ export default typedMemo(function DataTable<D extends object>({
   pageSize: initialPageSize = 0,
   initialState: initialState_ = {},
   pageSizeOptions = PAGE_SIZE_OPTIONS,
-  maxPageItemCount = 9,
+  maxPageItemCount = 5,
   sticky: doSticky,
   searchInput = true,
   onServerPaginationChange,
@@ -319,7 +319,12 @@ export default typedMemo(function DataTable<D extends object>({
   }
 
   const paginationStyle: CSSProperties = sticky.height
-    ? {}
+    ? {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '24px',
+      }
     : { visibility: 'hidden' };
 
   let resultPageCount = pageCount;

@@ -82,7 +82,7 @@ const defaultProps = {
 
 const TabTitleContainer = styled.div`
   ${({ isHighlighted, theme: { gridUnit, colors } }) => `
-    padding: ${gridUnit}px ${gridUnit * 2}px;
+    padding: ${gridUnit}px 0px;
     margin: ${-gridUnit}px ${gridUnit * -2}px;
     transition: box-shadow 0.2s ease-in-out;
     ${
@@ -311,9 +311,10 @@ class Tab extends React.PureComponent {
               canEdit={editMode && isFocused}
               onSaveTitle={this.handleChangeText}
               showTooltip={false}
+              style={{ fontWeight: 500, fontSize: 16 }}
               editing={editMode && isFocused}
             />
-            {!editMode && (
+            {!editMode && isFocused && (
               <AnchorLink
                 id={component.id}
                 dashboardId={this.props.dashboardId}

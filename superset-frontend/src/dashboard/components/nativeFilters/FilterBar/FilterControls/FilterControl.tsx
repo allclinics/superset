@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -107,6 +108,14 @@ const HorizontalOverflowFilterControlContainer = styled(
       padding-right: unset;
     }
   }
+`;
+
+const ErrorText = styled.span`
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  color: #f34359;
+  margin-top: 4px;
 `;
 
 const VerticalFormItem = styled(StyledFormItem)`
@@ -320,6 +329,7 @@ const FilterControl = ({
               validateStatus={validateStatus}
             >
               <OutPortal node={portalNode} />
+              {validateStatus && <ErrorText>* Required field</ErrorText>}
             </FormItem>
           </div>
         </FilterCard>

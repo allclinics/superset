@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,6 +18,7 @@
  * under the License.
  */
 import React, { CSSProperties, forwardRef } from 'react';
+import Arrow from '../../images/arrow.png';
 
 export interface PaginationProps {
   pageCount: number; // number of pages
@@ -27,49 +29,61 @@ export interface PaginationProps {
   style?: CSSProperties;
 }
 
-// first, ..., prev, current, next, ..., last
-const MINIMAL_PAGE_ITEM_COUNT = 7;
-
 /**
  * Generate numeric page items around current page.
  *   - Always include first and last page
  *   - Add ellipsis if needed
  */
-export function generatePageItems(
-  total: number,
-  current: number,
-  width: number,
-) {
-  if (width < MINIMAL_PAGE_ITEM_COUNT) {
-    throw new Error(
-      `Must allow at least ${MINIMAL_PAGE_ITEM_COUNT} page items`,
-    );
+
+const getPageNumbers = (
+  pageCount: number,
+  currentPage: number,
+  maxPageItemCount: number,
+) => {
+  const pageNumbers = [];
+  const halfMaxButtons = Math.floor(maxPageItemCount / 2);
+  let startPage = Math.max(currentPage - halfMaxButtons, 0);
+  const endPage = Math.min(startPage + maxPageItemCount - 1, pageCount - 1);
+
+  if (endPage - startPage < maxPageItemCount - 1) {
+    startPage = Math.max(endPage - maxPageItemCount + 1, 0);
   }
-  if (width % 2 === 0) {
-    throw new Error(`Must allow odd number of page items`);
+
+  for (let i = startPage; i <= endPage; i += 1) {
+    pageNumbers.push(i);
   }
-  if (total < width) {
-    return [...new Array(total).keys()];
-  }
-  const left = Math.max(
-    0,
-    Math.min(total - width, current - Math.floor(width / 2)),
-  );
-  const items: (string | number)[] = new Array(width);
-  for (let i = 0; i < width; i += 1) {
-    items[i] = i + left;
-  }
-  // replace non-ending items with placeholders
-  if (items[0] > 0) {
-    items[0] = 0;
-    items[1] = 'prev-more';
-  }
-  if (items[items.length - 1] < total - 1) {
-    items[items.length - 1] = total - 1;
-    items[items.length - 2] = 'next-more';
-  }
-  return items;
-}
+
+  return pageNumbers;
+};
+
+const getPageItemStyles = (
+  isLast: boolean,
+  isActive: boolean,
+): CSSProperties => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 36,
+  height: 36,
+  borderRadius: '50%',
+  fontSize: 14,
+  fontWeight: 400,
+  lineHeight: '24px',
+  backgroundColor: isActive ? '#E6E9F4' : 'transparent',
+  color: '#5A607F',
+  marginRight: isLast ? 0 : 6,
+  border: 'none',
+});
+
+const getArrowItemStyles = (isLeft = false): CSSProperties => ({
+  cursor: 'pointer',
+  transform: isLeft ? 'rotate(180deg)' : 'rotate(0deg)',
+  marginRight: isLeft ? 10 : 0,
+  marginLeft: isLeft ? 0 : 10,
+  border: 0,
+  background: 'transparent',
+  padding: 0,
+});
 
 export default React.memo(
   forwardRef(function Pagination(
@@ -77,44 +91,53 @@ export default React.memo(
       style,
       pageCount,
       currentPage = 0,
-      maxPageItemCount = 9,
+      maxPageItemCount = 5,
       onPageChange,
     }: PaginationProps,
     ref: React.Ref<HTMLDivElement>,
   ) {
-    const pageItems = generatePageItems(
-      pageCount,
-      currentPage,
-      maxPageItemCount,
-    );
+    const pageItems = getPageNumbers(pageCount, currentPage, maxPageItemCount);
+
     return (
       <div ref={ref} className="dt-pagination" style={style}>
+        <button
+          type="button"
+          onClick={() => onPageChange(currentPage - 1)}
+          style={getArrowItemStyles(true)}
+          aria-label="Previous page"
+          disabled={currentPage === 0}
+        >
+          <img src={Arrow} alt="arrow left" />
+        </button>
         <ul className="pagination pagination-sm">
-          {pageItems.map(item =>
-            typeof item === 'number' ? (
-              // actual page number
-              <li
-                key={item}
-                className={currentPage === item ? 'active' : undefined}
+          {pageItems.map((item, index) => (
+            <li key={index}>
+              <a
+                href={`#page-${item}`}
+                role="button"
+                style={getPageItemStyles(
+                  index === pageItems.length - 1,
+                  currentPage === item,
+                )}
+                onClick={e => {
+                  e.preventDefault();
+                  onPageChange(item);
+                }}
               >
-                <a
-                  href={`#page-${item}`}
-                  role="button"
-                  onClick={e => {
-                    e.preventDefault();
-                    onPageChange(item);
-                  }}
-                >
-                  {item + 1}
-                </a>
-              </li>
-            ) : (
-              <li key={item} className="dt-pagination-ellipsis">
-                <span>…</span>
-              </li>
-            ),
-          )}
+                {item + 1}
+              </a>
+            </li>
+          ))}
         </ul>
+        <button
+          type="button"
+          aria-label="Next page"
+          onClick={() => onPageChange(currentPage + 1)}
+          style={getArrowItemStyles()}
+          disabled={currentPage === pageCount}
+        >
+          <img src={Arrow} alt="arrow right" />
+        </button>
       </div>
     );
   }),
