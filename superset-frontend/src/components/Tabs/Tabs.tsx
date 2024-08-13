@@ -39,6 +39,11 @@ const StyledTabs = ({
     css={theme => css`
       overflow: ${allowOverflow ? 'visible' : 'hidden'};
 
+      .ant-tabs-nav-list {
+        justify-content: space-between;
+        width: 100%;
+      }
+
       .ant-tabs-content-holder {
         overflow: ${allowOverflow ? 'visible' : 'auto'};
       }
@@ -142,20 +147,33 @@ EditableTabs.TabPane.defaultProps = {
   closeIcon: <StyledCancelXIcon role="button" tabIndex={0} />,
 };
 
-export const StyledLineEditableTabs = styled(EditableTabs)`
+export const StyledLineEditableTabs = styled(EditableTabs)<{
+  isChild?: boolean;
+}>`
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
-    margin: 0 ${({ theme }) => theme.gridUnit * 6}px;
+    margin: 0
+      ${({ theme, isChild }) =>
+        isChild ? `0px !important` : `${theme.gridUnit * 6}px`};
     padding: ${({ theme }) => `${theme.gridUnit * 3}px ${theme.gridUnit}px`};
     background: transparent;
     border: none;
+    border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
+    max-width: ${({ isChild }) => (isChild ? '342px' : 'unset')};
+    width: ${({ isChild }) => (isChild ? '100%' : 'unset')};
+    height: ${({ isChild }) => (isChild ? '48px' : 'unset')};
 
     &:hover {
       color: #3876f6 !important;
     }
   }
 
+  .ant-tabs-tab-active {
+    background: ${({ isChild }) =>
+      isChild ? '#fff !important' : 'transparent'};
+  }
+
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-ink-bar {
-    visibility: visible;
+    visibility: ${({ isChild }) => (isChild ? 'hidden' : 'visible')};
   }
 
   .ant-tabs-tab-btn {
@@ -171,6 +189,12 @@ export const StyledLineEditableTabs = styled(EditableTabs)`
     min-width: unset !important;
     background: transparent !important;
     border: none !important;
+  }
+
+  .ant-tabs-nav-list {
+    background: ${({ isChild }) => (isChild ? '#f7f7f7' : 'transparent')};
+    border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
+    padding: ${({ isChild }) => (isChild ? '4px' : '10px 0px 0px 0px')};
   }
 `;
 

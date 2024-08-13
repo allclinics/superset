@@ -327,6 +327,16 @@ export default typedMemo(function DataTable<D extends object>({
       }
     : { visibility: 'hidden' };
 
+  const columnStyles: CSSProperties = {
+    display: 'flex',
+    width: '100%',
+  };
+
+  const selectPageWrapperStyles: CSSProperties = {
+    display: 'flex',
+    marginLeft: 'auto',
+  };
+
   let resultPageCount = pageCount;
   let resultCurrentPageSize = pageSize;
   let resultCurrentPage = pageIndex;
@@ -356,20 +366,22 @@ export default typedMemo(function DataTable<D extends object>({
       {hasGlobalControl ? (
         <div ref={globalControlRef} className="form-inline dt-controls">
           <div className="row">
-            <div className="col-sm-6">
-              {hasPagination ? (
-                <SelectPageSize
-                  total={resultsSize}
-                  current={resultCurrentPageSize}
-                  options={pageSizeOptions}
-                  selectRenderer={
-                    typeof selectPageSize === 'boolean'
-                      ? undefined
-                      : selectPageSize
-                  }
-                  onChange={setPageSize}
-                />
-              ) : null}
+            <div className="col-sm-6" style={columnStyles}>
+              <div style={selectPageWrapperStyles}>
+                {hasPagination ? (
+                  <SelectPageSize
+                    total={resultsSize}
+                    current={resultCurrentPageSize}
+                    options={pageSizeOptions}
+                    selectRenderer={
+                      typeof selectPageSize === 'boolean'
+                        ? undefined
+                        : selectPageSize
+                    }
+                    onChange={setPageSize}
+                  />
+                ) : null}
+              </div>
             </div>
             {searchInput ? (
               <div className="col-sm-6">

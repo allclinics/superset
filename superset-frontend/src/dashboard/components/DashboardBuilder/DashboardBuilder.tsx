@@ -52,6 +52,7 @@ import getDirectPathToTabIndex from 'src/dashboard/util/getDirectPathToTabIndex'
 import { URL_PARAMS } from 'src/constants';
 import { getUrlParam } from 'src/utils/urlUtils';
 import {
+  ChartsState,
   DashboardLayout,
   FilterBarOrientation,
   RootState,
@@ -91,11 +92,23 @@ import DashboardWrapper from './DashboardWrapper';
 
 type DashboardBuilderProps = {};
 
+const LoadingWrapper = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: #f7f7f7;
+`;
+
 // @z-index-above-dashboard-charts + 1 = 11
-const FiltersPanel = styled.div<{ width: number; hidden: boolean }>`
+const FiltersPanel = styled.div<{
+  width: number;
+  hidden: boolean;
+  isLoading: boolean;
+}>`
   grid-column: 1;
   grid-row: 1 / span 2;
   z-index: 11;
+  visibility: ${({ isLoading }) => (isLoading ? 'hidden' : 'unset')};
   width: ${({ width }) => width}px;
   ${({ hidden }) => hidden && `display: none;`}
 `;
@@ -108,8 +121,9 @@ const StickyPanel = styled.div<{ width: number }>`
 `;
 
 // @z-index-above-dashboard-popovers (99) + 1 = 100
-const StyledHeader = styled.div`
-  ${({ theme }) => css`
+const StyledHeader = styled.div<{ isLoading: boolean }>`
+  ${({ theme, isLoading }) => css`
+    visibility: ${isLoading ? 'hidden' : 'unset'};
     grid-column: 2;
     grid-row: 1;
     position: sticky;
@@ -134,9 +148,11 @@ const StyledHeader = styled.div`
 
 const StyledContent = styled.div<{
   fullSizeChartId: number | null;
+  isLoading: boolean;
 }>`
   grid-column: 2;
   grid-row: 2;
+  visibility: ${({ isLoading }) => (isLoading ? 'hidden' : 'unset')};
   // @z-index-above-dashboard-header (100) + 1 = 101
   ${({ fullSizeChartId }) => fullSizeChartId && `z-index: 101;`}
 `;
@@ -379,6 +395,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
   const dispatch = useDispatch();
   const uiConfig = useUiConfig();
   const theme = useTheme();
+  const [isFirstRenderCharts, setIsFirsRenderCharts] = useState(false);
 
   const dashboardId = useSelector<RootState, string>(
     ({ dashboardInfo }) => `${dashboardInfo.id}`,
@@ -386,6 +403,49 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
   const dashboardLayout = useSelector<RootState, DashboardLayout>(
     state => state.dashboardLayout.present,
   );
+
+  const [chartCount, setChartCount] = useState<number>(0);
+
+  useEffect(() => {
+    const countCharts = () => {
+      const charts = document.querySelectorAll('[data-ui-anchor="chart"]');
+      setChartCount(charts.length);
+    };
+    countCharts();
+
+    const observer = new MutationObserver(countCharts);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const charts = useSelector<RootState, ChartsState>(state => state.charts);
+
+  const numberOfLoadingCharts = Object.values(charts).filter(
+    ({ chartStatus }) => chartStatus !== 'loading',
+  ).length;
+
+  const isCurrentPartChartsLoading = useMemo(
+    () => chartCount > numberOfLoadingCharts,
+    [chartCount, numberOfLoadingCharts],
+  );
+
+  useEffect(() => {
+    if (
+      !isFirstRenderCharts &&
+      !isCurrentPartChartsLoading &&
+      numberOfLoadingCharts !== 0 &&
+      chartCount !== 0
+    ) {
+      setIsFirsRenderCharts(true);
+    }
+  }, [
+    isFirstRenderCharts,
+    isCurrentPartChartsLoading,
+    numberOfLoadingCharts,
+    chartCount,
+  ]);
+
   const editMode = useSelector<RootState, boolean>(
     state => state.dashboardState.editMode,
   );
@@ -615,6 +675,9 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
                     width={filterBarWidth}
                     hidden={isReport}
                     data-test="dashboard-filters-panel"
+                    isLoading={
+                      isCurrentPartChartsLoading && !isFirstRenderCharts
+                    }
                   >
                     <StickyPanel ref={containerRef} width={filterBarWidth}>
                       <ErrorBoundary>
@@ -636,7 +699,10 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
             </ResizableSidebar>
           </>
         )}
-      <StyledHeader ref={headerRef}>
+      <StyledHeader
+        ref={headerRef}
+        isLoading={isCurrentPartChartsLoading && !isFirstRenderCharts}
+      >
         {/* @ts-ignore */}
         <Droppable
           data-test="top-level-tabs"
@@ -655,7 +721,10 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
           {renderDraggableContent}
         </Droppable>
       </StyledHeader>
-      <StyledContent fullSizeChartId={fullSizeChartId}>
+      <StyledContent
+        isLoading={isCurrentPartChartsLoading && !isFirstRenderCharts}
+        fullSizeChartId={fullSizeChartId}
+      >
         <Global
           styles={css`
             // @z-index-above-dashboard-header (100) + 1 = 101
@@ -689,7 +758,10 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
             marginLeft={dashboardContentMarginLeft}
           >
             {showDashboard ? (
-              <DashboardContainer topLevelTabs={topLevelTabs} />
+              <DashboardContainer
+                isCurrentPartChartsLoading={isCurrentPartChartsLoading}
+                topLevelTabs={topLevelTabs}
+              />
             ) : (
               <Loading />
             )}
@@ -697,14 +769,17 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
           </StyledDashboardContent>
         </DashboardContentWrapper>
       </StyledContent>
-      {dashboardIsSaving && (
-        <Loading
-          css={css`
-            && {
-              position: fixed;
-            }
-          `}
-        />
+      {(dashboardIsSaving ||
+        (isCurrentPartChartsLoading && !isFirstRenderCharts)) && (
+        <LoadingWrapper>
+          <Loading
+            css={css`
+              && {
+                position: fixed;
+              }
+            `}
+          />
+        </LoadingWrapper>
       )}
     </DashboardWrapper>
   );

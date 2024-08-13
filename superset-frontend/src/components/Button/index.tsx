@@ -99,6 +99,8 @@ export default function Button(props: ButtonProps) {
   let borderColorHover = 'transparent';
   let borderColorDisabled = 'transparent';
   let borderRadius = '4px';
+  let fontSize = typography.sizes.s;
+  let fontWeight = typography.weights.bold;
 
   if (buttonStyle === 'custom_primary') {
     color = '#fff';
@@ -108,6 +110,8 @@ export default function Button(props: ButtonProps) {
     maxWidth = '212px';
     width = '100%';
     colorHover = '#fff';
+    fontSize = 16;
+    fontWeight = 500;
   }
   if (buttonStyle === 'custom_secondary') {
     color = '#3876F6 !important';
@@ -120,6 +124,8 @@ export default function Button(props: ButtonProps) {
     maxWidth = '212px';
     width = '100%';
     colorHover = '#3876F6 !important';
+    fontSize = 16;
+    fontWeight = 500;
   }
 
   if (buttonStyle === 'primary') {
@@ -191,8 +197,8 @@ export default function Button(props: ButtonProps) {
         alignItems: 'center',
         justifyContent: 'center',
         lineHeight: 1.5715,
-        fontSize: typography.sizes.s,
-        fontWeight: typography.weights.bold,
+        fontSize,
+        fontWeight,
         height,
         width,
         maxWidth,

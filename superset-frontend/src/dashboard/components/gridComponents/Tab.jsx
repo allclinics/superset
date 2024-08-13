@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -21,7 +22,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { styled, t } from '@superset-ui/core';
+import { styled, t, css } from '@superset-ui/core';
 
 import { EmptyStateMedium } from 'src/components/EmptyState';
 import EditableTitle from 'src/components/EditableTitle';
@@ -38,6 +39,7 @@ import {
   GRID_GUTTER_SIZE,
   GRID_HORIZINTAL_PADDING,
 } from 'src/dashboard/util/constants';
+import Loading from 'src/components/Loading';
 
 export const RENDER_TAB = 'RENDER_TAB';
 export const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
@@ -79,6 +81,20 @@ const defaultProps = {
   onResize() {},
   onResizeStop() {},
 };
+
+const TabContentWrapper = styled.div`
+  position: relative;
+`;
+
+const LoadingWrapper = styled.div`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 100;
+`;
 
 const TabTitleContainer = styled.div`
   ${({ isHighlighted, theme: { gridUnit, colors } }) => `
@@ -174,12 +190,25 @@ class Tab extends React.PureComponent {
       canEdit,
       setEditMode,
       dashboardId,
+      isChild,
+      isCurrentPartChartsLoading,
     } = this.props;
 
     const shouldDisplayEmptyState = tabComponent.children.length === 0;
     return (
-      <div className="dashboard-component-tabs-content">
-        {/* Make top of tab droppable */}
+      <TabContentWrapper className="dashboard-component-tabs-content">
+        {isCurrentPartChartsLoading && (
+          <LoadingWrapper>
+            <Loading
+              css={css`
+                && {
+                  position: fixed;
+                  left: calc(50% + 142px);
+                }
+              `}
+            />
+          </LoadingWrapper>
+        )}
         {editMode && (
           <Droppable
             component={tabComponent}
@@ -242,6 +271,7 @@ class Tab extends React.PureComponent {
           <React.Fragment key={componentId}>
             <DashboardComponent
               id={componentId}
+              isChild={isChild}
               parentId={tabComponent.id}
               depth={depth} // see isValidChild.js for why tabs don't increment child depth
               index={componentIndex}
@@ -271,7 +301,7 @@ class Tab extends React.PureComponent {
             )}
           </React.Fragment>
         ))}
-      </div>
+      </TabContentWrapper>
     );
   }
 
@@ -283,6 +313,7 @@ class Tab extends React.PureComponent {
       depth,
       editMode,
       isFocused,
+      isChild,
       isHighlighted,
     } = this.props;
 
@@ -314,7 +345,7 @@ class Tab extends React.PureComponent {
               style={{ fontWeight: 500, fontSize: 16 }}
               editing={editMode && isFocused}
             />
-            {!editMode && isFocused && (
+            {!editMode && isFocused && !isChild && (
               <AnchorLink
                 id={component.id}
                 dashboardId={this.props.dashboardId}

@@ -46,6 +46,7 @@ const containerStyle = (theme: SupersetTheme) => css`
 
   && > .filter-clear-all-button {
     color: ${theme.colors.grayscale.base};
+    text-transform: capitalize;
     margin-left: 0;
     &:hover {
       color: ${theme.colors.primary.dark1};
@@ -80,6 +81,7 @@ const verticalStyle = (theme: SupersetTheme, width: number) => css`
 
   & > .filter-apply-button {
     margin-bottom: ${theme.gridUnit * 3}px;
+    text-transform: capitalize;
   }
 `;
 

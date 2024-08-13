@@ -49,13 +49,20 @@ export const StyledSelect = styled(AntdSelect, {
     border-color: #3876F6 !important;
     border: 1px solid #D9E1EC;
     border-radius: 10px;
-    padding: 0px 12px;
+    padding: 0px 28px 0px 12px;
     height: 34px;
      &:hover {
         border: 1px solid #3876F6;
         border-color: #3876F6 !important;
       }
     }
+
+   && .ant-select-selection-overflow {
+    overflow: auto;
+    flex-wrap: nowrap;
+    }
+
+
     && .ant-select-selection-placeholder {
     color: #A1A7C4;
     }

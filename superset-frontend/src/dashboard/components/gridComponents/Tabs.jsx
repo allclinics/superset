@@ -330,6 +330,8 @@ export class Tabs extends React.PureComponent {
       isComponentVisible: isCurrentTabVisible,
       editMode,
       nativeFilters,
+      isChild,
+      isCurrentPartChartsLoading,
     } = this.props;
 
     const { children: tabIds } = tabsComponent;
@@ -362,13 +364,13 @@ export class Tabs extends React.PureComponent {
                 <DeleteComponentButton onDelete={this.handleDeleteComponent} />
               </HoverMenu>
             )}
-
             <LineEditableTabs
               id={tabsComponent.id}
               activeKey={activeKey}
               onChange={key => {
                 this.handleClickTab(tabIds.indexOf(key));
               }}
+              isChild={isChild}
               onEdit={this.handleEdit}
               data-test="nav-list"
               type={editMode ? 'editable-card' : 'card'}
@@ -388,9 +390,11 @@ export class Tabs extends React.PureComponent {
                       onDropOnTab={this.handleDropOnTab}
                       onHoverTab={() => this.handleClickTab(tabIndex)}
                       isFocused={activeKey === tabId}
+                      isChild={isChild}
                       isHighlighted={
                         activeKey !== tabId && tabsToHighlight?.includes(tabId)
                       }
+                      isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                     />
                   }
                 >
@@ -400,11 +404,13 @@ export class Tabs extends React.PureComponent {
                       parentId={tabsComponent.id}
                       depth={depth} // see isValidChild.js for why tabs don't increment child depth
                       index={tabIndex}
+                      isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                       renderType={RENDER_TAB_CONTENT}
                       availableColumnCount={availableColumnCount}
                       columnWidth={columnWidth}
                       onResizeStart={onResizeStart}
                       onResize={onResize}
+                      isChild={!isChild}
                       onResizeStop={onResizeStop}
                       onDropOnTab={this.handleDropOnTab}
                       isComponentVisible={

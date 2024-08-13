@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -184,10 +185,10 @@ function SelectPageSize({
   onChange,
 }: SelectPageSizeRendererProps) {
   return (
-    <span className="dt-select-page-size form-inline">
+    <span className="dt-select-page-size form-inline select-page-size-wrapper">
       {t('page_size.show')}{' '}
       <select
-        className="form-control input-sm"
+        className="form-control input-sm select-page-size"
         value={current}
         onBlur={() => {}}
         onChange={e => {
@@ -204,8 +205,7 @@ function SelectPageSize({
             </option>
           );
         })}
-      </select>{' '}
-      {t('page_size.entries')}
+      </select>
     </span>
   );
 }
