@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -110,6 +111,33 @@ export default styled.div`
     .dt-no-results {
       text-align: center;
       padding: 1em 0.6em;
+    }
+
+    .select-page-size-wrapper {
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 24px;
+      width: 100px;
+    }
+
+    .select-page-size {
+      border-radius: 10px;
+      height: 24px;
+      width: 100%;
+      max-width: 64px;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: -0.04em;
+      padding: 0px 6px 0px 12px;
+      border: none;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.19526 6.19526C3.95494 6.43558 3.93645 6.81374 4.1398 7.07527L4.19526 7.13807L7.5286 10.4714C7.76892 10.7117 8.14707 10.7302 8.4086 10.5269L8.4714 10.4714L11.8047 7.13807C12.0651 6.87772 12.0651 6.45561 11.8047 6.19526C11.5644 5.95494 11.1863 5.93645 10.9247 6.1398L10.8619 6.19526L8 9.05667L5.13807 6.19526C4.89775 5.95494 4.51959 5.93645 4.25807 6.1398L4.19526 6.19526Z" fill="%237E84A3"/></svg>')
+        no-repeat right 10px center;
+      background-color: #e6e9f4;
+      margin-left: 4px;
     }
   `}
 `;

@@ -37,6 +37,7 @@ const propTypes = {
   setDirectPathToChild: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   dashboardId: PropTypes.number,
+  isCurrentPartChartsLoading: PropTypes.bool,
 };
 
 const defaultProps = {};
@@ -190,6 +191,7 @@ class DashboardGrid extends React.PureComponent {
       canEdit,
       setEditMode,
       dashboardId,
+      isCurrentPartChartsLoading,
     } = this.props;
     const columnPlusGutterWidth =
       (width + GRID_GUTTER_SIZE) / GRID_COLUMN_COUNT;
@@ -311,6 +313,7 @@ class DashboardGrid extends React.PureComponent {
                   onResize={this.handleResize}
                   onResizeStop={this.handleResizeStop}
                   onChangeTab={this.handleChangeTab}
+                  isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                 />
                 {/* make the area below components droppable */}
                 {editMode && (
