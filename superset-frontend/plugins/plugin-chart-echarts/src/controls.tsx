@@ -31,8 +31,25 @@ import { DEFAULT_LEGEND_FORM_DATA, StackControlOptions } from './constants';
 import { DEFAULT_FORM_DATA } from './Timeseries/constants';
 import { defaultXAxis } from './defaults';
 
-const { legendMargin, legendOrientation, legendType, showLegend } =
-  DEFAULT_LEGEND_FORM_DATA;
+const {
+  legendMargin,
+  legendOrientation,
+  legendType,
+  showLegend,
+  showLegendPopUp,
+  legendContent,
+} = DEFAULT_LEGEND_FORM_DATA;
+
+const showPopUpLegendControl: ControlSetItem = {
+  name: 'showPopUpLegend',
+  config: {
+    type: 'CheckboxControl',
+    label: 'Show pop up legend',
+    renderTrigger: true,
+    default: showLegendPopUp,
+    description: 'Show molal legend for the chart',
+  },
+};
 
 const showLegendControl: ControlSetItem = {
   name: 'show_legend',
@@ -56,6 +73,20 @@ const legendMarginControl: ControlSetItem = {
     description: t('Additional padding for legend.'),
     visibility: ({ controls }: ControlPanelsContainerProps) =>
       Boolean(controls?.show_legend?.value),
+  },
+};
+
+const legendContentControl: ControlSetItem = {
+  name: 'legendContent',
+  config: {
+    type: 'MarkdownControl',
+    label: 'Legend Content',
+    renderTrigger: false,
+    isInt: true,
+    default: legendContent,
+    description: 'HTML legend content',
+    visibility: ({ controls }: ControlPanelsContainerProps) =>
+      Boolean(controls?.showPopUpLegend?.value),
   },
 };
 
@@ -93,9 +124,15 @@ const legendOrientationControl: ControlSetItem = {
     renderTrigger: true,
     description: t('Legend Orientation'),
     visibility: ({ controls }: ControlPanelsContainerProps) =>
-      Boolean(controls?.show_legend?.value),
+      Boolean(controls?.showPopUpLegend?.value),
   },
 };
+
+export const legendModalSection: ControlSetRow[] = [
+  [<ControlSubSectionHeader>{t('Legend Modal')}</ControlSubSectionHeader>],
+  [showPopUpLegendControl],
+  [legendContentControl],
+];
 
 export const legendSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Legend')}</ControlSubSectionHeader>],

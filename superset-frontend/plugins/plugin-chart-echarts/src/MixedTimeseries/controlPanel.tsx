@@ -39,6 +39,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   xAxisLabelRotation,
+  legendModalSection,
 } from '../controls';
 
 const {
@@ -284,6 +285,11 @@ function createAdvancedAnalyticsSection(
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [...legendModalSection],
+    },
     {
       label: t('Shared query fields'),
       expanded: true,

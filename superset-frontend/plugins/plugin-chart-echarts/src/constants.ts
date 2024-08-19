@@ -102,6 +102,8 @@ export const DEFAULT_LEGEND_FORM_DATA: LegendFormData = {
   legendOrientation: LegendOrientation.Top,
   legendType: LegendType.Scroll,
   showLegend: true,
+  showLegendPopUp: false,
+  legendContent: '',
 };
 
 export const DEFAULT_TITLE_FORM_DATA: TitleFormData = {

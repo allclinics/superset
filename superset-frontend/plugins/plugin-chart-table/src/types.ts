@@ -79,6 +79,7 @@ export type TableChartFormData = QueryFormData & {
   include_time?: boolean;
   include_search?: boolean;
   query_mode?: QueryMode;
+  showPopUpLegend?: boolean;
   page_length?: string | number | null; // null means auto-paginate
   metrics?: QueryFormMetric[] | null;
   percent_metrics?: QueryFormMetric[] | null;
@@ -118,6 +119,7 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   percentMetrics?: (keyof D)[];
   pageSize?: number;
   showCellBars?: boolean;
+  showPopUpLegend?: boolean;
   sortDesc?: boolean;
   includeSearch?: boolean;
   alignPositiveNegative?: boolean;

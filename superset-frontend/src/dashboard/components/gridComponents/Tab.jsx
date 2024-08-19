@@ -22,13 +22,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { styled, t, css } from '@superset-ui/core';
+import { styled, t } from '@superset-ui/core';
 
 import { EmptyStateMedium } from 'src/components/EmptyState';
 import EditableTitle from 'src/components/EditableTitle';
 import { setEditMode } from 'src/dashboard/actions/dashboardState';
 import DashboardComponent from 'src/dashboard/containers/DashboardComponent';
-import AnchorLink from 'src/dashboard/components/AnchorLink';
 import DragDroppable, {
   Droppable,
 } from 'src/dashboard/components/dnd/DragDroppable';
@@ -39,7 +38,6 @@ import {
   GRID_GUTTER_SIZE,
   GRID_HORIZINTAL_PADDING,
 } from 'src/dashboard/util/constants';
-import Loading from 'src/components/Loading';
 
 export const RENDER_TAB = 'RENDER_TAB';
 export const RENDER_TAB_CONTENT = 'RENDER_TAB_CONTENT';
@@ -84,16 +82,6 @@ const defaultProps = {
 
 const TabContentWrapper = styled.div`
   position: relative;
-`;
-
-const LoadingWrapper = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  z-index: 100;
 `;
 
 const TabTitleContainer = styled.div`
@@ -191,24 +179,11 @@ class Tab extends React.PureComponent {
       setEditMode,
       dashboardId,
       isChild,
-      isCurrentPartChartsLoading,
     } = this.props;
 
     const shouldDisplayEmptyState = tabComponent.children.length === 0;
     return (
       <TabContentWrapper className="dashboard-component-tabs-content">
-        {isCurrentPartChartsLoading && (
-          <LoadingWrapper>
-            <Loading
-              css={css`
-                && {
-                  position: fixed;
-                  left: calc(50% + 142px);
-                }
-              `}
-            />
-          </LoadingWrapper>
-        )}
         {editMode && (
           <Droppable
             component={tabComponent}
@@ -313,7 +288,6 @@ class Tab extends React.PureComponent {
       depth,
       editMode,
       isFocused,
-      isChild,
       isHighlighted,
     } = this.props;
 
@@ -345,13 +319,6 @@ class Tab extends React.PureComponent {
               style={{ fontWeight: 500, fontSize: 16 }}
               editing={editMode && isFocused}
             />
-            {!editMode && isFocused && !isChild && (
-              <AnchorLink
-                id={component.id}
-                dashboardId={this.props.dashboardId}
-                placement={index >= 5 ? 'left' : 'right'}
-              />
-            )}
             {dropIndicatorProps && <div {...dropIndicatorProps} />}
           </TabTitleContainer>
         )}

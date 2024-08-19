@@ -50,6 +50,8 @@ const formData: EchartsMixedTimeseriesFormData = {
   rowLimitB: 0,
   legendOrientation: LegendOrientation.Top,
   legendType: LegendType.Scroll,
+  legendContent: '',
+  showLegendPopUp: false,
   showLegend: false,
   showValue: false,
   showValueB: false,

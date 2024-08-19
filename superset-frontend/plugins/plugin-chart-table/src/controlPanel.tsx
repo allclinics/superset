@@ -146,6 +146,39 @@ const percentMetricsControl: typeof sharedControls.metrics = {
 const config: ControlPanelConfig = {
   controlPanelSections: [
     {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'showPopUpLegend',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show pop up legend',
+              renderTrigger: true,
+              default: false,
+              description: 'Show molal legend for the chart',
+            },
+          },
+        ],
+        [
+          {
+            name: 'legendContent',
+            config: {
+              type: 'MarkdownControl',
+              label: 'Legend Content',
+              renderTrigger: false,
+              isInt: true,
+              default: '',
+              description: 'HTML legend content',
+              visibility: ({ controls }: ControlPanelsContainerProps) =>
+                Boolean(controls?.showPopUpLegend?.value),
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Query'),
       expanded: true,
       controlSetRows: [
