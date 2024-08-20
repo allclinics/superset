@@ -192,7 +192,7 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
   }
 
   .ant-tabs-nav-list {
-    background: ${({ isChild }) => (isChild ? '#f7f7f7' : 'transparent')};
+    background: ${({ isChild }) => (isChild ? '#f5f6fa' : 'transparent')};
     border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
     padding: ${({ isChild }) => (isChild ? '4px' : '10px 0px 0px 0px')};
   }

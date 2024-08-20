@@ -42,6 +42,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   xAxisLabelRotation,
+  legendModalSection,
 } from '../../../controls';
 
 const {
@@ -59,6 +60,11 @@ const {
 } = DEFAULT_FORM_DATA;
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [...legendModalSection],
+    },
     sections.echartsTimeSeriesQueryWithXAxisSort,
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,

@@ -39,6 +39,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   xAxisLabelRotation,
+  legendModalSection,
 } from '../../../controls';
 
 import { OrientationType } from '../../types';
@@ -255,6 +256,11 @@ function createAxisControl(axis: 'x' | 'y'): ControlSetRow[] {
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [...legendModalSection],
+    },
     sections.echartsTimeSeriesQueryWithXAxisSort,
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,

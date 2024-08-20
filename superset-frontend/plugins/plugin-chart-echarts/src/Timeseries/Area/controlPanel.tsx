@@ -41,6 +41,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   minorTicks,
+  legendModalSection,
 } from '../../controls';
 import { AreaChartStackControlOptions } from '../../constants';
 
@@ -58,6 +59,11 @@ const {
 } = DEFAULT_FORM_DATA;
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [...legendModalSection],
+    },
     sections.echartsTimeSeriesQueryWithXAxisSort,
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,

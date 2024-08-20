@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -23,13 +24,39 @@ import {
   getColumnLabel,
   getNumberFormatter,
 } from '@superset-ui/core';
-import React, { useCallback } from 'react';
+import React, {
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  CSSProperties,
+} from 'react';
 import Echart from '../components/Echart';
 import { NULL_STRING } from '../constants';
 import { EventHandlers } from '../types';
 import { extractTreePathInfo } from './constants';
 import { TreemapTransformedProps } from './types';
 import { formatSeriesName } from '../utils/series';
+import ZoomInIcon from './images/zoom-in.svg';
+import ZoomOutIcon from './images/zoom-out.svg';
+
+const iconsWrapperStyles: CSSProperties = {
+  background: '#FFFFFF',
+  borderRadius: '20px',
+  width: '80px',
+  padding: '4px 0px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const divider: CSSProperties = {
+  background: '#7E84A3',
+  width: '1px',
+  height: '24px',
+  margin: '0px 6px',
+};
 
 export default function EchartsTreemap({
   echartOptions,
@@ -45,6 +72,53 @@ export default function EchartsTreemap({
   formData,
   coltypeMapping,
 }: TreemapTransformedProps) {
+  const [isOverlay, setIsOverlay] = useState(true);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        setIsOverlay(false);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('wheel', handleWheel);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel);
+      }
+    };
+  }, []);
+
+  const wrapperStyles: CSSProperties = useMemo(
+    () => ({
+      position: 'relative',
+      width: `${width}px`,
+      height: `${height}px`,
+    }),
+    [height, width],
+  );
+
+  const overlayStyles: CSSProperties = useMemo(
+    () => ({
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: `${width}px`,
+      height: `${height}px`,
+      background: 'rgba(19, 21, 35, 0.6)',
+      zIndex: 1,
+    }),
+    [height, width],
+  );
+
   const getCrossFilterDataMask = useCallback(
     (data, treePathInfo) => {
       if (data?.children) {
@@ -152,14 +226,32 @@ export default function EchartsTreemap({
     },
   };
 
+  const handleHideOverlay = useCallback(() => setIsOverlay(false), []);
+
   return (
-    <Echart
-      refs={refs}
-      height={height}
-      width={width}
-      echartOptions={echartOptions}
-      eventHandlers={eventHandlers}
-      selectedValues={selectedValues}
-    />
+    <div ref={containerRef} style={wrapperStyles}>
+      {isOverlay && (
+        <div
+          tabIndex={0}
+          style={overlayStyles}
+          onClick={handleHideOverlay}
+          role="button"
+        >
+          <div style={iconsWrapperStyles}>
+            <ZoomInIcon />
+            <div style={divider} />
+            <ZoomOutIcon />
+          </div>
+        </div>
+      )}
+      <Echart
+        refs={refs}
+        height={height}
+        width={width}
+        echartOptions={echartOptions}
+        eventHandlers={eventHandlers}
+        selectedValues={selectedValues}
+      />
+    </div>
   );
 }

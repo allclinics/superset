@@ -31,6 +31,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   xAxisLabelRotation,
+  legendModalSection,
 } from '../controls';
 import { defaultYAxis } from '../defaults';
 
@@ -38,6 +39,11 @@ const { logAxis, truncateYAxis, yAxisBounds, opacity } = DEFAULT_FORM_DATA;
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Legend Modal'),
+      expanded: true,
+      controlSetRows: [...legendModalSection],
+    },
     {
       label: t('Query'),
       expanded: true,

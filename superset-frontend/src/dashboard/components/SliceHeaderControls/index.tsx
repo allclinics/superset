@@ -31,6 +31,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import moment from 'moment';
+import { Popover } from 'antd';
 import {
   Behavior,
   css,
@@ -41,7 +42,9 @@ import {
   styled,
   t,
   useTheme,
+  SafeMarkdown,
 } from '@superset-ui/core';
+import { Global } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import { Menu } from 'src/components/Menu';
 import { NoAnimationDropdown } from 'src/components/Dropdown';
@@ -76,6 +79,24 @@ const MENU_KEYS = {
   DRILL_TO_DETAIL: 'drill_to_detail',
   CROSS_FILTER_SCOPING: 'cross_filter_scoping',
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  column-gap: 4px;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  min-width: 200px;
+`;
+
+const InfoText = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  margin-right: 4px;
+  color: #7e84a3;
+`;
 
 const HorizontalDotsContainer = styled.div`
   display: flex;
@@ -112,6 +133,32 @@ const RefreshTooltip = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+`;
+
+const MarkdownWrapper = styled.div`
+  h3 {
+    font-weight: 700;
+  }
+
+  ol,
+  ul {
+    padding-inline-start: 15px;
+    margin: 0px;
+  }
+
+  p,
+  span,
+  li {
+    color: #5a607f;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    margin: 0px;
+  }
+
+  b {
+    color: #5a607f;
+  }
 `;
 
 const getScreenshotNodeSelector = (chartId: string | number) =>
@@ -565,7 +612,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
   );
 
   return (
-    <>
+    <Wrapper>
       {isFullSize && (
         <Icons.FullscreenExitOutlined
           style={{ fontSize: 22 }}
@@ -573,6 +620,49 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
             props.handleToggleFullSize();
           }}
         />
+      )}
+      {props?.formData?.showPopUpLegend && (
+        <InfoWrapper>
+          <InfoText>Check the chart guidance</InfoText>
+          <Popover
+            placement="bottom"
+            overlayClassName="chart-guidance-popover"
+            content={
+              <MarkdownWrapper>
+                <Global
+                  styles={css`
+                    .chart-guidance-popover {
+                      border-radius: 10px;
+
+                      .ant-popover-arrow {
+                        display: none;
+                      }
+
+                      .ant-popover-inner {
+                        border-radius: 10px;
+                      }
+
+                      .ant-popover-inner-content {
+                        width: 100%;
+                        max-width: 422px;
+                        border-radius: 10px;
+                        padding: 16px 24px;
+                        background: #ffffff;
+                        box-shadow: 0px 2px 22px 0px #151b261f !important;
+                      }
+                    }
+                  `}
+                />
+                <SafeMarkdown
+                  source={props?.formData?.legendContent ?? ''}
+                  htmlSanitization
+                />
+              </MarkdownWrapper>
+            }
+          >
+            <Icons.Information />
+          </Popover>
+        </InfoWrapper>
       )}
       <NoAnimationDropdown
         overlay={menu}
@@ -593,7 +683,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
         </span>
       </NoAnimationDropdown>
       {canEditCrossFilters && scopingModal}
-    </>
+    </Wrapper>
   );
 };
 
