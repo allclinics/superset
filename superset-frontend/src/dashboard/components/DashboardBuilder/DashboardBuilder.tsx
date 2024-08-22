@@ -426,8 +426,11 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
   ).length;
 
   const isCurrentPartChartsLoading = useMemo(
-    () => chartCount > numberOfLoadingCharts,
-    [chartCount, numberOfLoadingCharts],
+    () =>
+      chartCount > numberOfLoadingCharts ||
+      (Object.values(charts).length !== 0 &&
+        (chartCount === 0 || numberOfLoadingCharts === 0)),
+    [chartCount, charts, numberOfLoadingCharts],
   );
 
   useEffect(() => {
@@ -763,7 +766,9 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
                 topLevelTabs={topLevelTabs}
               />
             ) : (
-              <Loading />
+              <>
+                <Loading />
+              </>
             )}
             {editMode && <BuilderComponentPane topOffset={barTopOffset} />}
           </StyledDashboardContent>
