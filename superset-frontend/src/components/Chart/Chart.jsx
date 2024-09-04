@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/* eslint-disable theme-colors/no-literal-colors */
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
@@ -134,6 +135,18 @@ const MonospaceDiv = styled.div`
   word-break: break-word;
   overflow-x: auto;
   white-space: pre-wrap;
+`;
+
+const LoaderWrapper = styled.div`
+  background: rgba(19, 21, 35, 0.6);
+  width: ${p => p.width}px;
+  height: ${p => p.height}px;
+  min
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 class Chart extends React.PureComponent {
@@ -308,10 +321,16 @@ class Chart extends React.PureComponent {
                 data-test={this.props.vizType}
               />
             ) : (
-              <Loading />
+              <LoaderWrapper height={height} width={width}>
+                <Loading />
+              </LoaderWrapper>
             )}
           </div>
-          {isLoading && <Loading />}
+          {isLoading && (
+            <LoaderWrapper height={height} width={width}>
+              <Loading />
+            </LoaderWrapper>
+          )}
         </Styles>
       </ErrorBoundary>
     );

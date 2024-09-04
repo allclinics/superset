@@ -42,8 +42,9 @@ const StyledIcon = styled.div`
 
 const VerticalFilterControlTitle = styled.h4`
   font-size: ${({ theme }) => theme.typography.sizes.s}px;
-  color: ${({ theme }) => theme.colors.grayscale.dark1};
+  color: #5a607f;
   margin: 0;
+  font-weight: 400;
   overflow-wrap: anywhere;
 `;
 
