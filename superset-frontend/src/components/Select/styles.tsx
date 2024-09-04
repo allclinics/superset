@@ -46,8 +46,9 @@ export const StyledSelect = styled(AntdSelect, {
   ${({ theme, headerPosition, oneLine }) => `
     flex: ${headerPosition === 'left' ? 1 : 0};
     && .ant-select-selector {
-    border-color: #3876F6 !important;
+    border-color: #D9E1EC !important;
     border: 1px solid #D9E1EC;
+    box-shadow: none !important;
     border-radius: 10px;
     padding: 0px 28px 0px 12px;
     height: 34px;
@@ -79,24 +80,28 @@ export const StyledSelect = styled(AntdSelect, {
     border-color: #3876F6;
     border-right-width: 1px !important;
     outline: 0;
-    box-shadow: none;
+    box-shadow: none !important;
     }
     .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-    color: rgba(0, 0, 0, 0.85);
-    font-weight: 600;
-    background-color: #3876F6;
-    color: #fff;
+    font-weight: 400;
+    background-color: #F5F6FA;
+    color: #A1A7C4;
 
     .anticon-check {
-    color: #fff;
+    color: #7E84A3;
     }
     }
     .ant-select-arrow .anticon:not(.ant-select-suffix) {
       pointer-events: none;
     }
+
+    .ant-select-item-option {
+    color: #A1A7C4;
+    }
+
     .ant-select-selection-item {
       background: #E6E9F4;
-      color: #5A607F;
+      color: #A1A7C4;
       border-radius: 10px;
       max-width: 120px;
       padding: 0px 6px 0px 12px !important;

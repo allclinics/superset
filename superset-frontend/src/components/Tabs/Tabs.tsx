@@ -163,7 +163,9 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     height: ${({ isChild }) => (isChild ? '48px' : 'unset')};
 
     &:hover {
-      color: #3876f6 !important;
+      span {
+        color: #3876f6 !important;
+      }
     }
   }
 
