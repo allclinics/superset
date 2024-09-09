@@ -16,15 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/* eslint-disable camelcase */
+/* eslint-disable no-plusplus */
 /* eslint-disable prefer-template */
 /* eslint-disable react/require-default-props */
 /* eslint-disable theme-colors/no-literal-colors */
 import PropTypes from 'prop-types';
 import React from 'react';
-import { CanvasOverlay } from 'react-map-gl';
+import { CanvasOverlay, Popup } from 'react-map-gl';
 import roundDecimal from './utils/roundDecimal';
-import luminanceFromRGB from './utils/luminanceFromRGB';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import './popup.css';
+import LocationIcon from './icons/location';
+import PhoneIcon from './icons/phone';
+import TimeIcon from './icons/time';
+import WorldIcon from './icons/world';
 
 const propTypes = {
   aggregation: PropTypes.string,
@@ -78,7 +84,15 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
   constructor(props) {
     super(props);
     this.redraw = this.redraw.bind(this);
+    this.handleIconClick = this.handleIconClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.wrapText = this.wrapText.bind(this);
     this.image = new Image();
+    this.state = {
+      showModal: false,
+      popupCoords: null,
+      modal_data: null,
+    };
     this.image.src =
       'data:image/svg+xml;base64,' +
       btoa(
@@ -86,54 +100,62 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
       );
   }
 
-  drawText(ctx, pixel, options = {}) {
-    const IS_DARK_THRESHOLD = 110;
-    const {
-      fontHeight = 0,
-      label = '',
-      radius = 0,
-      rgb = [0, 0, 0],
-      shadow = false,
-    } = options;
-    const maxWidth = radius * 1.8;
-    const luminance = luminanceFromRGB(rgb[1], rgb[2], rgb[3]);
-
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = luminance <= IS_DARK_THRESHOLD ? 'white' : 'black';
-    ctx.font = `${fontHeight}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    if (shadow) {
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = luminance <= IS_DARK_THRESHOLD ? 'black' : '';
-    }
-
-    const textWidth = ctx.measureText(label).width;
-    if (textWidth > maxWidth) {
-      const scale = fontHeight / textWidth;
-      ctx.font = `${scale * maxWidth}px sans-serif`;
-    }
-
-    const { compositeOperation } = this.props;
-
-    ctx.fillText(label, pixel[0], pixel[1]);
-    ctx.globalCompositeOperation = compositeOperation;
-    ctx.shadowBlur = 0;
-    ctx.shadowColor = '';
+  openLink(link) {
+    window.open(link, '_blank');
   }
 
-  // Modified: https://github.com/uber/react-map-gl/blob/master/overlays/scatterplot.react.js
+  handleIconClick(pixel, modal_data) {
+    this.setState({
+      showModal: true,
+      popupCoords: pixel,
+      modal_data,
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      showModal: false,
+      popupCoords: null,
+      modal_data: null,
+    });
+  }
+
+  wrapText(ctx, text = '', x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    const lines = [];
+
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+
+      if (testWidth > maxWidth && n > 0) {
+        lines.push(line);
+        line = words[n] + ' ';
+      } else {
+        line = testLine;
+      }
+    }
+    lines.push(line);
+
+    for (let i = 0; i < lines.length; i++) {
+      const lineWidth = ctx.measureText(lines[i]).width;
+      const centeredX = x - lineWidth / 2;
+      ctx.fillText(lines[i], centeredX, y + i * lineHeight);
+    }
+  }
+
   redraw({ width, height, ctx, isDragging, project }) {
     const {
       aggregation,
       compositeOperation,
-      dotRadius,
       lngLatAccessor,
       locations,
       renderWhileDragging,
     } = this.props;
 
-    const radius = dotRadius;
+    const radius = 10;
     const clusterLabelMap = [];
 
     locations.forEach((location, i) => {
@@ -167,13 +189,92 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
             pixelRounded[0] - this.image.width / 2,
             pixelRounded[1] - this.image.height / 2,
           );
+
+          ctx.font = '14px Arial';
+          ctx.fillStyle = '#3876F6';
+          const maxWidth = 120;
+          const lineHeight = 20;
+
+          this.wrapText(
+            ctx,
+            location?.properties?.modal_data?.hospital_name,
+            pixelRounded[0] + this.image.width / 2 - 10,
+            pixelRounded[1] + this.image.height / 2 + 25,
+            maxWidth,
+            lineHeight,
+          );
+
+          ctx.canvas.addEventListener('click', e => {
+            const { offsetX, offsetY } = e;
+
+            if (
+              offsetX >= pixelRounded[0] - radius &&
+              offsetX <= pixelRounded[0] + radius &&
+              offsetY >= pixelRounded[1] - radius &&
+              offsetY <= pixelRounded[1] + radius
+            ) {
+              this.handleIconClick(
+                location.geometry.coordinates,
+                location?.properties?.modal_data,
+              );
+            }
+          });
         }
       }, this);
     }
   }
 
   render() {
-    return <CanvasOverlay redraw={this.redraw} />;
+    const { showModal, popupCoords, modal_data } = this.state;
+
+    return (
+      <>
+        {showModal && popupCoords && modal_data && (
+          <Popup
+            longitude={popupCoords[0]}
+            latitude={popupCoords[1]}
+            anchor="right"
+            onClose={this.closeModal}
+            className="popup"
+          >
+            <div className="wrapper">
+              <h3 className="title">{modal_data?.hospital_name}</h3>
+              <div className="divider" />
+              <div className="infoList">
+                <div className="listItem">
+                  <LocationIcon />
+                  <span className="listItemText">
+                    1501 S Potomac St, Aurora, CO 80012, USA
+                  </span>
+                </div>
+                <div className="listItem">
+                  <PhoneIcon />
+                  <span className="listItemText">+13036952600</span>
+                </div>
+                <div className="listItem">
+                  <TimeIcon />
+                  <span className="listItemText">Mon-Fri: 10 AM-10PM</span>
+                </div>
+                <div className="listItem">
+                  <WorldIcon />
+                  <span className="listItemText">
+                    https://www.healthonecares.com/
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="button"
+                onClick={() => this.openLink('https://www.google.com.ua')}
+              >
+                Hospital Details
+              </button>
+            </div>
+          </Popup>
+        )}
+        <CanvasOverlay redraw={this.redraw} />
+      </>
+    );
   }
 }
 

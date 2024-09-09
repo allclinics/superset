@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 # pylint: disable=too-many-lines
+# pylint: disable=W0311,C0301,R0914,W0612
 """This module contains the 'Viz' objects
 
 These objects represent the backend of all the visualizations that
@@ -1761,8 +1762,18 @@ class MapboxViz(BaseViz):
     def get_data(self, df: pd.DataFrame) -> VizData:
         if df.empty:
             return None
-
         label_col = self.form_data.get("mapbox_label")
+        groupby_data = self.form_data.get("groupby") or []
+
+        modal_data_list = []
+
+        if groupby_data:
+           for i, row in df.iterrows():
+            modal_data_obj = {col: row[col] for col in groupby_data}
+            modal_data_list.append(modal_data_obj)
+        else:
+            modal_data_list = [{'default': ''}] * len(df.index)
+
         has_custom_metric = label_col is not None and len(label_col) > 0
         metric_col = [None] * len(df.index)
         if has_custom_metric:
@@ -1787,7 +1798,7 @@ class MapboxViz(BaseViz):
             "features": [
                 {
                     "type": "Feature",
-                    "properties": {"metric": metric, "radius": point_radius},
+                    "properties": {"metric": metric, "radius": point_radius, "modal_data": modal_data },
                     "geometry": {
                         "type": "Point",
                         "coordinates": [
@@ -1796,11 +1807,12 @@ class MapboxViz(BaseViz):
                         ],
                     },
                 }
-                for lon, lat, metric, point_radius in zip(
+                for lon, lat, metric, point_radius, modal_data in zip(
                     df[self.form_data.get("all_columns_x")],
                     df[self.form_data.get("all_columns_y")],
                     metric_col,
                     point_radius_col,
+                    modal_data_list
                 )
             ],
         }

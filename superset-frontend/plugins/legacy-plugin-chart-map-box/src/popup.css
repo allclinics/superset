@@ -1,0 +1,104 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+.popup {
+  z-index: 1000;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 422px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0px 2px 22px 0px #151b261f;
+  border-radius: 10px !important;
+  padding: 16px 24px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #31323f;
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: #e6e9f4;
+  margin: 8px 0px 16px 0px;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+}
+
+.listItemText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #5a607f;
+  margin-left: 8px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 212px;
+  height: 48px;
+  padding: 12px 40px 12px 40px;
+  gap: 20px;
+  border-radius: 20px;
+  background-color: #3876f6;
+  color: #fff;
+  margin: 16px auto 0px auto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+}
+
+.button:hover {
+  opacity: 0.7;
+}
+
+.mapboxgl-popup-close-button {
+  display: none !important;
+}
+
+.mapboxgl-popup-tip {
+  display: none;
+}
+.mapboxgl-popup-content {
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0px;
+  background: transparent;
+  padding: 20px;
+}
