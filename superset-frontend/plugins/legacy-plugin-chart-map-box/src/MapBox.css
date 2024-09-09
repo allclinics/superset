@@ -19,3 +19,7 @@
 .mapbox .slice_container div {
   padding-top: 0px;
 }
+
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}

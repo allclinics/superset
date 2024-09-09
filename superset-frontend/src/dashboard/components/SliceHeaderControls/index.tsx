@@ -623,7 +623,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
       )}
       {props?.formData?.showPopUpLegend && (
         <InfoWrapper>
-          <InfoText>Check the chart guidance</InfoText>
+          <InfoText>Chart guidance</InfoText>
           <Popover
             placement="bottom"
             overlayClassName="chart-guidance-popover"
