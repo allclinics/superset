@@ -40,6 +40,7 @@ import {
   truncateXAxis,
   xAxisBounds,
   xAxisLabelRotation,
+  showLoaderSection,
 } from '../../controls';
 
 const {
@@ -56,6 +57,11 @@ const {
 } = DEFAULT_FORM_DATA;
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

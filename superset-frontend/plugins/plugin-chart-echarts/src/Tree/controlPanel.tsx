@@ -25,7 +25,7 @@ import {
   sharedControls,
 } from '@superset-ui/chart-controls';
 import { DEFAULT_FORM_DATA } from './constants';
-import { legendModalSection } from '../controls';
+import { legendModalSection, showLoaderSection } from '../controls';
 
 const requiredEntity = {
   ...sharedControls.entity,
@@ -39,6 +39,11 @@ const optionalEntity = {
 
 const controlPanel: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

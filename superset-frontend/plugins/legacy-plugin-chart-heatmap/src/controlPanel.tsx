@@ -41,6 +41,24 @@ const dndAllColumns = {
 const config: ControlPanelConfig = {
   controlPanelSections: [
     {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'showLoader',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show Loader',
+              renderTrigger: true,
+              default: true,
+              description: 'Show Loader',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Query'),
       expanded: true,
       controlSetRows: [

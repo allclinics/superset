@@ -42,6 +42,7 @@ import {
   xAxisBounds,
   minorTicks,
   legendModalSection,
+  showLoaderSection,
 } from '../../controls';
 import { AreaChartStackControlOptions } from '../../constants';
 
@@ -59,6 +60,11 @@ const {
 } = DEFAULT_FORM_DATA;
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

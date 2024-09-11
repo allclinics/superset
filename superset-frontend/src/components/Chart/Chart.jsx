@@ -138,10 +138,10 @@ const MonospaceDiv = styled.div`
 `;
 
 const LoaderWrapper = styled.div`
-  background: rgba(19, 21, 35, 0.6);
+  background: ${p =>
+    p.isTransparent ? 'transparent' : 'rgba(19, 21, 35, 0.6)'};
   width: ${p => p.width}px;
   height: ${p => p.height}px;
-  min
   display: flex;
   position: absolute;
   left: 50%;
@@ -321,12 +321,20 @@ class Chart extends React.PureComponent {
                 data-test={this.props.vizType}
               />
             ) : (
-              <LoaderWrapper height={height} width={width}>
-                <Loading />
-              </LoaderWrapper>
+              <>
+                {this.props.formData?.showLoader && (
+                  <LoaderWrapper
+                    isTransparent={isLoading}
+                    height={height}
+                    width={width}
+                  >
+                    <Loading />
+                  </LoaderWrapper>
+                )}
+              </>
             )}
           </div>
-          {isLoading && (
+          {isLoading && this.props.formData?.showLoader && (
             <LoaderWrapper height={height} width={width}>
               <Loading />
             </LoaderWrapper>

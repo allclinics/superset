@@ -40,6 +40,7 @@ import {
   xAxisBounds,
   xAxisLabelRotation,
   legendModalSection,
+  showLoaderSection,
 } from '../controls';
 
 const {
@@ -285,6 +286,11 @@ function createAdvancedAnalyticsSection(
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

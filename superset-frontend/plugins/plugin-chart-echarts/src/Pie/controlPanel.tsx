@@ -29,7 +29,11 @@ import {
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
 import { DEFAULT_FORM_DATA } from './types';
-import { legendSection, legendModalSection } from '../controls';
+import {
+  legendSection,
+  legendModalSection,
+  showLoaderSection,
+} from '../controls';
 
 const {
   donut,
@@ -44,6 +48,11 @@ const {
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

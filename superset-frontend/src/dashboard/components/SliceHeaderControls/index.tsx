@@ -87,7 +87,7 @@ const Wrapper = styled.div`
 
 const InfoWrapper = styled.div`
   display: flex;
-  min-width: 200px;
+  min-width: 130px;
 `;
 
 const InfoText = styled.span`
