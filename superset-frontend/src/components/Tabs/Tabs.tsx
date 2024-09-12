@@ -60,8 +60,15 @@ const StyledTabs = ({
             }
           }
         }
+
+        .short-link-trigger {
+          padding: 0px;
+          margin-right: 10px;
+          transform: translate(0px, 0px);
+        }
+
         .short-link-trigger.btn {
-          padding: 0px 0px 0px 6px;
+          padding: 0px 0px 0px 0px;
           & > .anticon {
             margin: 0px;
           }

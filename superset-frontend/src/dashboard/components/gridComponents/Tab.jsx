@@ -23,7 +23,7 @@ import classNames from 'classnames';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { styled, t } from '@superset-ui/core';
-
+import AnchorLink from 'src/dashboard/components/AnchorLink';
 import { EmptyStateMedium } from 'src/components/EmptyState';
 import EditableTitle from 'src/components/EditableTitle';
 import { setEditMode } from 'src/dashboard/actions/dashboardState';
@@ -85,10 +85,12 @@ const TabContentWrapper = styled.div`
 `;
 
 const TabTitleContainer = styled.div`
-  ${({ isHighlighted, theme: { gridUnit, colors } }) => `
+  ${({ isHighlighted, editMode, theme: { gridUnit, colors } }) => `
     padding: ${gridUnit}px 0px;
     margin: ${-gridUnit}px ${gridUnit * -2}px;
     transition: box-shadow 0.2s ease-in-out;
+    ${editMode && `display: flex;`}
+    ${editMode && `align-items: center;`}
     ${
       isHighlighted && `box-shadow: 0 0 ${gridUnit}px ${colors.primary.light1};`
     }
@@ -308,7 +310,15 @@ class Tab extends React.PureComponent {
             isHighlighted={isHighlighted}
             className="dragdroppable-tab"
             ref={dragSourceRef}
+            editMode={editMode}
           >
+            {editMode && isFocused && (
+              <AnchorLink
+                id={component.id}
+                dashboardId={this.props.dashboardId}
+                placement={index >= 5 ? 'left' : 'right'}
+              />
+            )}
             <EditableTitle
               title={component.meta.text}
               defaultTitle={component.meta.defaultText}
