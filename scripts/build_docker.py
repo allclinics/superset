@@ -23,8 +23,7 @@ from textwrap import dedent
 
 import click
 os.chdir('/home/admin/minikube/superset')
-os.environ["DOCKERHUB_USER"] = "vadymyuzko"
-os.environ["DOCKERHUB_TOKEN"] = ""
+
 REPO = "vadymyuzko/superset"
 CACHE_REPO = f"{REPO}-cache"
 BASE_PY_IMAGE = "3.10-slim-bookworm"
@@ -108,7 +107,7 @@ def get_docker_tags(
 
     if build_preset != "lean":
         # Always add the preset_build name if different from default (lean)
-        print('ASFKLJASDKJASHDJKASDHJKASDHJSAKDHJAKSDHJKASDHJKASD' + build_preset)
+        print('diff' + build_preset)
         tag_chunks += [build_preset]
 
     if len(build_platforms) == 1:

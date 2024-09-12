@@ -57,7 +57,7 @@ from superset.views.base_api import (
 )
 from superset.views.filters import BaseFilterRelatedUsers, FilterRelatedOwners
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__) 
 
 
 class ReportScheduleRestApi(BaseSupersetModelRestApi):
