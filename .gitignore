@@ -116,3 +116,4 @@ cache/
 superset-frontend/package-lock.json
 docker/.env
 superset-frontend/package-lock.json
+superset/docker/*.env
