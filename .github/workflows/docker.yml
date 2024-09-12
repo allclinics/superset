@@ -15,7 +15,7 @@ jobs:
     steps:
       - id: set_matrix
         run: |
-          MATRIX_CONFIG=$(if [ "${{ github.event_name }}" == "pull_request" ]; then echo '["lean", "dockerize"]'; else echo '["lean", "dockerize"]'; fi)
+          MATRIX_CONFIG=$(if [ "${{ github.event_name }}" == "pull_request" ]; then echo '["dockerize"]'; else echo '["dockerize"]'; fi)
           echo "matrix_config=${MATRIX_CONFIG}" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
 
@@ -56,4 +56,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          python3 build_docker.py dockerize release --force-latest
           python3 build_docker.py dockerize release --force-latest
