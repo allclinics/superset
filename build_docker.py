@@ -22,7 +22,7 @@ import subprocess
 from textwrap import dedent
 
 import click
-os.chdir('/home/admin/minikube/superset')
+# os.chdir('/home/admin/minikube/superset')
 
 REPO = "vadymyuzko/superset"
 CACHE_REPO = f"{REPO}-cache"

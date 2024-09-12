@@ -45,6 +45,6 @@ jobs:
           DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          python3 scripts/build_docker.py dockerize release --force-latest
-          python3 scripts/build_docker.py dockerize release --force-latest
+          python3 build_docker.py dockerize release --force-latest
+          python3 build_docker.py lean release --force-latest
         
