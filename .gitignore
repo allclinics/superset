@@ -113,3 +113,7 @@ messages.mo
 docker/requirements-local.txt
 
 cache/
+superset-frontend/package-lock.json
+docker/.env
+superset-frontend/src/assets/images/dashboard_export_20240731T144310.zip
+superset-frontend/src/assets/images/Untitled-2024-07-02-2104.excalidraw
