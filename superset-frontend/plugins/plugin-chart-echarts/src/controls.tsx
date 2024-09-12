@@ -128,6 +128,22 @@ const legendOrientationControl: ControlSetItem = {
   },
 };
 
+const showLoader: ControlSetItem = {
+  name: 'showLoader',
+  config: {
+    type: 'CheckboxControl',
+    label: 'Show Loader',
+    renderTrigger: true,
+    default: true,
+    description: 'Show Loader',
+  },
+};
+
+export const showLoaderSection: ControlSetRow[] = [
+  [<ControlSubSectionHeader>{t('Loader')}</ControlSubSectionHeader>],
+  [showLoader],
+];
+
 export const legendModalSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Legend Modal')}</ControlSubSectionHeader>],
   [showPopUpLegendControl],

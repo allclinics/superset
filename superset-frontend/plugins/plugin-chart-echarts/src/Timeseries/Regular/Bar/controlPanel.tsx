@@ -40,6 +40,7 @@ import {
   xAxisBounds,
   xAxisLabelRotation,
   legendModalSection,
+  showLoaderSection,
 } from '../../../controls';
 
 import { OrientationType } from '../../types';
@@ -256,6 +257,11 @@ function createAxisControl(axis: 'x' | 'y'): ControlSetRow[] {
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

@@ -22,6 +22,24 @@ import { viewport, mapboxStyle } from '../utilities/Shared_DeckGL';
 export default {
   controlPanelSections: [
     {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'showLoader',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show Loader',
+              renderTrigger: true,
+              default: true,
+              description: 'Show Loader',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Map'),
       expanded: true,
       controlSetRows: [

@@ -37,7 +37,11 @@ import {
 } from '@superset-ui/chart-controls';
 import { DEFAULT_FORM_DATA } from './types';
 import { LABEL_POSITION } from '../constants';
-import { legendSection, legendModalSection } from '../controls';
+import {
+  legendSection,
+  legendModalSection,
+  showLoaderSection,
+} from '../controls';
 
 const { labelType, labelPosition, numberFormat, showLabels, isCircle } =
   DEFAULT_FORM_DATA;
@@ -59,6 +63,11 @@ const radarMetricMaxValue: { name: string; config: ControlFormItemSpec } = {
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

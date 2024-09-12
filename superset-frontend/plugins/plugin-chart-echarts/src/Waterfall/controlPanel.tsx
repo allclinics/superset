@@ -26,10 +26,19 @@ import {
   formatSelectOptions,
   sharedControls,
 } from '@superset-ui/chart-controls';
-import { legendModalSection, showValueControl } from '../controls';
+import {
+  legendModalSection,
+  showValueControl,
+  showLoaderSection,
+} from '../controls';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

@@ -33,7 +33,11 @@ import {
   EchartsFunnelLabelTypeType,
   PercentCalcType,
 } from './types';
-import { legendModalSection, legendSection } from '../controls';
+import {
+  legendModalSection,
+  legendSection,
+  showLoaderSection,
+} from '../controls';
 
 const { labelType, numberFormat, showLabels, defaultTooltipLabel } =
   DEFAULT_FORM_DATA;
@@ -43,6 +47,11 @@ funnelLegendSection.splice(2, 1);
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

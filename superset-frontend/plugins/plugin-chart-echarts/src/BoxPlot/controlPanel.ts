@@ -36,10 +36,15 @@ import {
   getTemporalColumns,
   sharedControls,
 } from '@superset-ui/chart-controls';
-import { legendModalSection } from '../controls';
+import { legendModalSection, showLoaderSection } from '../controls';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,

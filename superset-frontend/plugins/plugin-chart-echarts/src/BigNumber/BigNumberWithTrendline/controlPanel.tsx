@@ -27,10 +27,15 @@ import {
 } from '@superset-ui/chart-controls';
 import React from 'react';
 import { headerFontSize, subheaderFontSize } from '../sharedControls';
-import { legendModalSection } from '../../controls';
+import { showLoaderSection, legendModalSection } from '../../controls';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [...showLoaderSection],
+    },
     {
       label: t('Legend Modal'),
       expanded: true,
