@@ -50,7 +50,6 @@ env
 venv*
 env_py3
 envpy3
-/docker/.env
 env36
 local_config.py
 /superset_config.py
@@ -115,5 +114,9 @@ docker/requirements-local.txt
 cache/
 superset-frontend/package-lock.json
 docker/.env
+/docker/.env
+docker/.env-non-dev
 superset-frontend/package-lock.json
 superset/docker/*.env
+*.env
+.env
