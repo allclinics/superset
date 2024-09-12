@@ -50,6 +50,7 @@ env
 venv*
 env_py3
 envpy3
+/docker/.env
 env36
 local_config.py
 /superset_config.py
