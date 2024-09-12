@@ -51,24 +51,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Setup supersetbot
-        uses: ./.github/actions/setup-supersetbot/
-
       - name: Build Docker Image
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Single platform builds in pull_request context to speed things up
-          if [ "${{ github.event_name }}" = "push" ]; then
-            PLATFORM_ARG="--platform linux/arm64 --platform linux/amd64"
-          elif [ "${{ github.event_name }}" = "pull_request" ]; then
-            PLATFORM_ARG="--platform linux/amd64"
-          fi
-
-          supersetbot docker \
-            -r "allclinics/superset"
-            --preset ${{ matrix.build_preset }} \
-            --context "$EVENT" \
-            --context-ref "$RELEASE" $FORCE_LATEST \
-            $PLATFORM_ARG
+          python3 build_docker.py dockerize release --force-latest
