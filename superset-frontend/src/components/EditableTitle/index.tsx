@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -77,6 +78,7 @@ export default function EditableTitle({
       setLastTitle(currentTitle);
       setCurrentTitle(title);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title]);
 
   useEffect(() => {
@@ -224,8 +226,12 @@ export default function EditableTitle({
         to={url}
         data-test="editable-title-input"
         css={(theme: SupersetTheme) => css`
-          color: ${theme.colors.grayscale.dark1};
+          color: #31323f;
           text-decoration: none;
+          font-family: ${theme.typography.families.sansSerif};
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 24px;
           :hover {
             text-decoration: underline;
           }

@@ -44,6 +44,7 @@ export const FiltersOutOfScopeCollapsible = ({
     css={(theme: SupersetTheme) =>
       horizontalOverflow
         ? css`
+            display: none;
             &.ant-collapse > .ant-collapse-item {
               & > .ant-collapse-header {
                 padding: 0;
@@ -61,6 +62,7 @@ export const FiltersOutOfScopeCollapsible = ({
             }
           `
         : css`
+            display: none;
             &.ant-collapse {
               margin-top: ${hasTopMargin ? theme.gridUnit * 6 : 0}px;
               & > .ant-collapse-item {

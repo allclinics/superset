@@ -78,7 +78,7 @@ const ChartHeaderStyles = styled.div`
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     flex-direction: column;
-    row-gap: 6px;
+    row-gap: 8px;
 
     & > .header {
       display: flex;

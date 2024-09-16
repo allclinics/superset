@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -96,6 +97,7 @@ const InfoText = styled.span`
   line-height: 24px;
   margin-right: 4px;
   color: #7e84a3;
+  font-family: ${({ theme }) => theme.typography.families.sansSerif};
 `;
 
 const HorizontalDotsContainer = styled.div`
