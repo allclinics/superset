@@ -161,7 +161,7 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     margin: 0
       ${({ theme, isChild }) =>
         isChild ? `0px !important` : `${theme.gridUnit * 6}px`};
-    padding: ${({ theme }) => `${theme.gridUnit * 3}px ${theme.gridUnit}px`};
+    padding: ${({ theme }) => `${theme.gridUnit * 3}px ${6}px`};
     background: transparent;
     border: none;
     border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
@@ -204,6 +204,16 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     background: ${({ isChild }) => (isChild ? '#f5f6fa' : 'transparent')};
     border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
     padding: ${({ isChild }) => (isChild ? '4px' : '10px 0px 0px 0px')};
+  }
+
+  .ant-tabs-nav {
+    padding-right: 24px;
+
+    &::before {
+      display: ${({ isChild }) => (isChild ? 'none' : 'block')};
+      width: calc(100% - 48px);
+      left: 24px;
+    }
   }
 `;
 
