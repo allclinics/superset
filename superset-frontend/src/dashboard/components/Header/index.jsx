@@ -506,6 +506,7 @@ class Header extends React.PureComponent {
       >
         <PageHeaderWithActions
           isFiltersOpen={isFiltersOpen}
+          userCanEdit={userCanEdit}
           toggleFiltersBar={toggleFiltersBar}
           editableTitleProps={{
             title: dashboardTitle,

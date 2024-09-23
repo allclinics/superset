@@ -152,6 +152,7 @@ export type PageHeaderWithActionsProps = {
   };
   isFiltersOpen?: boolean;
   toggleFiltersBar?: () => void;
+  userCanEdit?: boolean;
 };
 
 export const PageHeaderWithActions = ({
@@ -168,6 +169,7 @@ export const PageHeaderWithActions = ({
   tooltipProps,
   isFiltersOpen,
   toggleFiltersBar,
+  userCanEdit,
 }: PageHeaderWithActionsProps) => {
   const theme = useTheme();
   return (
@@ -195,15 +197,15 @@ export const PageHeaderWithActions = ({
             {certificatiedBadgeProps?.certifiedBy && (
               <CertifiedBadge {...certificatiedBadgeProps} />
             )}
-            {showFaveStar && <FaveStar {...faveStarProps} />}
-            {titlePanelAdditionalItems}
+            {showFaveStar && userCanEdit && <FaveStar {...faveStarProps} />}
+            {userCanEdit && titlePanelAdditionalItems}
           </div>
         )}
       </div>
       <div className="right-button-panel">
         {rightPanelAdditionalItems}
         <div css={additionalActionsContainerStyles}>
-          {showMenuDropdown && (
+          {showMenuDropdown && userCanEdit && (
             <AntdDropdown
               trigger={['click']}
               overlay={additionalActionsMenu}
