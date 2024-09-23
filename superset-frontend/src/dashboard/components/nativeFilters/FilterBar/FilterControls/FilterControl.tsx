@@ -17,7 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   createHtmlPortalNode,
   InPortal,
@@ -29,10 +29,7 @@ import { Tooltip } from 'src/components/Tooltip';
 import { FilterBarOrientation } from 'src/dashboard/types';
 import { checkIsMissingRequiredValue } from '../utils';
 import FilterValue from './FilterValue';
-import { FilterCard } from '../../FilterCard';
-import { FilterBarScrollContext } from '../Vertical';
 import { FilterControlProps } from './types';
-import { FilterCardPlacement } from '../../FilterCard/types';
 import { useIsFilterInScope } from '../../state';
 
 const StyledIcon = styled.div`
@@ -242,7 +239,7 @@ const FilterControl = ({
   overflow = false,
 }: FilterControlProps) => {
   const portalNode = useMemo(() => createHtmlPortalNode(), []);
-  const [isFilterActive, setIsFilterActive] = useState(false);
+  const [, setIsFilterActive] = useState(false);
 
   const { name = '<undefined>' } = filter;
 
@@ -283,17 +280,6 @@ const FilterControl = ({
     ],
   );
 
-  const isScrolling = useContext(FilterBarScrollContext);
-  const filterCardPlacement = useMemo(() => {
-    if (orientation === FilterBarOrientation.Horizontal) {
-      if (overflow) {
-        return FilterCardPlacement.Left;
-      }
-      return FilterCardPlacement.Bottom;
-    }
-    return FilterCardPlacement.Right;
-  }, [orientation, overflow]);
-
   return (
     <>
       <InPortal node={portalNode}>
@@ -317,23 +303,17 @@ const FilterControl = ({
             : 'vertical'
         }
       >
-        <FilterCard
-          filter={filter}
-          isVisible={!isFilterActive && !isScrolling}
-          placement={filterCardPlacement}
-        >
-          <div>
-            <FormItem
-              label={label}
-              aria-label={name}
-              required={filter?.controlValues?.enableEmptyFilter}
-              validateStatus={validateStatus}
-            >
-              <OutPortal node={portalNode} />
-              {validateStatus && <ErrorText>* Required field</ErrorText>}
-            </FormItem>
-          </div>
-        </FilterCard>
+        <div>
+          <FormItem
+            label={label}
+            aria-label={name}
+            required={filter?.controlValues?.enableEmptyFilter}
+            validateStatus={validateStatus}
+          >
+            <OutPortal node={portalNode} />
+            {validateStatus && <ErrorText>* Required field</ErrorText>}
+          </FormItem>
+        </div>
       </FilterControlContainer>
     </>
   );
