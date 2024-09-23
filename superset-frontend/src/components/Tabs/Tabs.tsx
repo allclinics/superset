@@ -208,6 +208,18 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
 
   .ant-tabs-nav {
     padding-right: 24px;
+    position: ${({ isChild }) => (isChild ? 'unset' : 'sticky')};
+    top: ${({ isChild }) => (isChild ? 'unset' : '95px')};
+    z-index: ${({ isChild }) => (isChild ? 'unset' : '100')};
+    background: ${({ isChild }) => (isChild ? 'unset' : 'white')};
+    border-top-left-radius: ${({ isChild }) => (isChild ? 'unset' : '20px')};
+    border-top-right-radius: ${({ isChild }) => (isChild ? 'unset' : '20px')};
+    box-shadow: ${({ isChild }) =>
+      isChild
+        ? 'unset'
+        : '0 -3px 20px #f7f7f7, -3px 0 20px #f7f7f7, 3px 0 20px #f7f7f7'};
+    clip-path: ${({ isChild }) =>
+      isChild ? 'unset' : 'inset(-10px -10px 0 -10px)'};
 
     &::before {
       display: ${({ isChild }) => (isChild ? 'none' : 'block')};
