@@ -376,7 +376,7 @@ export class Tabs extends React.PureComponent {
     const isMultiTabs = !!mapboxChartsArray?.length;
 
     const hospitalsLength = isMultiTabs
-      ? mapboxChartsArray[0]?.queriesResponse[0]?.data?.bounds?.length
+      ? mapboxChartsArray?.[0]?.queriesResponse?.[0]?.data?.bounds?.length
       : 0;
 
     return (
@@ -405,7 +405,7 @@ export class Tabs extends React.PureComponent {
                 <SubTitle>
                   Choose a hospital to see detailed information
                 </SubTitle>
-                <Caption>{`Found: ${hospitalsLength} hospitals`}</Caption>
+                <Caption>{`Found: ${hospitalsLength ?? 0} hospitals`}</Caption>
               </Card>
             )}
             <LineEditableTabs
