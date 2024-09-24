@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -80,6 +81,29 @@ const defaultProps = {
   onResize() {},
   onResizeStop() {},
 };
+
+const SubTitle = styled.span`
+  font-family: ${({ theme }) => theme.typography.families.sansSerif};
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #31323f;
+`;
+
+const Caption = styled.span`
+  font-family: ${({ theme }) => theme.typography.families.sansSerif};
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #5a607f;
+`;
+
+const Card = styled.div`
+  display: flex;
+  position: absolute;
+  row-gap: 4px;
+  flex-direction: column;
+`;
 
 const StyledTabsContainer = styled.div`
   width: 100%;
@@ -316,6 +340,7 @@ export class Tabs extends React.PureComponent {
 
   render() {
     const {
+      id,
       depth,
       component: tabsComponent,
       parentComponent,
@@ -343,6 +368,17 @@ export class Tabs extends React.PureComponent {
     if (highlightedFilterId) {
       tabsToHighlight = nativeFilters.filters[highlightedFilterId]?.tabsInScope;
     }
+
+    const mapboxChartsArray = this.props?.charts?.filter(
+      item => item?.form_data?.isMultiTabs && id === item?.form_data?.tabsId,
+    );
+
+    const isMultiTabs = !!mapboxChartsArray?.length;
+
+    const hospitalsLength = isMultiTabs
+      ? mapboxChartsArray[0]?.queriesResponse[0]?.data?.bounds?.length
+      : 0;
+
     return (
       <Draggable
         component={tabsComponent}
@@ -363,6 +399,14 @@ export class Tabs extends React.PureComponent {
                 <DragHandle position="left" />
                 <DeleteComponentButton onDelete={this.handleDeleteComponent} />
               </HoverMenu>
+            )}
+            {isMultiTabs && (
+              <Card className="map-tabs-card">
+                <SubTitle>
+                  Choose a hospital to see detailed information
+                </SubTitle>
+                <Caption>{`Found: ${hospitalsLength} hospitals`}</Caption>
+              </Card>
             )}
             <LineEditableTabs
               id={tabsComponent.id}
@@ -433,6 +477,7 @@ Tabs.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
   return {
+    charts: Object.values(state.charts ?? []),
     nativeFilters: state.nativeFilters,
     activeTabs: state.dashboardState.activeTabs,
     directPathToChild: state.dashboardState.directPathToChild,
