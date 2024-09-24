@@ -58,6 +58,33 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Multi-tabs controls'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'isMultiTabs',
+            config: {
+              type: 'CheckboxControl',
+              label: 'This is a multi-tabs',
+              renderTrigger: true,
+              default: false,
+              description: 'This is a multi-tabs',
+            },
+          },
+          {
+            name: 'tabsId',
+            config: {
+              type: 'TextControl',
+              label: t('TABS ID'),
+              default: '',
+              description: t('Tabs ID'),
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Legend Modal'),
       expanded: true,
       controlSetRows: [
