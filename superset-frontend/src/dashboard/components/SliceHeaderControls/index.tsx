@@ -88,16 +88,6 @@ const Wrapper = styled.div`
 
 const InfoWrapper = styled.div`
   display: flex;
-  min-width: 130px;
-`;
-
-const InfoText = styled.span`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-  margin-right: 4px;
-  color: #7e84a3;
-  font-family: ${({ theme }) => theme.typography.families.sansSerif};
 `;
 
 const HorizontalDotsContainer = styled.div`
@@ -625,7 +615,6 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
       )}
       {props?.formData?.showPopUpLegend && (
         <InfoWrapper>
-          <InfoText>Chart guidance</InfoText>
           <Popover
             placement="bottom"
             overlayClassName="chart-guidance-popover"
@@ -635,6 +624,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
                   styles={css`
                     .chart-guidance-popover {
                       border-radius: 10px;
+                      min-width: 250px;
 
                       .ant-popover-arrow {
                         display: none;

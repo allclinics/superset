@@ -32,7 +32,7 @@
 }
 
 .title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 24px;
   color: #31323f;
@@ -43,13 +43,13 @@
   height: 1px;
   width: 100%;
   background: #e6e9f4;
-  margin: 8px 0px 16px 0px;
+  margin: 8px 0px 12px 0px;
 }
 
 .infoList {
   display: flex;
   flex-direction: column;
-  row-gap: 18px;
+  row-gap: 12px;
 }
 
 .listItem {
@@ -58,11 +58,11 @@
 }
 
 .listItemText {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 20px;
   color: #5a607f;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .button {
@@ -71,16 +71,16 @@
   align-items: center;
   border: none;
   width: 212px;
-  height: 48px;
-  padding: 12px 40px 12px 40px;
+  height: 29px;
+  padding: 0px 40px 0px 40px;
   gap: 20px;
   border-radius: 20px;
   background-color: #3876f6;
   color: #fff;
-  margin: 16px auto 0px auto;
-  font-size: 16px;
+  margin: 12px auto 0px auto;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 21px;
   text-align: center;
 }
 
