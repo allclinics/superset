@@ -29,7 +29,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import './popup.css';
 import LocationIcon from './icons/location';
 import PhoneIcon from './icons/phone';
-import TimeIcon from './icons/time';
 import WorldIcon from './icons/world';
 
 const propTypes = {
@@ -101,7 +100,15 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
   }
 
   openLink(link) {
-    window.open(link, '_blank');
+    if (link) {
+      const hrefMatch = link.match(/href="([^"]*)"/);
+
+      const hrefValue = hrefMatch ? hrefMatch[1] : null;
+
+      if (hrefValue) {
+        window.open(hrefValue, '_blank');
+      }
+    }
   }
 
   handleIconClick(pixel, modal_data) {
@@ -153,6 +160,8 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
       lngLatAccessor,
       locations,
       renderWhileDragging,
+      namesDisappearZoomLevel,
+      zoom,
     } = this.props;
 
     const radius = 10;
@@ -195,14 +204,16 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
           const maxWidth = 120;
           const lineHeight = 20;
 
-          this.wrapText(
-            ctx,
-            location?.properties?.modal_data?.hospital_name,
-            pixelRounded[0] + this.image.width / 2 - 10,
-            pixelRounded[1] + this.image.height / 2 + 25,
-            maxWidth,
-            lineHeight,
-          );
+          if (zoom >= namesDisappearZoomLevel) {
+            this.wrapText(
+              ctx,
+              location?.properties?.modal_data?.hospital_name,
+              pixelRounded[0] + this.image.width / 2 - 10,
+              pixelRounded[1] + this.image.height / 2 + 25,
+              maxWidth,
+              lineHeight,
+            );
+          }
 
           ctx.canvas.addEventListener('click', e => {
             const { offsetX, offsetY } = e;
@@ -227,6 +238,8 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
   render() {
     const { showModal, popupCoords, modal_data } = this.state;
 
+    console.log(modal_data, 'this.propsthis.propsthis.props1337');
+
     return (
       <>
         {showModal && popupCoords && modal_data && (
@@ -241,31 +254,31 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
               <h3 className="title">{modal_data?.hospital_name}</h3>
               <div className="divider" />
               <div className="infoList">
-                <div className="listItem">
-                  <LocationIcon />
-                  <span className="listItemText">
-                    1501 S Potomac St, Aurora, CO 80012, USA
-                  </span>
-                </div>
-                <div className="listItem">
-                  <PhoneIcon />
-                  <span className="listItemText">+13036952600</span>
-                </div>
-                <div className="listItem">
-                  <TimeIcon />
-                  <span className="listItemText">Mon-Fri: 10 AM-10PM</span>
-                </div>
-                <div className="listItem">
-                  <WorldIcon />
-                  <span className="listItemText">
-                    https://www.healthonecares.com/
-                  </span>
-                </div>
+                {modal_data?.map_address && (
+                  <div className="listItem">
+                    <LocationIcon />
+                    <span className="listItemText">
+                      {modal_data?.map_address}
+                    </span>
+                  </div>
+                )}
+                {modal_data?.phone && (
+                  <div className="listItem">
+                    <PhoneIcon />
+                    <span className="listItemText">{modal_data?.phone}</span>
+                  </div>
+                )}
+                {modal_data?.website && (
+                  <div className="listItem">
+                    <WorldIcon />
+                    <span className="listItemText">{modal_data?.website}</span>
+                  </div>
+                )}
               </div>
               <button
                 type="button"
                 className="button"
-                onClick={() => this.openLink('https://www.google.com.ua')}
+                onClick={() => this.openLink(modal_data?.URL)}
               >
                 Hospital Details
               </button>

@@ -100,6 +100,7 @@ class MapBox extends React.Component {
       rgb,
       hasCustomMetric,
       bounds,
+      namesDisappearZoomLevel,
     } = this.props;
     const { viewport } = this.state;
     const isDragging =
@@ -136,6 +137,7 @@ class MapBox extends React.Component {
           dotRadius={pointRadius}
           pointRadiusUnit={pointRadiusUnit}
           rgb={rgb}
+          namesDisappearZoomLevel={namesDisappearZoomLevel}
           globalOpacity={globalOpacity}
           compositeOperation="screen"
           renderWhileDragging={renderWhileDragging}

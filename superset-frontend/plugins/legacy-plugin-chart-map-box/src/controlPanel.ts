@@ -58,6 +58,26 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Map custom config'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'namesDisappearZoomLevel',
+            config: {
+              type: 'TextControl',
+              label: t('The zoom value at which the names disappear'),
+              default: 5,
+              isFloat: true,
+              description: t(
+                'The zoom value at which the names disappear. The maximum number of levels is 24',
+              ),
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Multi-tabs controls'),
       expanded: true,
       controlSetRows: [

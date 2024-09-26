@@ -35,6 +35,7 @@ export default function transformProps(chartProps) {
     pointRadius,
     pointRadiusUnit,
     renderWhileDragging,
+    namesDisappearZoomLevel,
   } = formData;
 
   // Validate mapbox color
@@ -94,5 +95,6 @@ export default function transformProps(chartProps) {
     pointRadiusUnit,
     renderWhileDragging,
     rgb,
+    namesDisappearZoomLevel,
   };
 }
