@@ -23,3 +23,9 @@
 .mapboxgl-ctrl-logo {
   display: none !important;
 }
+
+.control-map {
+  position: absolute;
+  right: 50px;
+  bottom: 100px;
+}

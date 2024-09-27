@@ -20,7 +20,7 @@
 /* eslint-disable react/forbid-prop-types, react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import MapGL from 'react-map-gl';
+import MapGL, { NavigationControl } from 'react-map-gl';
 import ViewportMercator from 'viewport-mercator-project';
 import ScatterPlotGlowOverlay from './ScatterPlotGlowOverlay';
 import './MapBox.css';
@@ -130,6 +130,9 @@ class MapBox extends React.Component {
         onViewportChange={this.handleViewportChange}
         preserveDrawingBuffer
       >
+        <div className="control-map">
+          <NavigationControl showCompass={false} />
+        </div>
         <ScatterPlotGlowOverlay
           {...viewport}
           isDragging={isDragging}
