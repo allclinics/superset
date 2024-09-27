@@ -238,8 +238,6 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
   render() {
     const { showModal, popupCoords, modal_data } = this.state;
 
-    console.log(modal_data, 'this.propsthis.propsthis.props1337');
-
     return (
       <>
         {showModal && popupCoords && modal_data && (
