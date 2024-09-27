@@ -20,10 +20,12 @@
 /* eslint-disable react/forbid-prop-types, react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import MapGL, { NavigationControl } from 'react-map-gl';
+import MapGL from 'react-map-gl';
 import ViewportMercator from 'viewport-mercator-project';
 import ScatterPlotGlowOverlay from './ScatterPlotGlowOverlay';
 import './MapBox.css';
+import ZoomIn from './icons/zoom-in';
+import ZoomOut from './icons/zoom-out';
 
 const NOOP = () => {};
 export const DEFAULT_MAX_ZOOM = 16;
@@ -77,6 +79,26 @@ class MapBox extends React.Component {
       },
     };
     this.handleViewportChange = this.handleViewportChange.bind(this);
+    this.zoomIn = this.zoomIn.bind(this);
+    this.zoomOut = this.zoomOut.bind(this);
+  }
+
+  zoomIn() {
+    this.setState(prevState => ({
+      viewport: {
+        ...prevState.viewport,
+        zoom: prevState.viewport.zoom + 1,
+      },
+    }));
+  }
+
+  zoomOut() {
+    this.setState(prevState => ({
+      viewport: {
+        ...prevState.viewport,
+        zoom: prevState.viewport.zoom - 1,
+      },
+    }));
   }
 
   handleViewportChange(viewport) {
@@ -130,8 +152,24 @@ class MapBox extends React.Component {
         onViewportChange={this.handleViewportChange}
         preserveDrawingBuffer
       >
-        <div className="control-map">
-          <NavigationControl showCompass={false} />
+        <div className="zoom-controls">
+          <button
+            type="button"
+            disabled={viewport?.zoom === viewport?.maxZoom}
+            onClick={this.zoomIn}
+            className="zoom-btn zoom-in"
+          >
+            <ZoomIn />
+          </button>
+          <div className="divider" />
+          <button
+            type="button"
+            disabled={viewport?.zoom === viewport?.minZoom}
+            onClick={this.zoomOut}
+            className="zoom-btn zoom-out"
+          >
+            <ZoomOut />
+          </button>
         </div>
         <ScatterPlotGlowOverlay
           {...viewport}
