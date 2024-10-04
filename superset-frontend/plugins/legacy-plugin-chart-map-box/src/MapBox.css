@@ -27,7 +27,7 @@
 .zoom-controls {
   position: absolute;
   right: 10px;
-  bottom: 15px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
   background-color: white;

@@ -106,7 +106,7 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
       const hrefValue = hrefMatch ? hrefMatch[1] : null;
 
       if (hrefValue) {
-        window.open(hrefValue, '_blank');
+        window.open(hrefValue, '_self');
       }
     }
   }

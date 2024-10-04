@@ -60,15 +60,19 @@ export const menuTriggerStyles = (theme: SupersetTheme) => css`
   }
 `;
 
-const headerStyles = (theme: SupersetTheme, isFiltersOpen: boolean) => css`
+const headerStyles = (
+  theme: SupersetTheme,
+  isFiltersOpen: boolean,
+  userCanEdit: boolean,
+) => css`
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-wrap: nowrap;
   justify-content: space-between;
   background-color: #f5f6fa;
-  height: ${theme.gridUnit * 24}px;
-  padding: ${theme.gridUnit * 6}px;
+  height: ${theme.gridUnit * (userCanEdit ? 24 : 6)}px;
+  padding: ${userCanEdit ? theme.gridUnit * 6 : 0}px;
   padding-left: ${theme.gridUnit * (isFiltersOpen ? 6 : 14.5)}px;
 
   .editable-title {
@@ -102,14 +106,17 @@ const headerStyles = (theme: SupersetTheme, isFiltersOpen: boolean) => css`
 
   .collapse-button {
     background: #fff;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 32px;
+    height: 84px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 24px;
-    cusrsor: pointer;
+    cursor: pointer;
+    position: fixed;
+    top: 24px;
+    left: 0px;
   }
 
   .expend {
@@ -174,7 +181,7 @@ export const PageHeaderWithActions = ({
   const theme = useTheme();
   return (
     <div
-      css={headerStyles(theme, !!isFiltersOpen)}
+      css={headerStyles(theme, !!isFiltersOpen, !!userCanEdit)}
       className="header-with-actions"
     >
       <div className="title-panel">
@@ -191,7 +198,7 @@ export const PageHeaderWithActions = ({
             />
           </div>
         )}
-        <DynamicEditableTitle {...editableTitleProps} />
+        {userCanEdit && <DynamicEditableTitle {...editableTitleProps} />}
         {showTitlePanelItems && (
           <div css={buttonsStyles}>
             {certificatiedBadgeProps?.certifiedBy && (

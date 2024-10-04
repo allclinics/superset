@@ -97,6 +97,7 @@ const LoadingWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   background: #f7f7f7;
+  z-index: 100;
 `;
 
 // @z-index-above-dashboard-charts + 1 = 11
@@ -305,8 +306,9 @@ const DashboardContentWrapper = styled.div`
 const StyledDashboardContent = styled.div<{
   editMode: boolean;
   marginLeft: number;
+  dashboardFiltersOpen: boolean;
 }>`
-  ${({ theme, editMode }) => css`
+  ${({ theme, editMode, dashboardFiltersOpen }) => css`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -323,7 +325,9 @@ const StyledDashboardContent = styled.div<{
       width: 0;
       flex: 1;
       position: relative;
-      margin: 0px 24px 24px 24px;
+      margin: ${dashboardFiltersOpen
+        ? '0px 24px 24px 24px'
+        : '0px 24px 24px 48px'};
 
       ${editMode &&
       `
@@ -758,6 +762,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
           <StyledDashboardContent
             className="dashboard-content"
             editMode={editMode}
+            dashboardFiltersOpen={dashboardFiltersOpen}
             marginLeft={dashboardContentMarginLeft}
           >
             {showDashboard ? (
