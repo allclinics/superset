@@ -26,6 +26,7 @@ import {
   logging,
   styled,
   t,
+  css,
 } from '@superset-ui/core';
 import { PLACEHOLDER_DATASOURCE } from 'src/dashboard/constants';
 import Loading from 'src/components/Loading';
@@ -127,6 +128,20 @@ const Styles = styled.div`
     .alert {
       margin: ${({ theme }) => theme.gridUnit * 2}px;
     }
+
+    ${props =>
+      !!props?.fullDisplay &&
+      css`
+        height: 100%;
+
+        & > div {
+          height: 100%;
+
+          & > div {
+            height: 100%;
+          }
+        }
+      `};
   }
 `;
 
@@ -310,6 +325,7 @@ class Chart extends React.PureComponent {
           data-test="chart-container"
           height={height}
           width={width}
+          fullDisplay={!!this.props.formData?.fullDisplay}
         >
           <div className="slice_container" data-test="slice-container">
             {this.props.isInView ||

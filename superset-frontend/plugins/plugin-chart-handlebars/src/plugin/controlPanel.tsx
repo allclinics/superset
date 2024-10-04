@@ -44,9 +44,15 @@ import {
 } from './controls/pagination';
 import { queryModeControlSetItem } from './controls/queryMode';
 import { styleControlSetItem } from './controls/style';
+import { fullDisplayControl } from './controls/fullDisplay';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
+    {
+      label: t('Full display'),
+      expanded: true,
+      controlSetRows: [[fullDisplayControl]],
+    },
     {
       label: t('Query'),
       expanded: true,
