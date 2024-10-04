@@ -173,7 +173,7 @@ export interface SliceHeaderControlsProps {
     slice_description: string;
     datasource: string;
   };
-
+  hideChartControls: boolean;
   componentId: string;
   dashboardId: number;
   chartStatus: string;
@@ -605,7 +605,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
 
   return (
     <Wrapper>
-      {isFullSize && (
+      {isFullSize && !props?.hideChartControls && (
         <Icons.FullscreenExitOutlined
           style={{ fontSize: 22 }}
           onClick={() => {
@@ -656,25 +656,30 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
           </Popover>
         </InfoWrapper>
       )}
-      <NoAnimationDropdown
-        overlay={menu}
-        overlayStyle={dropdownOverlayStyle}
-        trigger={['click']}
-        placement="bottomRight"
-      >
-        <span
-          css={css`
-            display: flex;
-            align-items: center;
-          `}
-          id={`slice_${slice.slice_id}-controls`}
-          role="button"
-          aria-label="More Options"
-        >
-          <HorizontalDotsTrigger />
-        </span>
-      </NoAnimationDropdown>
-      {canEditCrossFilters && scopingModal}
+      <Icons.VideoPlay />
+      {!props?.hideChartControls && (
+        <>
+          <NoAnimationDropdown
+            overlay={menu}
+            overlayStyle={dropdownOverlayStyle}
+            trigger={['click']}
+            placement="bottomRight"
+          >
+            <span
+              css={css`
+                display: flex;
+                align-items: center;
+              `}
+              id={`slice_${slice.slice_id}-controls`}
+              role="button"
+              aria-label="More Options"
+            >
+              <HorizontalDotsTrigger />
+            </span>
+          </NoAnimationDropdown>
+          {canEditCrossFilters && scopingModal}
+        </>
+      )}
     </Wrapper>
   );
 };

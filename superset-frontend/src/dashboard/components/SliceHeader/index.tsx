@@ -231,37 +231,36 @@ const SliceHeader: FC<SliceHeaderProps> = ({
           <CrossFilterIcon iconSize="m" />
         </Tooltip>
       )}
-      {!uiConfig.hideChartControls && (
-        <SliceHeaderControls
-          slice={slice}
-          isCached={isCached}
-          isExpanded={isExpanded}
-          cachedDttm={cachedDttm}
-          updatedDttm={updatedDttm}
-          toggleExpandSlice={toggleExpandSlice}
-          forceRefresh={forceRefresh}
-          logExploreChart={logExploreChart}
-          logEvent={logEvent}
-          exportCSV={exportCSV}
-          exportFullCSV={exportFullCSV}
-          exportXLSX={exportXLSX}
-          exportFullXLSX={exportFullXLSX}
-          supersetCanExplore={supersetCanExplore}
-          supersetCanShare={supersetCanShare}
-          supersetCanCSV={supersetCanCSV}
-          componentId={componentId}
-          dashboardId={dashboardId}
-          addSuccessToast={addSuccessToast}
-          addDangerToast={addDangerToast}
-          handleToggleFullSize={handleToggleFullSize}
-          isFullSize={isFullSize}
-          isDescriptionExpanded={isExpanded}
-          chartStatus={chartStatus}
-          formData={formData}
-          exploreUrl={exploreUrl}
-          crossFiltersEnabled={isCrossFiltersEnabled}
-        />
-      )}
+      <SliceHeaderControls
+        slice={slice}
+        hideChartControls={uiConfig.hideChartControls}
+        isCached={isCached}
+        isExpanded={isExpanded}
+        cachedDttm={cachedDttm}
+        updatedDttm={updatedDttm}
+        toggleExpandSlice={toggleExpandSlice}
+        forceRefresh={forceRefresh}
+        logExploreChart={logExploreChart}
+        logEvent={logEvent}
+        exportCSV={exportCSV}
+        exportFullCSV={exportFullCSV}
+        exportXLSX={exportXLSX}
+        exportFullXLSX={exportFullXLSX}
+        supersetCanExplore={supersetCanExplore}
+        supersetCanShare={supersetCanShare}
+        supersetCanCSV={supersetCanCSV}
+        componentId={componentId}
+        dashboardId={dashboardId}
+        addSuccessToast={addSuccessToast}
+        addDangerToast={addDangerToast}
+        handleToggleFullSize={handleToggleFullSize}
+        isFullSize={isFullSize}
+        isDescriptionExpanded={isExpanded}
+        chartStatus={chartStatus}
+        formData={formData}
+        exploreUrl={exploreUrl}
+        crossFiltersEnabled={isCrossFiltersEnabled}
+      />
     </>
   );
 

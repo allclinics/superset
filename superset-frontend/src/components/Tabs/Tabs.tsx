@@ -98,6 +98,7 @@ const StyledTabs = ({
       }
       .ant-tabs-ink-bar {
         background: ${theme.colors.primary.base};
+        z-index: 1;
       }
     `}
   />
@@ -207,9 +208,9 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
   }
 
   .ant-tabs-nav {
-    padding-right: 24px;
+    padding-right: ${({ isChild }) => (isChild ? '0px' : '24px')};
     position: ${({ isChild }) => (isChild ? 'unset' : 'sticky')};
-    top: ${({ isChild }) => (isChild ? 'unset' : '95px')};
+    top: ${({ isChild }) => (isChild ? 'unset' : '24px')};
     z-index: ${({ isChild }) => (isChild ? 'unset' : '100')};
     background: ${({ isChild }) => (isChild ? 'unset' : 'white')};
     border-top-left-radius: ${({ isChild }) => (isChild ? 'unset' : '20px')};

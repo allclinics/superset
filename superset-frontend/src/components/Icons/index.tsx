@@ -167,6 +167,7 @@ const IconFileNames = [
   'dropdown',
   'setting',
   'information',
+  'video_play',
 ];
 
 const iconOverrides: Record<string, React.FC<IconType>> = {};
