@@ -65,6 +65,12 @@ const CrossFilterIcon = styled(Icons.ApartmentOutlined)`
   `}
 `;
 
+const NoHeaderStyles = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+`;
+
 const ChartHeaderStyles = styled.div`
   ${({ theme }) => css`
     font-size: ${theme.typography.sizes.l}px;
@@ -207,6 +213,66 @@ const SliceHeader: FC<SliceHeaderProps> = ({
 
   const exploreUrl = `/explore/?dashboard_page_id=${dashboardPageId}&slice_id=${slice.slice_id}`;
 
+  const HeaderControls = () => (
+    <>
+      {SliceHeaderExtension && (
+        <SliceHeaderExtension
+          sliceId={slice.slice_id}
+          dashboardId={dashboardId}
+        />
+      )}
+      {crossFilterValue && (
+        <Tooltip
+          placement="top"
+          title={t(
+            'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
+          )}
+        >
+          <CrossFilterIcon iconSize="m" />
+        </Tooltip>
+      )}
+      {!uiConfig.hideChartControls && (
+        <SliceHeaderControls
+          slice={slice}
+          isCached={isCached}
+          isExpanded={isExpanded}
+          cachedDttm={cachedDttm}
+          updatedDttm={updatedDttm}
+          toggleExpandSlice={toggleExpandSlice}
+          forceRefresh={forceRefresh}
+          logExploreChart={logExploreChart}
+          logEvent={logEvent}
+          exportCSV={exportCSV}
+          exportFullCSV={exportFullCSV}
+          exportXLSX={exportXLSX}
+          exportFullXLSX={exportFullXLSX}
+          supersetCanExplore={supersetCanExplore}
+          supersetCanShare={supersetCanShare}
+          supersetCanCSV={supersetCanCSV}
+          componentId={componentId}
+          dashboardId={dashboardId}
+          addSuccessToast={addSuccessToast}
+          addDangerToast={addDangerToast}
+          handleToggleFullSize={handleToggleFullSize}
+          isFullSize={isFullSize}
+          isDescriptionExpanded={isExpanded}
+          chartStatus={chartStatus}
+          formData={formData}
+          exploreUrl={exploreUrl}
+          crossFiltersEnabled={isCrossFiltersEnabled}
+        />
+      )}
+    </>
+  );
+
+  if (formData?.fullDisplay) {
+    return (
+      <NoHeaderStyles className="slice-no-header">
+        {!editMode && <HeaderControls />}
+      </NoHeaderStyles>
+    );
+  }
+
   return (
     <ChartHeaderStyles data-test="slice-header" ref={innerRef}>
       <div className="header">
@@ -252,59 +318,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
             </Tooltip>
           )}
         </div>
-        <div className="header-controls">
-          {!editMode && (
-            <>
-              {SliceHeaderExtension && (
-                <SliceHeaderExtension
-                  sliceId={slice.slice_id}
-                  dashboardId={dashboardId}
-                />
-              )}
-              {crossFilterValue && (
-                <Tooltip
-                  placement="top"
-                  title={t(
-                    'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
-                  )}
-                >
-                  <CrossFilterIcon iconSize="m" />
-                </Tooltip>
-              )}
-              {!uiConfig.hideChartControls && (
-                <SliceHeaderControls
-                  slice={slice}
-                  isCached={isCached}
-                  isExpanded={isExpanded}
-                  cachedDttm={cachedDttm}
-                  updatedDttm={updatedDttm}
-                  toggleExpandSlice={toggleExpandSlice}
-                  forceRefresh={forceRefresh}
-                  logExploreChart={logExploreChart}
-                  logEvent={logEvent}
-                  exportCSV={exportCSV}
-                  exportFullCSV={exportFullCSV}
-                  exportXLSX={exportXLSX}
-                  exportFullXLSX={exportFullXLSX}
-                  supersetCanExplore={supersetCanExplore}
-                  supersetCanShare={supersetCanShare}
-                  supersetCanCSV={supersetCanCSV}
-                  componentId={componentId}
-                  dashboardId={dashboardId}
-                  addSuccessToast={addSuccessToast}
-                  addDangerToast={addDangerToast}
-                  handleToggleFullSize={handleToggleFullSize}
-                  isFullSize={isFullSize}
-                  isDescriptionExpanded={isExpanded}
-                  chartStatus={chartStatus}
-                  formData={formData}
-                  exploreUrl={exploreUrl}
-                  crossFiltersEnabled={isCrossFiltersEnabled}
-                />
-              )}
-            </>
-          )}
-        </div>
+        <div className="header-controls">{!editMode && <HeaderControls />}</div>
       </div>
       {!uiConfig.hideChartControls && <FiltersBadge chartId={slice.slice_id} />}
     </ChartHeaderStyles>

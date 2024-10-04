@@ -27,6 +27,7 @@ import {
 export interface HandlebarsStylesProps {
   height: number;
   width: number;
+  fullDisplay?: boolean;
 }
 
 interface HandlebarsCustomizeProps {

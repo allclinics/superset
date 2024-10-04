@@ -19,7 +19,7 @@
 import cx from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { styled, t, logging } from '@superset-ui/core';
+import { styled, t, logging, css } from '@superset-ui/core';
 import { debounce, isEqual } from 'lodash';
 import { withRouter } from 'react-router-dom';
 
@@ -119,6 +119,18 @@ const SliceContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 100%;
+
+  ${props =>
+    !!props?.fullDisplay &&
+    css`
+      height: 100%;
+
+      & .chart-container,
+      & .dashboard-chart {
+        padding: 0;
+        height: 100%;
+      }
+    `};
 `;
 
 class Chart extends React.Component {
@@ -428,6 +440,7 @@ class Chart extends React.Component {
         data-test-chart-id={id}
         data-test-viz-type={slice.viz_type}
         data-test-chart-name={slice.slice_name}
+        fullDisplay={!!formData?.fullDisplay}
       >
         <SliceHeader
           innerRef={this.setHeaderRef}

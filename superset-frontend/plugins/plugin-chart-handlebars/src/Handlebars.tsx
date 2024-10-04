@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { styled } from '@superset-ui/core';
+import { styled, css } from '@superset-ui/core';
 import React, { createRef } from 'react';
 import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
@@ -27,6 +27,14 @@ const Styles = styled.div<HandlebarsStylesProps>`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   overflow: auto;
+
+  ${props =>
+    !!props?.fullDisplay &&
+    css`
+      height: 100%;
+      width: 100%;
+      padding: 0;
+    `};
 `;
 
 export default function Handlebars(props: HandlebarsProps) {
@@ -42,7 +50,12 @@ export default function Handlebars(props: HandlebarsProps) {
   const rootElem = createRef<HTMLDivElement>();
 
   return (
-    <Styles ref={rootElem} height={height} width={width}>
+    <Styles
+      ref={rootElem}
+      height={height}
+      width={width}
+      fullDisplay={formData?.fullDisplay}
+    >
       <HandlebarsViewer data={{ data }} templateSource={templateSource} />
     </Styles>
   );
