@@ -166,7 +166,7 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     background: transparent;
     border: none;
     border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
-    max-width: ${({ isChild }) => (isChild ? '342px' : 'unset')};
+    max-width: unset;
     width: ${({ isChild }) => (isChild ? '100%' : 'unset')};
     height: ${({ isChild }) => (isChild ? '48px' : 'unset')};
 

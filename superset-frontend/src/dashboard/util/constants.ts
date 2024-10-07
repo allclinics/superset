@@ -43,7 +43,7 @@ export const GRID_MIN_ROW_UNITS = 5;
 export const GRID_MAX_ROW_UNITS = 100;
 export const GRID_MIN_ROW_HEIGHT = GRID_GUTTER_SIZE;
 export const GRID_DEFAULT_CHART_WIDTH = 4;
-export const GRID_HORIZINTAL_PADDING = 48;
+export const GRID_HORIZINTAL_PADDING = 0;
 
 // Header types
 export const SMALL_HEADER = 'SMALL_HEADER';
