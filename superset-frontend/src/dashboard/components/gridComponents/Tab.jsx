@@ -17,6 +17,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/* eslint-disable no-extra-boolean-cast */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -155,13 +156,14 @@ class Tab extends React.PureComponent {
     return item.type !== TAB_TYPE;
   }
 
-  calculateNewColumnWidth = oldColumnWidth => {
+  calculateNewColumnWidth = (oldColumnWidth, isChild) => {
     const width =
       (oldColumnWidth + GRID_GUTTER_SIZE) * GRID_COLUMN_COUNT -
       GRID_GUTTER_SIZE;
 
     return (
-      (width + GRID_GUTTER_SIZE - GRID_HORIZINTAL_PADDING) / GRID_COLUMN_COUNT -
+      (width + GRID_GUTTER_SIZE - (!!isChild ? 48 : GRID_HORIZINTAL_PADDING)) /
+        GRID_COLUMN_COUNT -
       GRID_GUTTER_SIZE
     );
   };
@@ -255,7 +257,7 @@ class Tab extends React.PureComponent {
               onDrop={this.handleDrop}
               onHover={this.handleOnHover}
               availableColumnCount={availableColumnCount}
-              columnWidth={this.calculateNewColumnWidth(columnWidth)}
+              columnWidth={this.calculateNewColumnWidth(columnWidth, isChild)}
               onResizeStart={onResizeStart}
               onResize={onResize}
               onResizeStop={onResizeStop}

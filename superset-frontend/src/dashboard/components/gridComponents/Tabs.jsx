@@ -113,7 +113,7 @@ const StyledTabsContainer = styled.div`
     min-height: ${({ theme }) => theme.gridUnit * 12}px;
     margin-top: ${({ theme }) => theme.gridUnit / 4}px;
     position: relative;
-    padding: 0px 24px;
+    padding: ${({ isChild }) => (isChild ? '0px' : '0px 24px')};
   }
 
   .ant-tabs {
@@ -393,6 +393,7 @@ export class Tabs extends React.PureComponent {
           <StyledTabsContainer
             className="dashboard-component dashboard-component-tabs"
             data-test="dashboard-component-tabs"
+            isChild={isChild}
           >
             {editMode && renderHoverMenu && (
               <HoverMenu innerRef={tabsDragSourceRef} position="left">
