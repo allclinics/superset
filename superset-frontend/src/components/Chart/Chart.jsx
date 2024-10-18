@@ -270,6 +270,7 @@ class Chart extends React.PureComponent {
       chartIsStale,
       queriesResponse = [],
       width,
+      chartId,
     } = this.props;
 
     const isLoading = chartStatus === 'loading';
@@ -319,6 +320,9 @@ class Chart extends React.PureComponent {
         onError={this.handleRenderContainerFailure}
         showMessage={false}
       >
+        {!!this.props.formData?.noMainBorder && (
+          <style>{` .dashboard-chart-id-${chartId} { border: none !important; } `}</style>
+        )}
         <Styles
           data-ui-anchor="chart"
           className="chart-container"

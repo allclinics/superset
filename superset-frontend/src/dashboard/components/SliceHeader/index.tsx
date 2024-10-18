@@ -65,10 +65,19 @@ const CrossFilterIcon = styled(Icons.ApartmentOutlined)`
   `}
 `;
 
-const NoHeaderStyles = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
+const NoHeaderStyles = styled.div<{ $isFloating?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+
+  ${({ $isFloating }) =>
+    $isFloating &&
+    css`
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    `};
 `;
 
 const ChartHeaderStyles = styled.div`
@@ -264,9 +273,16 @@ const SliceHeader: FC<SliceHeaderProps> = ({
     </>
   );
 
+  if (formData?.hideControlsOnCustomerView && uiConfig.hideChartControls) {
+    return null;
+  }
+
   if (formData?.fullDisplay) {
     return (
-      <NoHeaderStyles className="slice-no-header">
+      <NoHeaderStyles
+        className="slice-no-header"
+        $isFloating={!formData?.hideControlsOnCustomerView}
+      >
         {!editMode && <HeaderControls />}
       </NoHeaderStyles>
     );

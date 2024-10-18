@@ -164,6 +164,77 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Chart display'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'fullDisplay',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Full display',
+              renderTrigger: true,
+              default: false,
+              description: 'Slice take full space (No header, only controls)',
+            },
+          },
+          {
+            name: 'noMainBorder',
+            config: {
+              type: 'CheckboxControl',
+              label: 'No border',
+              renderTrigger: true,
+              default: false,
+              description: 'There will be no border around the slice',
+            },
+          },
+        ],
+        [
+          {
+            name: 'hideControlsOnCustomerView',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Hide controls on customer view',
+              renderTrigger: true,
+              default: false,
+              description: "Controls won't be visible on production",
+            },
+          },
+        ],
+        [
+          {
+            name: 'isRoundStyles',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Apply round styles',
+              renderTrigger: true,
+              default: false,
+              description: 'Apply round styles for the chart',
+            },
+          },
+        ],
+      ],
+    },
+    {
+      label: t('Round Chart Configuration'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'roundChartTitle',
+            config: {
+              type: 'TextControl',
+              label: 'Round Chart Title',
+              renderTrigger: true,
+              default: '',
+              description:
+                'Chart title that will be displayed in the round chart',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Legend Modal'),
       expanded: true,
       controlSetRows: [

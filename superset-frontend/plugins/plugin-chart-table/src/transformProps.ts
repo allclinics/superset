@@ -230,6 +230,10 @@ const transformProps = (
     color_pn: colorPositiveNegative = true,
     show_cell_bars: showCellBars = true,
     include_search: includeSearch = false,
+    fullDisplay = false,
+    noMainBorder = false,
+    isRoundStyles = false,
+    roundChartTitle = '',
     page_length: pageLength,
     server_pagination: serverPagination = false,
     server_page_length: serverPageLength = 10,
@@ -281,6 +285,10 @@ const transformProps = (
     showCellBars,
     sortDesc,
     includeSearch,
+    fullDisplay,
+    noMainBorder,
+    isRoundStyles,
+    roundChartTitle,
     rowCount,
     pageSize: serverPagination
       ? serverPageLength

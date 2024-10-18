@@ -39,6 +39,7 @@ import {
 import { matchSorter, rankings } from 'match-sorter';
 import { typedMemo, usePrevious } from '@superset-ui/core';
 import { isEqual } from 'lodash';
+import cx from 'classnames';
 import GlobalFilter, { GlobalFilterProps } from './components/GlobalFilter';
 import SelectPageSize, {
   SelectPageSizeProps,
@@ -67,6 +68,8 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   rowCount: number;
   wrapperRef?: MutableRefObject<HTMLDivElement>;
   onColumnOrderChange: () => void;
+  isRoundStyles?: boolean;
+  roundChartTitle?: string;
 }
 
 export interface RenderHTMLCellProps extends HTMLProps<HTMLTableCellElement> {
@@ -99,6 +102,8 @@ export default typedMemo(function DataTable<D extends object>({
   serverPagination,
   wrapperRef: userWrapperRef,
   onColumnOrderChange,
+  isRoundStyles,
+  roundChartTitle,
   ...moreUseTableOptions
 }: DataTableProps<D>): JSX.Element {
   const tableHooks: PluginHook<D>[] = [
@@ -175,6 +180,7 @@ export default typedMemo(function DataTable<D extends object>({
     page,
     pageCount,
     gotoPage,
+    rows,
     preGlobalFilteredRows,
     setGlobalFilter,
     setPageSize: setPageSize_,
@@ -365,7 +371,14 @@ export default typedMemo(function DataTable<D extends object>({
     >
       {hasGlobalControl ? (
         <div ref={globalControlRef} className="form-inline dt-controls">
-          <div className="row">
+          {isRoundStyles && (
+            <div className="dt-title-row">
+              <p className="dt-title">{roundChartTitle}</p>
+              <p>Found: {rows.length} terms</p>
+            </div>
+          )}
+
+          <div className={cx('row', isRoundStyles && 'dt-control-row')}>
             <div className="col-sm-6" style={columnStyles}>
               <div style={selectPageWrapperStyles}>
                 {hasPagination ? (
@@ -384,7 +397,9 @@ export default typedMemo(function DataTable<D extends object>({
               </div>
             </div>
             {searchInput ? (
-              <div className="col-sm-6">
+              <div
+                className={cx('col-sm-6', isRoundStyles && 'dt-control-search')}
+              >
                 <GlobalFilter<D>
                   searchInput={
                     typeof searchInput === 'boolean' ? undefined : searchInput
