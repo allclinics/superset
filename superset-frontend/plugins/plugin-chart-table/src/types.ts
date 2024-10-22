@@ -125,6 +125,11 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   alignPositiveNegative?: boolean;
   colorPositiveNegative?: boolean;
   tableTimestampFormat?: string;
+  fullDisplay?: boolean;
+  noMainBorder?: boolean;
+  hideControlsOnCustomerView?: boolean;
+  isRoundStyles?: boolean;
+  roundChartTitle?: string;
   // These are dashboard filters, don't be confused with in-chart search filter
   // enabled by `includeSearch`
   filters?: DataRecordFilters;

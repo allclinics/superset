@@ -57,6 +57,35 @@ export default styled.div`
     }
 
     .dt-controls {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .dt-title-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .dt-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+
+      .dt-control-row {
+        display: flex;
+        flex-direction: column-reverse;
+        flex: 1;
+        align-items: flex-end;
+
+        .dt-control-search {
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    .dt-controls {
       padding-bottom: 0.65em;
     }
     .dt-metric {
@@ -81,6 +110,78 @@ export default styled.div`
 
     .dt-global-filter {
       float: right;
+    }
+
+    .dt-global-filter-round {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      border: 1px solid ${theme.colors.primary.light4};
+      margin: 4px;
+      min-width: 360px;
+      height: auto;
+
+      &:focus-within {
+        border: 1px solid ${theme.colors.primary.base};
+        outline: 0;
+        box-shadow:
+          inset 0 1px 1px rgba(0, 0, 0, 0.075),
+          0 0 8px rgba(56, 118, 246, 0.6);
+      }
+
+      .dt-global-filter-input-round {
+        border: none;
+        outline: none;
+        flex: 1;
+
+        &:focus {
+          border: none;
+          outline: none;
+        }
+      }
+    }
+
+    .table-custom {
+      border-collapse: separate;
+      border-spacing: 0 8px;
+
+      tbody::after {
+        content: '';
+        display: block;
+        height: 8px;
+      }
+
+      thead > tr,
+      tbody > tr {
+        th {
+          font-weight: 700;
+        }
+
+        th,
+        td {
+          color: #5a607f;
+          font-size: 14px;
+          background: #f5f6fa;
+          border-top: 1px solid #e6e9f4;
+          border-bottom: 1px solid #e6e9f4;
+          padding: 16px 20px;
+        }
+
+        th:first-of-type,
+        td:first-of-type {
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          border-left: 1px solid #e6e9f4;
+        }
+
+        th:last-of-type,
+        td:last-of-type {
+          border-right: 1px solid #e6e9f4;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
+      }
     }
 
     .dt-truncate-cell {
