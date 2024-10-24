@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -19,8 +20,9 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { ResizeCallback, ResizeStartCallback } from 're-resizable';
 import cx from 'classnames';
-import { useSelector } from 'react-redux';
-import { css } from '@superset-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateDataMask } from 'src/dataMask/actions';
+import { css, DataMask, DataMaskStateWithId } from '@superset-ui/core';
 import { LayoutItem, RootState } from 'src/dashboard/types';
 import AnchorLink from 'src/dashboard/components/AnchorLink';
 import Chart from 'src/dashboard/containers/Chart';
@@ -37,6 +39,9 @@ import {
   GRID_MIN_COLUMN_COUNT,
   GRID_MIN_ROW_UNITS,
 } from 'src/dashboard/util/constants';
+import { logEvent } from 'src/logger/actions';
+import { LOG_ACTIONS_CHANGE_DASHBOARD_FILTER } from 'src/logger/LogUtils';
+import { useNativeFiltersDataMask } from '../nativeFilters/FilterBar/state';
 
 export const CHART_MARGIN = 32;
 
@@ -47,6 +52,7 @@ interface ChartHolderProps {
   component: LayoutItem;
   parentComponent: LayoutItem;
   getComponentById?: (id?: string) => LayoutItem | undefined;
+  onChangeParentTab?: (tabIndex: number) => void;
   index: number;
   depth: number;
   editMode: boolean;
@@ -100,9 +106,34 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
   handleComponentDrop,
   setFullSizeChartId,
   isInView,
+  onChangeParentTab,
 }) => {
+  const dispatch = useDispatch();
   const { chartId } = component.meta;
   const isFullSize = fullSizeChartId === chartId;
+
+  const dataMaskApplied: DataMaskStateWithId = useNativeFiltersDataMask();
+
+  const handleApply = useCallback(
+    async (
+      dataMask: DataMask,
+      filterIdForDetails: string,
+      callback: () => void,
+    ) => {
+      if (dataMask && filterIdForDetails) {
+        dispatch(logEvent(LOG_ACTIONS_CHANGE_DASHBOARD_FILTER, {}));
+
+        if (dataMaskApplied[filterIdForDetails]) {
+          await dispatch(updateDataMask(filterIdForDetails, dataMask));
+        }
+
+        if (callback) {
+          callback();
+        }
+      }
+    },
+    [dataMaskApplied, dispatch],
+  );
 
   const focusHighlightStyles = useFilterFocusHighlightStyles(chartId);
   const dashboardState = useSelector(
@@ -315,6 +346,8 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
               setControlValue={handleExtraControl}
               extraControls={extraControls}
               isInView={isInView}
+              onChangeParentTab={onChangeParentTab}
+              handleApply={handleApply}
             />
             {editMode && (
               <HoverMenu position="top">

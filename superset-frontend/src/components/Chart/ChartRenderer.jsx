@@ -119,6 +119,8 @@ class ChartRenderer extends React.Component {
       setDataMask: dataMask => {
         this.props.actions?.updateDataMask(this.props.chartId, dataMask);
       },
+      onChangeParentTab: this.props?.onChangeParentTab,
+      handleApply: this.props?.handleApply,
     };
 
     // TODO: queriesResponse comes from Redux store but it's being edited by

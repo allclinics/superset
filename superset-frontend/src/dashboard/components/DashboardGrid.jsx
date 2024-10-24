@@ -313,6 +313,7 @@ class DashboardGrid extends React.PureComponent {
                   onResize={this.handleResize}
                   onResizeStop={this.handleResizeStop}
                   onChangeTab={this.handleChangeTab}
+                  onChangeParentTab={this.props?.onChangeParentTab}
                   isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                 />
                 {/* make the area below components droppable */}

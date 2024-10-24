@@ -357,6 +357,7 @@ export class Tabs extends React.PureComponent {
       nativeFilters,
       isChild,
       isCurrentPartChartsLoading,
+      onChangeParentTab,
     } = this.props;
 
     const { children: tabIds } = tabsComponent;
@@ -436,6 +437,9 @@ export class Tabs extends React.PureComponent {
                       onHoverTab={() => this.handleClickTab(tabIndex)}
                       isFocused={activeKey === tabId}
                       isChild={isChild}
+                      onChangeParentTab={
+                        isChild ? onChangeParentTab : this.handleClickTab
+                      }
                       isHighlighted={
                         activeKey !== tabId && tabsToHighlight?.includes(tabId)
                       }
@@ -449,6 +453,9 @@ export class Tabs extends React.PureComponent {
                       parentId={tabsComponent.id}
                       depth={depth} // see isValidChild.js for why tabs don't increment child depth
                       index={tabIndex}
+                      onChangeParentTab={
+                        isChild ? onChangeParentTab : this.handleClickTab
+                      }
                       isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                       renderType={RENDER_TAB_CONTENT}
                       availableColumnCount={availableColumnCount}

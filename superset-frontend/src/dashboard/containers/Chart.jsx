@@ -54,7 +54,8 @@ function mapStateToProps(
   },
   ownProps,
 ) {
-  const { id, extraControls, setControlValue } = ownProps;
+  const { id, extraControls, setControlValue, onChangeParentTab, handleApply } =
+    ownProps;
   const chart = chartQueries[id] || EMPTY_OBJECT;
   const datasource =
     (chart && chart.form_data && datasources[chart.form_data.datasource]) ||
@@ -101,6 +102,8 @@ function mapStateToProps(
     setControlValue,
     datasetsStatus,
     emitCrossFilters: !!dashboardInfo.crossFiltersEnabled,
+    onChangeParentTab,
+    handleApply,
   };
 }
 

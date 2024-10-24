@@ -81,6 +81,7 @@ class MapBox extends React.Component {
     this.handleViewportChange = this.handleViewportChange.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
+    this.handleViewDetail = this.handleViewDetail.bind(this);
   }
 
   zoomIn() {
@@ -105,6 +106,35 @@ class MapBox extends React.Component {
     this.setState({ viewport });
     const { onViewportChange } = this.props;
     onViewportChange(viewport);
+  }
+
+  handleViewDetail(value) {
+    const dataMask = {
+      id: this.props?.filterIdForDetails,
+      extraFormData: {
+        filters: [
+          {
+            col: 'hospital_name',
+            op: 'IN',
+            val: [value],
+          },
+        ],
+      },
+      filterState: {
+        validateMessage: false,
+        label: value,
+        value: [value],
+      },
+      ownState: {},
+    };
+
+    this?.props?.onChangeParentTab(4);
+    this?.props?.handleApply(dataMask, this.props?.filterIdForDetails, () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
   }
 
   render() {
@@ -181,6 +211,7 @@ class MapBox extends React.Component {
           namesDisappearZoomLevel={namesDisappearZoomLevel}
           globalOpacity={globalOpacity}
           compositeOperation="screen"
+          handleViewDetail={this.handleViewDetail}
           renderWhileDragging={renderWhileDragging}
           aggregation={hasCustomMetric ? aggregatorName : null}
           lngLatAccessor={location => {
