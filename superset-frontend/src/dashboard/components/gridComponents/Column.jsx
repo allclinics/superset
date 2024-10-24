@@ -280,6 +280,7 @@ class Column extends React.PureComponent {
                         onResizeStop={onResizeStop}
                         isComponentVisible={isComponentVisible}
                         onChangeTab={onChangeTab}
+                        onChangeParentTab={this.props?.onChangeParentTab}
                       />
                       {editMode && (
                         <Droppable

@@ -183,6 +183,7 @@ class Tab extends React.PureComponent {
       setEditMode,
       dashboardId,
       isChild,
+      onChangeParentTab,
     } = this.props;
 
     const shouldDisplayEmptyState = tabComponent.children.length === 0;
@@ -263,6 +264,7 @@ class Tab extends React.PureComponent {
               onResizeStop={onResizeStop}
               isComponentVisible={isComponentVisible}
               onChangeTab={this.handleChangeTab}
+              onChangeParentTab={onChangeParentTab}
             />
             {/* Make bottom of tab droppable */}
             {editMode && (

@@ -75,6 +75,20 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'filterIdForDetails',
+            config: {
+              type: 'TextControl',
+              label: t('Filter ID for item details'),
+              default: '',
+              isFloat: false,
+              description: t(
+                'Filter id for item details. Which will take us to the details tab',
+              ),
+            },
+          },
+        ],
       ],
     },
     {

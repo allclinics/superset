@@ -415,6 +415,8 @@ class Chart extends React.Component {
       isInView,
       emitCrossFilters,
       logEvent,
+      onChangeParentTab,
+      handleApply,
     } = this.props;
 
     const { width } = this.state;
@@ -530,6 +532,8 @@ class Chart extends React.Component {
             postTransformProps={postTransformProps}
             datasetsStatus={datasetsStatus}
             isInView={isInView}
+            handleApply={handleApply}
+            onChangeParentTab={onChangeParentTab}
             emitCrossFilters={emitCrossFilters}
           />
         </ChartWrapper>

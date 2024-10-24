@@ -366,6 +366,7 @@ class Row extends React.PureComponent {
                       onResizeStop={onResizeStop}
                       isComponentVisible={isComponentVisible}
                       onChangeTab={onChangeTab}
+                      onChangeParentTab={this.props?.onChangeParentTab}
                       isInView={this.state.isInView}
                     />
                     {editMode && (

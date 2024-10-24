@@ -276,7 +276,9 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
               <button
                 type="button"
                 className="button"
-                onClick={() => this.openLink(modal_data?.URL)}
+                onClick={() =>
+                  this.props.handleViewDetail(modal_data?.hospital_name)
+                }
               >
                 Hospital Details
               </button>
