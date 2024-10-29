@@ -134,7 +134,7 @@ const MarkdownWrapper = styled.div`
 
   ol,
   ul {
-    padding-inline-start: 15px;
+    padding-inline-start: 20px;
     margin: 0px;
   }
 
@@ -148,7 +148,12 @@ const MarkdownWrapper = styled.div`
     margin: 0px;
   }
 
-  b {
+  b,
+  strong {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
     color: #5a607f;
   }
 `;
@@ -625,6 +630,15 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
                     .chart-guidance-popover {
                       border-radius: 10px;
                       min-width: 250px;
+
+                      h3 {
+                        line-height: 24px;
+                        font-family: 'Inter', sans-serif;
+                        font-size: 16px;
+                        font-weight: 700;
+                        color: #31323f;
+                        margin: 0px 0px 4px 0px;
+                      }
 
                       .ant-popover-arrow {
                         display: none;

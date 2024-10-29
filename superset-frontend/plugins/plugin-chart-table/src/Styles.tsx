@@ -109,7 +109,27 @@ export default styled.div`
     }
 
     .dt-global-filter {
-      float: right;
+      position: relative;
+
+      input {
+        border-radius: 10px;
+        padding-left: 38px;
+        height: 36px;
+        width: 245px;
+        border: 1px solid #e8ecfc;
+        font-size: 14px;
+
+        &::placeholder {
+          color: #a1a7c4;
+        }
+      }
+
+      svg {
+        position: absolute;
+        left: 10px;
+        top: 55%;
+        transform: translateY(-50%);
+      }
     }
 
     .dt-global-filter-round {
@@ -239,6 +259,10 @@ export default styled.div`
         no-repeat right 10px center;
       background-color: #e6e9f4;
       margin-left: 4px;
+    }
+
+    .sort-icon {
+      color: #3876f6 !important;
     }
   `}
 `;
