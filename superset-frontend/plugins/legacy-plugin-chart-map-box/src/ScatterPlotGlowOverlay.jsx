@@ -203,8 +203,11 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
           pixelRounded[1] - radius < height
         ) {
           ctx.drawImage(
-            this.state.modal_data?.hospital_name ===
-              location?.properties?.modal_data?.hospital_name
+            !!this.state.modal_data &&
+              this.state.modal_data?.latitude ===
+                location?.properties?.modal_data?.latitude &&
+              this.state.modal_data?.longitude ===
+                location?.properties?.modal_data?.longitude
               ? this.images.hoverImage
               : this.images.default,
             pixelRounded[0] - this.images.default.width / 2,
