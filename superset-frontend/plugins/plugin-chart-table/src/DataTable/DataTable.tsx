@@ -333,9 +333,22 @@ export default typedMemo(function DataTable<D extends object>({
       }
     : { visibility: 'hidden' };
 
+  const rowStyles: CSSProperties = {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: '0px',
+    marginLeft: '0px',
+  };
+
   const columnStyles: CSSProperties = {
     display: 'flex',
     width: '100%',
+    paddingRight: '0px',
+  };
+
+  const controlSearchStyles: CSSProperties = {
+    padding: '0px',
   };
 
   const selectPageWrapperStyles: CSSProperties = {
@@ -378,7 +391,25 @@ export default typedMemo(function DataTable<D extends object>({
             </div>
           )}
 
-          <div className={cx('row', isRoundStyles && 'dt-control-row')}>
+          <div
+            className={cx('row', isRoundStyles && 'dt-control-row')}
+            style={rowStyles}
+          >
+            {searchInput ? (
+              <div
+                className={cx('col-sm-6', isRoundStyles && 'dt-control-search')}
+                style={controlSearchStyles}
+              >
+                <GlobalFilter<D>
+                  searchInput={
+                    typeof searchInput === 'boolean' ? undefined : searchInput
+                  }
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  setGlobalFilter={setGlobalFilter}
+                  filterValue={filterValue}
+                />
+              </div>
+            ) : null}
             <div className="col-sm-6" style={columnStyles}>
               <div style={selectPageWrapperStyles}>
                 {hasPagination ? (
@@ -396,20 +427,6 @@ export default typedMemo(function DataTable<D extends object>({
                 ) : null}
               </div>
             </div>
-            {searchInput ? (
-              <div
-                className={cx('col-sm-6', isRoundStyles && 'dt-control-search')}
-              >
-                <GlobalFilter<D>
-                  searchInput={
-                    typeof searchInput === 'boolean' ? undefined : searchInput
-                  }
-                  preGlobalFilteredRows={preGlobalFilteredRows}
-                  setGlobalFilter={setGlobalFilter}
-                  filterValue={filterValue}
-                />
-              </div>
-            ) : null}
           </div>
         </div>
       ) : null}

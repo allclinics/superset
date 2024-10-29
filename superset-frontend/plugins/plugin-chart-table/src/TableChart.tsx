@@ -48,12 +48,12 @@ import {
   styled,
   css,
   t,
-  tn,
   useTheme,
 } from '@superset-ui/core';
 import { isNumber } from 'lodash';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Tooltip } from '@superset-ui/chart-controls';
+import SearchIcon from './images/search.svg';
 import { DataColumnMeta, TableChartTransformedProps } from './types';
 import DataTable, {
   DataTableProps,
@@ -159,7 +159,11 @@ function SortIcon<D extends object>({ column }: { column: ColumnInstance<D> }) {
   const { isSorted, isSortedDesc } = column;
   let sortIcon = <FaSort />;
   if (isSorted) {
-    sortIcon = isSortedDesc ? <FaSortDesc /> : <FaSortAsc />;
+    sortIcon = isSortedDesc ? (
+      <FaSortDesc className="sort-icon" />
+    ) : (
+      <FaSortAsc className="sort-icon" />
+    );
   }
   return sortIcon;
 }
@@ -167,10 +171,10 @@ function SortIcon<D extends object>({ column }: { column: ColumnInstance<D> }) {
 function SearchInput({ count, value, onChange }: SearchInputProps) {
   return (
     <span className="dt-global-filter">
-      {t('Search')}{' '}
+      <SearchIcon />
       <input
         className="form-control input-sm"
-        placeholder={tn('search.num_records', count)}
+        placeholder="Search..."
         value={value}
         aria-label={t('Search %s records', count)}
         onChange={onChange}

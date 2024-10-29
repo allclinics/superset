@@ -86,16 +86,25 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
     this.handleIconClick = this.handleIconClick.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.wrapText = this.wrapText.bind(this);
-    this.image = new Image();
     this.state = {
       showModal: false,
       popupCoords: null,
       modal_data: null,
     };
-    this.image.src =
+    this.images = {
+      default: new Image(),
+      hoverImage: new Image(),
+    };
+
+    this.images.default.src =
       'data:image/svg+xml;base64,' +
       btoa(
         '<svg width="19" height="26" viewBox="0 0 19 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.49996 0.667969C14.6546 0.667969 18.8333 4.92401 18.8333 10.1741C18.8333 13.2424 16.4424 18.1433 11.6607 24.8768C11.4944 25.1109 11.2926 25.3165 11.0628 25.4858C9.92913 26.3209 8.36791 26.1166 7.47461 25.052L7.33928 24.8768L6.95679 24.3349C2.43001 17.8797 0.166626 13.1595 0.166626 10.1741C0.166626 4.92401 4.3453 0.667969 9.49996 0.667969ZM9.49996 7.33463C10.9727 7.33463 12.1666 8.52854 12.1666 10.0013C12.1666 11.4741 10.9727 12.668 9.49996 12.668C8.0272 12.668 6.83329 11.4741 6.83329 10.0013C6.83329 8.52854 8.0272 7.33463 9.49996 7.33463Z" fill="#3876F6"/></svg>',
+      );
+    this.images.hoverImage.src =
+      'data:image/svg+xml;base64,' +
+      btoa(
+        '<svg width="19" height="26" viewBox="0 0 19 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.49996 0.667969C14.6546 0.667969 18.8333 4.92401 18.8333 10.1741C18.8333 13.2424 16.4424 18.1433 11.6607 24.8768C11.4944 25.1109 11.2926 25.3165 11.0628 25.4858C9.92913 26.3209 8.36791 26.1166 7.47461 25.052L7.33928 24.8768L6.95679 24.3349C2.43001 17.8797 0.166626 13.1595 0.166626 10.1741C0.166626 4.92401 4.3453 0.667969 9.49996 0.667969ZM9.49996 7.33463C10.9727 7.33463 12.1666 8.52854 12.1666 10.0013C12.1666 11.4741 10.9727 12.668 9.49996 12.668C8.0272 12.668 6.83329 11.4741 6.83329 10.0013C6.83329 8.52854 8.0272 7.33463 9.49996 7.33463Z" fill="#1047B6"/></svg>',
       );
   }
 
@@ -194,13 +203,20 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
           pixelRounded[1] - radius < height
         ) {
           ctx.drawImage(
-            this.image,
-            pixelRounded[0] - this.image.width / 2,
-            pixelRounded[1] - this.image.height / 2,
+            this.state.modal_data?.hospital_name ===
+              location?.properties?.modal_data?.hospital_name
+              ? this.images.hoverImage
+              : this.images.default,
+            pixelRounded[0] - this.images.default.width / 2,
+            pixelRounded[1] - this.images.default.height / 2,
           );
 
           ctx.font = '14px Arial';
-          ctx.fillStyle = '#3876F6';
+          ctx.fillStyle =
+            this.state.modal_data?.hospital_name ===
+            location?.properties?.modal_data?.hospital_name
+              ? '#1047B6'
+              : '#3876F6';
           const maxWidth = 120;
           const lineHeight = 20;
 
@@ -208,8 +224,8 @@ class ScatterPlotGlowOverlay extends React.PureComponent {
             this.wrapText(
               ctx,
               location?.properties?.modal_data?.hospital_name,
-              pixelRounded[0] + this.image.width / 2 - 10,
-              pixelRounded[1] + this.image.height / 2 + 25,
+              pixelRounded[0] + this.images.default.width / 2 - 10,
+              pixelRounded[1] + this.images.default.height / 2 + 25,
               maxWidth,
               lineHeight,
             );
