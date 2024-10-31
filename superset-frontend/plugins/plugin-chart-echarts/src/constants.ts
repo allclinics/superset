@@ -103,6 +103,8 @@ export const DEFAULT_LEGEND_FORM_DATA: LegendFormData = {
   legendType: LegendType.Scroll,
   showLegend: true,
   showLegendPopUp: false,
+  showPopUpVideoLegend: false,
+  legendVideoLink: '',
   legendContent: '',
 };
 

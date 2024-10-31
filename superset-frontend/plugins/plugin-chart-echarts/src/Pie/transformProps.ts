@@ -23,7 +23,6 @@ import {
   getNumberFormatter,
   getTimeFormatter,
   NumberFormats,
-  t,
   ValueFormatter,
   getValueFormatter,
 } from '@superset-ui/core';
@@ -175,6 +174,7 @@ export default function transformProps(
     showLabelsThreshold,
     sliceId,
     showTotal,
+    pieChartLegend,
   }: EchartsPieFormData = {
     ...DEFAULT_LEGEND_FORM_DATA,
     ...DEFAULT_PIE_FORM_DATA,
@@ -336,7 +336,7 @@ export default function transformProps(
           type: 'text',
           ...getTotalValuePadding({ chartPadding, donut, width, height }),
           style: {
-            text: t('Total: %s', numberFormatter(totalValue)),
+            text: `${pieChartLegend} ${numberFormatter(totalValue)}`,
             fontSize: 16,
             fontWeight: 'bold',
           },

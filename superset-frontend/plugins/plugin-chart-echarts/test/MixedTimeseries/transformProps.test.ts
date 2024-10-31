@@ -51,6 +51,8 @@ const formData: EchartsMixedTimeseriesFormData = {
   legendOrientation: LegendOrientation.Top,
   legendType: LegendType.Scroll,
   legendContent: '',
+  legendVideoLink: '',
+  showPopUpVideoLegend: false,
   showLegendPopUp: false,
   showLegend: false,
   showValue: false,

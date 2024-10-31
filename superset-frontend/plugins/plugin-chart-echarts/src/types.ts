@@ -98,7 +98,9 @@ export type LegendFormData = {
   legendType: LegendType;
   showLegend: boolean;
   showLegendPopUp: boolean;
+  showPopUpVideoLegend: boolean;
   legendContent: string;
+  legendVideoLink: string;
 };
 
 export type EventHandlers = Record<string, { (props: any): void }>;

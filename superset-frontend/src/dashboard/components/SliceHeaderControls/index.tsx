@@ -618,7 +618,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
           }}
         />
       )}
-      {props?.formData?.showPopUpLegend && (
+      {props?.formData?.showPopUpLegend && props?.formData?.legendContent && (
         <InfoWrapper>
           <Popover
             placement="bottom"
@@ -670,7 +670,8 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
           </Popover>
         </InfoWrapper>
       )}
-      <Icons.VideoPlay />
+      {props?.formData?.showPopUpVideoLegend &&
+        props?.formData?.legendVideoLink && <Icons.VideoPlay />}
       {!props?.hideChartControls && (
         <>
           <NoAnimationDropdown
