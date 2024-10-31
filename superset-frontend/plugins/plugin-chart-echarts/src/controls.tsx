@@ -38,7 +38,32 @@ const {
   showLegend,
   showLegendPopUp,
   legendContent,
+  showPopUpVideoLegend,
 } = DEFAULT_LEGEND_FORM_DATA;
+
+const showPopUpVideoLegendControl: ControlSetItem = {
+  name: 'showPopUpVideoLegend',
+  config: {
+    type: 'CheckboxControl',
+    label: 'Show video pop up legend',
+    renderTrigger: true,
+    default: showPopUpVideoLegend,
+    description: 'Show video modal legend for the chart',
+  },
+};
+
+const legendVideoLinkControl: ControlSetItem = {
+  name: 'legendVideoLink',
+  config: {
+    type: 'TextControl',
+    label: t('Video link'),
+    default: '',
+    isFloat: false,
+    description: t('Video link for legend'),
+    visibility: ({ controls }: ControlPanelsContainerProps) =>
+      Boolean(controls?.showPopUpVideoLegend?.value),
+  },
+};
 
 const showPopUpLegendControl: ControlSetItem = {
   name: 'showPopUpLegend',
@@ -47,7 +72,7 @@ const showPopUpLegendControl: ControlSetItem = {
     label: 'Show pop up legend',
     renderTrigger: true,
     default: showLegendPopUp,
-    description: 'Show molal legend for the chart',
+    description: 'Show modal legend for the chart',
   },
 };
 
@@ -139,15 +164,33 @@ const showLoader: ControlSetItem = {
   },
 };
 
+const pieChartLegend: ControlSetItem = {
+  name: 'pieChartLegend',
+  config: {
+    type: 'TextControl',
+    label: 'Change pie chart legend',
+    renderTrigger: true,
+    default: 'Total:',
+    description: 'Change pie chart legend',
+  },
+};
+
 export const showLoaderSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Loader')}</ControlSubSectionHeader>],
   [showLoader],
+];
+
+export const pieChartLegendrSection: ControlSetRow[] = [
+  [<ControlSubSectionHeader>{t('Pie Chart Legend')}</ControlSubSectionHeader>],
+  [pieChartLegend],
 ];
 
 export const legendModalSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Legend Modal')}</ControlSubSectionHeader>],
   [showPopUpLegendControl],
   [legendContentControl],
+  [showPopUpVideoLegendControl],
+  [legendVideoLinkControl],
 ];
 
 export const legendSection: ControlSetRow[] = [

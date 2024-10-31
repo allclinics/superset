@@ -149,6 +149,32 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'showPopUpVideoLegend',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show video pop up legend',
+              renderTrigger: true,
+              default: true,
+              description: 'Show video modal legend for the chart',
+            },
+          },
+        ],
+        [
+          {
+            name: 'legendVideoLink',
+            config: {
+              type: 'TextControl',
+              label: t('Video link'),
+              default: '',
+              isFloat: false,
+              description: t('Video link for legend'),
+              visibility: ({ controls }: ControlPanelsContainerProps) =>
+                Boolean(controls?.showPopUpVideoLegend?.value),
+            },
+          },
+        ],
       ],
     },
     {
