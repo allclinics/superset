@@ -51,6 +51,7 @@ export interface ChartDataResponseResult {
   cache_key: string | null;
   cache_timeout: number | null;
   cached_dttm: string | null;
+  mapbox_api_key: string;
   /**
    * Array of data records as dictionary
    */

@@ -20,6 +20,7 @@ import { styled, css } from '@superset-ui/core';
 import React, { createRef } from 'react';
 import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
+import Map from './components/Map';
 
 const Styles = styled.div<HandlebarsStylesProps>`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
@@ -56,6 +57,9 @@ export default function Handlebars(props: HandlebarsProps) {
       width={width}
       fullDisplay={formData?.fullDisplay}
     >
+      {props?.formData?.showMap && props?.mapboxApiKey && (
+        <Map mapboxApiKey={props?.mapboxApiKey} />
+      )}
       <HandlebarsViewer data={{ data }} templateSource={templateSource} />
     </Styles>
   );

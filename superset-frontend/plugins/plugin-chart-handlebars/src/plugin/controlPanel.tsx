@@ -45,6 +45,7 @@ import {
 import { queryModeControlSetItem } from './controls/queryMode';
 import { styleControlSetItem } from './controls/style';
 import { fullDisplayControl } from './controls/fullDisplay';
+import { showMapControl } from './controls/showMap';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -52,6 +53,11 @@ const config: ControlPanelConfig = {
       label: t('Full display'),
       expanded: true,
       controlSetRows: [[fullDisplayControl]],
+    },
+    {
+      label: t('Show map'),
+      expanded: true,
+      controlSetRows: [[showMapControl]],
     },
     {
       label: t('Query'),
