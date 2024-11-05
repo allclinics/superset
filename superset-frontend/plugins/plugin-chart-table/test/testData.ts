@@ -85,6 +85,7 @@ const basicQueryResult: ChartDataResponseResult = {
   status: 'success',
   from_dttm: null,
   to_dttm: null,
+  mapbox_api_key: '',
 };
 
 /**

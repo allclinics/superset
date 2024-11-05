@@ -16,17 +16,5 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { ChartProps, TimeseriesDataRecord } from '@superset-ui/core';
 
-export default function transformProps(chartProps: ChartProps) {
-  const { width, height, formData, queriesData } = chartProps;
-  const data = queriesData[0].data as TimeseriesDataRecord[];
-
-  return {
-    width,
-    height,
-    data,
-    formData,
-    mapboxApiKey: queriesData[0]?.mapbox_api_key,
-  };
-}
+export { default } from './Map';

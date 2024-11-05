@@ -122,6 +122,7 @@ def _get_full(
     payload["applied_filters"] = [
         {"column": get_column_name(col)} for col in applied_filter_columns
     ] + applied_time_columns
+    payload["mapbox_api_key"] = config["MAPBOX_API_KEY"]
     payload["rejected_filters"] = [
         {
             "reason": ExtraFiltersReasonType.COL_NOT_IN_DATASOURCE,
