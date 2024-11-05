@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,15 +17,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import { styled } from '@superset-ui/core';
 
-declare module '*.svg' {
-  const content: any;
-  export default content;
-}
-
-declare module '*.png' {
-  const value: any;
-  export default value;
-}
-declare module '*.jpg';
-declare module 'just-handlebars-helpers';
+export const Wrapper = styled.div`
+  border-radius: ${({ theme }) => theme.gridUnit * 5}px;
+  border: 1px solid #e6e9f4;
+  overflow: auto;
+  width: 350px;
+  height: 240px;
+  min-width: 350px;
+  min-height: 240px;
+`;

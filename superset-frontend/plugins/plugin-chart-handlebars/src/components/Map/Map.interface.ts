@@ -17,5 +17,7 @@
  * under the License.
  */
 export interface MapProps {
+  latitude: number;
+  longitude: number;
   mapboxApiKey: string;
 }

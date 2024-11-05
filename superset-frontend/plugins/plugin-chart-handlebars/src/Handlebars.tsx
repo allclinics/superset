@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -21,6 +22,9 @@ import React, { createRef } from 'react';
 import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
 import Map from './components/Map';
+import CallIcon from './icons/call.svg';
+import PinIcon from './icons/pin.svg';
+import GlobeIcon from './icons/globe.svg';
 
 const Styles = styled.div<HandlebarsStylesProps>`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
@@ -36,6 +40,73 @@ const Styles = styled.div<HandlebarsStylesProps>`
       width: 100%;
       padding: 0;
     `};
+`;
+
+const Conteiner = styled.div`
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 16px 16px 20px;
+  background: #f4f6fa;
+`;
+
+const WrapperDetails = styled.div`
+  height: 100%;
+  padding-right: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  background: #e6e9f4;
+  height: 1px;
+  margin: 10px 0px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  row-gap: 10px;
+  flex-direction: column;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  row-gap: 16px;
+  flex-direction: column;
+`;
+
+const Item = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+`;
+
+const Title = styled.span`
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #31323f;
+`;
+
+const Bold = styled.span`
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #5a607f;
+`;
+
+const Text = styled.span`
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #5a607f;
 `;
 
 export default function Handlebars(props: HandlebarsProps) {
@@ -57,10 +128,65 @@ export default function Handlebars(props: HandlebarsProps) {
       width={width}
       fullDisplay={formData?.fullDisplay}
     >
-      {props?.formData?.showMap && props?.mapboxApiKey && (
-        <Map mapboxApiKey={props?.mapboxApiKey} />
+      {props?.formData?.showMap ? (
+        <Conteiner>
+          <WrapperDetails>
+            <Header>
+              <Title>{data[0].hospital_name}</Title>
+              {data[0]?.id && (
+                <div>
+                  <Text>
+                    <Bold>AllClinics ID:</Bold>
+                    {` ${data[0]?.id}`}
+                  </Text>
+                </div>
+              )}
+              {data[0]?.description && (
+                <div>
+                  <Text>
+                    <Bold>Descriptions:</Bold>
+                    {` ${data[0]?.description}`}
+                  </Text>
+                </div>
+              )}
+            </Header>
+            <Divider />
+            <Footer>
+              {data[0]?.address && (
+                <Item>
+                  <PinIcon />
+                  <Text>{data[0].address}</Text>
+                </Item>
+              )}
+              {data[0]?.phone && (
+                <Item>
+                  <CallIcon />
+                  <Text>{data[0]?.phone}</Text>
+                </Item>
+              )}
+              {data[0]?.website && (
+                <Item>
+                  <GlobeIcon />
+                  <Text>{data[0].website}</Text>
+                </Item>
+              )}
+            </Footer>
+          </WrapperDetails>
+          {props?.mapboxApiKey && data[0]?.latitude && data[0]?.longitude && (
+            <Map
+              latitude={
+                typeof data[0]?.latitude === 'number' ? data[0].latitude : 0
+              }
+              longitude={
+                typeof data[0]?.longitude === 'number' ? data[0].longitude : 0
+              }
+              mapboxApiKey={props?.mapboxApiKey}
+            />
+          )}
+        </Conteiner>
+      ) : (
+        <HandlebarsViewer data={{ data }} templateSource={templateSource} />
       )}
-      <HandlebarsViewer data={{ data }} templateSource={templateSource} />
     </Styles>
   );
 }
