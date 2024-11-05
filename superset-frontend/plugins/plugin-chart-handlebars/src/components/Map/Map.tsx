@@ -16,43 +16,48 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// @ts-nocheck
 // eslint-disable-next-line import/no-extraneous-dependencies
-import ViewportMercator from 'viewport-mercator-project';
-import React, { useState, type FC } from 'react';
-import MapGL from 'react-map-gl';
+import React, { useState, useEffect, useCallback, type FC } from 'react';
+import MapGL, { Marker, ViewState } from 'react-map-gl';
 import { MapProps } from './Map.interface';
+import { Wrapper } from './Map.styled';
+import Point from '../../icons/point.svg';
 
-const Map: FC<MapProps> = ({ mapboxApiKey }) => {
-  const mercator = new ViewportMercator({
-    width: 200,
-    height: 200,
-  }).fitBounds([
-    [-123.802, 25.9807],
-    [-93.9857, 41.7194],
-  ]);
-  const { latitude, longitude, zoom } = mercator;
-
-  const [state] = useState({
-    viewport: {
-      longitude,
-      latitude,
-      zoom,
-    },
+const Map: FC<MapProps> = ({ mapboxApiKey, latitude, longitude }) => {
+  const [viewport, setViewport] = useState({
+    latitude,
+    longitude,
+    zoom: 15,
   });
 
-  const handleViewportChange = () => {};
+  useEffect(() => {
+    setViewport({
+      latitude,
+      longitude,
+      zoom: 15,
+    });
+  }, [latitude, longitude]);
+
+  const handleViewportChange = useCallback((newViewport: ViewState) => {
+    setViewport(newViewport);
+  }, []);
 
   return (
-    <MapGL
-      {...state.viewport}
-      mapStyle="mapbox://styles/mapbox/light-v9"
-      width={200}
-      height={200}
-      mapboxApiAccessToken={mapboxApiKey}
-      onViewportChange={handleViewportChange}
-      preserveDrawingBuffer
-    />
+    <Wrapper>
+      <MapGL
+        {...viewport}
+        mapStyle="mapbox://styles/mapbox/light-v9"
+        mapboxApiAccessToken={mapboxApiKey}
+        onViewportChange={handleViewportChange}
+        preserveDrawingBuffer
+        width={350}
+        height={240}
+      >
+        <Marker longitude={longitude} latitude={latitude}>
+          <Point />
+        </Marker>
+      </MapGL>
+    </Wrapper>
   );
 };
 

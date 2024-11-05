@@ -29,8 +29,7 @@
   "dependencies": {
     "handlebars": "^4.7.7",
     "just-handlebars-helpers": "^1.0.19",
-    "react-map-gl": "^7.1.7",
-    "viewport-mercator-project": "^7.0.4"
+    "react-map-gl": "^6.1.19"
   },
   "peerDependencies": {
     "@superset-ui/chart-controls": "*",
