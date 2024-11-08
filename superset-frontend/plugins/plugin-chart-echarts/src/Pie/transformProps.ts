@@ -175,6 +175,7 @@ export default function transformProps(
     sliceId,
     showTotal,
     pieChartLegend,
+    pieChartLegendsTopPosition,
   }: EchartsPieFormData = {
     ...DEFAULT_LEGEND_FORM_DATA,
     ...DEFAULT_PIE_FORM_DATA,
@@ -330,11 +331,15 @@ export default function transformProps(
     legend: {
       ...getLegendProps(legendType, legendOrientation, showLegend, theme),
       data: keys,
+      ...(pieChartLegendsTopPosition
+        ? { top: pieChartLegendsTopPosition }
+        : {}),
     },
     graphic: showTotal
       ? {
           type: 'text',
           ...getTotalValuePadding({ chartPadding, donut, width, height }),
+          left: 'center',
           style: {
             text: `${pieChartLegend} ${numberFormatter(totalValue)}`,
             fontSize: 16,

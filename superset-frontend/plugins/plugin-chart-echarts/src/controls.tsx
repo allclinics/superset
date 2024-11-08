@@ -175,6 +175,19 @@ const pieChartLegend: ControlSetItem = {
   },
 };
 
+const pieChartLegendsTopPosition: ControlSetItem = {
+  name: 'pieChartLegendsTopPosition',
+  config: {
+    type: 'TextControl',
+    label: 'Pie Chart Legends Top Position',
+    renderTrigger: true,
+    default: 0,
+    initialValue: 0,
+    isFloat: true,
+    description: 'Pie Chart Legends Top Position',
+  },
+};
+
 export const showLoaderSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Loader')}</ControlSubSectionHeader>],
   [showLoader],
@@ -183,6 +196,7 @@ export const showLoaderSection: ControlSetRow[] = [
 export const pieChartLegendrSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Pie Chart Legend')}</ControlSubSectionHeader>],
   [pieChartLegend],
+  [pieChartLegendsTopPosition],
 ];
 
 export const legendModalSection: ControlSetRow[] = [
