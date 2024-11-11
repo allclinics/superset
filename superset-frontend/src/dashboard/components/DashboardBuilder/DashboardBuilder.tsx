@@ -112,6 +112,12 @@ const FiltersPanel = styled.div<{
   visibility: ${({ isLoading }) => (isLoading ? 'hidden' : 'unset')};
   width: ${({ width }) => width}px;
   ${({ hidden }) => hidden && `display: none;`}
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+  }
 `;
 
 const StickyPanel = styled.div<{ width: number }>`
@@ -328,6 +334,10 @@ const StyledDashboardContent = styled.div<{
       margin: ${dashboardFiltersOpen
         ? '0px 24px 24px 24px'
         : '0px 24px 24px 48px'};
+
+      @media (max-width: 768px) {
+        margin: 0px 10px 24px 10px;
+      }
 
       ${editMode &&
       `

@@ -205,6 +205,10 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     background: ${({ isChild }) => (isChild ? '#f5f6fa' : 'transparent')};
     border-radius: ${({ isChild }) => (isChild ? '20px' : '0px')};
     padding: ${({ isChild }) => (isChild ? '4px' : '10px 0px 0px 0px')};
+
+    @media (max-width: 768px) {
+      flex-direction: ${({ isChild }) => (isChild ? 'column' : 'row')};
+    }
   }
 
   .ant-tabs-nav {
@@ -226,6 +230,16 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
       display: ${({ isChild }) => (isChild ? 'none' : 'block')};
       width: calc(100% - 48px);
       left: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .ant-tabs-nav-wrap {
+        overflow: auto;
+      }
+
+      .ant-tabs-nav-operations {
+        display: none;
+      }
     }
   }
 `;

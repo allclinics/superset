@@ -114,6 +114,10 @@ const StyledTabsContainer = styled.div`
     margin-top: ${({ theme }) => theme.gridUnit / 4}px;
     position: relative;
     padding: ${({ isChild }) => (isChild ? '0px' : '0px 24px')};
+
+    @media (max-width: 768px) {
+      padding: ${({ isChild }) => (isChild ? '0px' : '0px 16px')};
+    }
   }
 
   .ant-tabs {
