@@ -85,6 +85,16 @@ const GridRow = styled.div`
       ${!editMode && `margin-right: ${theme.gridUnit * 3}px;`}
     }
 
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      justify-content: center;
+
+      & > :not(:last-child):not(.hover-menu) {
+        margin-right: 0px;
+        margin-bottom: 16px;
+      }
+    }
+
     & .empty-droptarget {
       position: relative;
       align-self: center;

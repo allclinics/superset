@@ -109,6 +109,10 @@ const Styles = styled.div`
   position: relative;
   padding: 24px 20px 20px 20px;
 
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+
   .chart-tooltip {
     opacity: 0.75;
     font-size: ${({ theme }) => theme.typography.sizes.s}px;

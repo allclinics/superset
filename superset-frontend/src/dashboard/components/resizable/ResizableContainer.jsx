@@ -25,6 +25,7 @@ import { css, styled } from '@superset-ui/core';
 import ResizableHandle from './ResizableHandle';
 import resizableConfig from '../../util/resizableConfig';
 import { GRID_BASE_UNIT, GRID_GUTTER_SIZE } from '../../util/constants';
+import withMobileDetection from '../../hoc/withMobileDetection';
 
 const proxyToInfinity = Number.MAX_VALUE;
 
@@ -232,9 +233,7 @@ class ResizableContainer extends React.PureComponent {
       children,
       adjustableWidth,
       adjustableHeight,
-      widthStep,
       heightStep,
-      widthMultiple,
       heightMultiple,
       staticHeight,
       staticHeightMultiple,
@@ -244,16 +243,22 @@ class ResizableContainer extends React.PureComponent {
       maxWidthMultiple,
       minHeightMultiple,
       maxHeightMultiple,
-      gutterWidth,
       editMode,
+      isMobile,
     } = this.props;
 
+    const widthStep = isMobile ? 16 : this.props?.widthStep;
+    const gutterWidth = isMobile ? 12 : this.props?.gutterWidth;
+    const widthMultiple = isMobile ? 12 : this.props?.widthMultiple;
+
     const size = {
-      width: adjustableWidth
-        ? (widthStep + gutterWidth) * widthMultiple - gutterWidth
-        : (staticWidthMultiple && staticWidthMultiple * widthStep) ||
-          staticWidth ||
-          undefined,
+      width: isMobile
+        ? window.innerWidth - 52
+        : adjustableWidth
+          ? (widthStep + gutterWidth) * widthMultiple - gutterWidth
+          : (staticWidthMultiple && staticWidthMultiple * widthStep) ||
+            staticWidth ||
+            undefined,
       height: adjustableHeight
         ? heightStep * heightMultiple
         : (staticHeightMultiple && staticHeightMultiple * heightStep) ||
@@ -324,4 +329,4 @@ class ResizableContainer extends React.PureComponent {
 ResizableContainer.propTypes = propTypes;
 ResizableContainer.defaultProps = defaultProps;
 
-export default ResizableContainer;
+export default withMobileDetection(ResizableContainer);
