@@ -50,6 +50,7 @@ export const Select = ({
     chartType="filter_select"
     width={width}
     height={height}
+    isMobile
     queriesData={[{ data: mockQueryDataForCountries }]}
     formData={{
       adhoc_filters: [],

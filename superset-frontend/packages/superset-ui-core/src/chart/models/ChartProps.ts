@@ -155,6 +155,8 @@ export default class ChartProps<FormData extends RawFormData = RawFormData> {
 
   theme: SupersetTheme;
 
+  isMobile?: boolean;
+
   constructor(config: ChartPropsConfig & { formData?: FormData } = {}) {
     const {
       annotationData = {},
@@ -176,9 +178,11 @@ export default class ChartProps<FormData extends RawFormData = RawFormData> {
       inContextMenu = false,
       emitCrossFilters = false,
       theme,
+      isMobile = false,
     } = config;
     this.width = width;
     this.height = height;
+    this.isMobile = isMobile;
     this.annotationData = annotationData;
     this.datasource = convertKeysToCamelCase(datasource) as Datasource;
     this.rawDatasource = datasource;
@@ -223,6 +227,7 @@ ChartProps.createSelector = function create(): ChartPropsSelector {
     input => input.inContextMenu,
     input => input.emitCrossFilters,
     input => input.theme,
+    input => input.isMobile,
     (
       annotationData,
       datasource,
@@ -243,6 +248,7 @@ ChartProps.createSelector = function create(): ChartPropsSelector {
       inContextMenu,
       emitCrossFilters,
       theme,
+      isMobile,
     ) =>
       new ChartProps({
         annotationData,
@@ -264,6 +270,7 @@ ChartProps.createSelector = function create(): ChartPropsSelector {
         inContextMenu,
         emitCrossFilters,
         theme,
+        isMobile,
       }),
   );
 };

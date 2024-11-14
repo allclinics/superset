@@ -71,6 +71,7 @@ export type Props = {
   className?: string;
   chartProps?: ChartProps | null;
   chartType: string;
+  isMobile?: boolean;
   preTransformProps?: PreTransformProps;
   overrideTransformProps?: TransformProps;
   postTransformProps?: PostTransformProps;

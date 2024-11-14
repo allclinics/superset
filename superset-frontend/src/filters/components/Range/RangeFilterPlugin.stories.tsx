@@ -39,6 +39,7 @@ export const range = ({ width, height }: { width: number; height: number }) => (
     chartType="filter_range"
     width={width}
     height={height}
+    isMobile
     queriesData={[{ data: [{ min: 10, max: 100 }] }]}
     filterState={{ value: [10, 70] }}
     formData={{

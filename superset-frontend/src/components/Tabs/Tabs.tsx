@@ -157,6 +157,7 @@ EditableTabs.TabPane.defaultProps = {
 
 export const StyledLineEditableTabs = styled(EditableTabs)<{
   isChild?: boolean;
+  isMultiTabs?: boolean;
 }>`
   &.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
     margin: 0
@@ -207,7 +208,10 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     padding: ${({ isChild }) => (isChild ? '4px' : '10px 0px 0px 0px')};
 
     @media (max-width: 768px) {
-      flex-direction: ${({ isChild }) => (isChild ? 'column' : 'row')};
+      display: ${({ isChild, isMultiTabs }) =>
+        isChild && !isMultiTabs ? 'none !important' : 'flex'};
+      flex-direction: ${({ isChild, isMultiTabs }) =>
+        isChild && !isMultiTabs ? 'column' : 'row'};
     }
   }
 
@@ -233,6 +237,10 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     }
 
     @media (max-width: 768px) {
+      margin-bottom: ${({ isChild }) => (isChild ? '0px' : '13px')};
+      transform: ${({ isMultiTabs }) =>
+        isMultiTabs && 'translate(0px, 10px) !important'};
+
       .ant-tabs-nav-wrap {
         overflow: auto;
       }

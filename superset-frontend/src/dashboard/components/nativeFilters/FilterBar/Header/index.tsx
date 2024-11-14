@@ -23,6 +23,7 @@ import Icons from 'src/components/Icons';
 import Button from 'src/components/Button';
 import { useSelector } from 'react-redux';
 import FilterConfigurationLink from 'src/dashboard/components/nativeFilters/FilterBar/FilterConfigurationLink';
+import useDetectDevice from 'src/hooks/useDetectDevice';
 import { useFilters } from 'src/dashboard/components/nativeFilters/FilterBar/state';
 import { RootState } from 'src/dashboard/types';
 import { getFilterBarTestId } from '../utils';
@@ -36,6 +37,10 @@ const TitleArea = styled.div`
     justify-content: space-between;
     margin: 0;
     padding: 0 ${theme.gridUnit * 2}px ${theme.gridUnit * 2}px;
+
+    @media (max-width: 768px) {
+      padding: 0px;
+    }
 
     & > span {
       font-size: ${theme.typography.sizes.l}px;
@@ -66,6 +71,11 @@ const Wrapper = styled.div`
     .ant-dropdown-trigger span {
       padding-right: ${theme.gridUnit * 2}px;
     }
+
+    @media (max-width: 768px) {
+     padding: 24px 24px 0px 24px;
+     }
+  }
   `}
 `;
 
@@ -95,6 +105,7 @@ const AddFiltersButtonContainer = styled.div`
 const Header: FC<HeaderProps> = ({ toggleFiltersBar }) => {
   const theme = useTheme();
   const filters = useFilters();
+  const { isMobile } = useDetectDevice();
   const filterValues = useMemo(() => Object.values(filters), [filters]);
   const canEdit = useSelector<RootState, boolean>(
     ({ dashboardInfo }) => dashboardInfo.dash_edit_perm,
@@ -114,7 +125,11 @@ const Header: FC<HeaderProps> = ({ toggleFiltersBar }) => {
           buttonSize="xsmall"
           onClick={() => toggleFiltersBar(false)}
         >
-          <Icons.Expand iconColor={theme.colors.grayscale.base} />
+          {isMobile ? (
+            <Icons.Cross iconColor={theme.colors.grayscale.base} />
+          ) : (
+            <Icons.Expand iconColor={theme.colors.grayscale.base} />
+          )}
         </HeaderButton>
       </TitleArea>
       {canEdit && (

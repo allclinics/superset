@@ -31,7 +31,7 @@ import {
 import { Logger, LOG_ACTIONS_RENDER_CHART } from 'src/logger/LogUtils';
 import { EmptyStateBig, EmptyStateSmall } from 'src/components/EmptyState';
 import { ChartSource } from 'src/types/ChartSource';
-import withMobileDetection from 'src/dashboard/hoc/withMobileDetection';
+import withMobileDetection from 'src/dashboard/hocs/withMobileDetection';
 import ChartContextMenu from './ChartContextMenu/ChartContextMenu';
 
 const propTypes = {
@@ -349,6 +349,7 @@ class ChartRenderer extends React.Component {
             id={`chart-id-${chartId}`}
             className={chartClassName}
             chartType={vizType}
+            isMobile={isMobile}
             width={isMobile ? '100%' : width}
             height={height}
             annotationData={annotationData}
