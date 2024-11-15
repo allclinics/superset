@@ -83,6 +83,21 @@ const verticalStyle = (theme: SupersetTheme, width: number) => css`
     margin-bottom: ${theme.gridUnit * 3}px;
     text-transform: capitalize;
   }
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    flex-direction: row-reverse;
+    column-gap: 12px;
+    border-top: 1px solid #e8ecfc;
+
+    & > button {
+      max-width: 165px;
+    }
+
+    & > .filter-apply-button {
+      margin-bottom: 0px;
+    }
+  }
 `;
 
 const horizontalStyle = (theme: SupersetTheme) => css`

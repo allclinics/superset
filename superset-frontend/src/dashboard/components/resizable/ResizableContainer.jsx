@@ -25,7 +25,7 @@ import { css, styled } from '@superset-ui/core';
 import ResizableHandle from './ResizableHandle';
 import resizableConfig from '../../util/resizableConfig';
 import { GRID_BASE_UNIT, GRID_GUTTER_SIZE } from '../../util/constants';
-import withMobileDetection from '../../hoc/withMobileDetection';
+import withMobileDetection from '../../hocs/withMobileDetection';
 
 const proxyToInfinity = Number.MAX_VALUE;
 
@@ -247,13 +247,13 @@ class ResizableContainer extends React.PureComponent {
       isMobile,
     } = this.props;
 
-    const widthStep = isMobile ? 16 : this.props?.widthStep;
+    const widthStep = isMobile ? 24 : this.props?.widthStep;
     const gutterWidth = isMobile ? 12 : this.props?.gutterWidth;
     const widthMultiple = isMobile ? 12 : this.props?.widthMultiple;
 
     const size = {
       width: isMobile
-        ? window.innerWidth - 52
+        ? window.innerWidth - 48
         : adjustableWidth
           ? (widthStep + gutterWidth) * widthMultiple - gutterWidth
           : (staticWidthMultiple && staticWidthMultiple * widthStep) ||

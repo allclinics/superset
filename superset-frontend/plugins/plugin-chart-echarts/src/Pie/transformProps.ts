@@ -44,7 +44,6 @@ import {
   sanitizeHtml,
 } from '../utils/series';
 import { defaultGrid } from '../defaults';
-import { convertInteger } from '../utils/convertInteger';
 import { getDefaultTooltip } from '../utils/tooltip';
 import { Refs } from '../types';
 
@@ -148,6 +147,7 @@ export default function transformProps(
     inContextMenu,
     emitCrossFilters,
     datasource,
+    isMobile,
   } = chartProps;
   const { columnFormats = {}, currencyFormats = {} } = datasource;
   const { data = [] } = queriesData[0];
@@ -218,8 +218,6 @@ export default function transformProps(
     currencyFormat,
   );
 
-  let totalValue = 0;
-
   const transformedData: PieSeriesOption[] = data.map(datum => {
     const name = extractGroupbyLabel({
       datum,
@@ -231,10 +229,6 @@ export default function transformProps(
     const isFiltered =
       filterState.selectedValues && !filterState.selectedValues.includes(name);
     const value = datum[metricLabel];
-
-    if (typeof value === 'number' || typeof value === 'string') {
-      totalValue += convertInteger(value);
-    }
 
     return {
       value,
@@ -341,8 +335,8 @@ export default function transformProps(
           ...getTotalValuePadding({ chartPadding, donut, width, height }),
           left: 'center',
           style: {
-            text: `${pieChartLegend} ${numberFormatter(totalValue)}`,
-            fontSize: 16,
+            text: `${pieChartLegend} ${keys.length}`,
+            fontSize: isMobile ? 12 : 16,
             fontWeight: 'bold',
           },
           z: 10,

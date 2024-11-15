@@ -78,6 +78,9 @@ export type Filter = {
   chartsInScope?: number[];
   type: typeof NativeFilterType.NativeFilter;
   description: string;
+  dataMask?: {
+    [key: string]: any;
+  };
 };
 
 export type FilterWithDataMask = Filter & { dataMask: DataMaskWithId };

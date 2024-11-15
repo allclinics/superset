@@ -88,6 +88,7 @@ describe('SuperChartCore', () => {
         <SuperChartCore
           chartType={ChartKeys.DILIGENT}
           chartProps={chartProps}
+          isMobile
         />,
       );
 
@@ -97,7 +98,7 @@ describe('SuperChartCore', () => {
     });
     it('renders registered chart with lazy loading', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.LAZY} />,
+        <SuperChartCore isMobile chartType={ChartKeys.LAZY} />,
       );
 
       return promiseTimeout(() => {
@@ -115,7 +116,11 @@ describe('SuperChartCore', () => {
     });
     it('adds id to container if specified', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.DILIGENT} id="the-chart" />,
+        <SuperChartCore
+          chartType={ChartKeys.DILIGENT}
+          id="the-chart"
+          isMobile
+        />,
       );
 
       return promiseTimeout(() => {
@@ -124,7 +129,11 @@ describe('SuperChartCore', () => {
     });
     it('adds class to container if specified', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.DILIGENT} className="the-chart" />,
+        <SuperChartCore
+          chartType={ChartKeys.DILIGENT}
+          className="the-chart"
+          isMobile
+        />,
       );
 
       return promiseTimeout(() => {
@@ -136,6 +145,7 @@ describe('SuperChartCore', () => {
         <SuperChartCore
           chartType={ChartKeys.DILIGENT}
           overrideTransformProps={() => ({ message: 'hulk' })}
+          isMobile
         />,
       );
 
@@ -153,6 +163,7 @@ describe('SuperChartCore', () => {
           chartType={ChartKeys.DILIGENT}
           preTransformProps={() => chartPropsWithPayload}
           overrideTransformProps={props => props.queriesData[0]}
+          isMobile
         />,
       );
 
@@ -165,6 +176,7 @@ describe('SuperChartCore', () => {
         <SuperChartCore
           chartType={ChartKeys.DILIGENT}
           postTransformProps={() => ({ message: 'hulk' })}
+          isMobile
         />,
       );
 
@@ -174,7 +186,7 @@ describe('SuperChartCore', () => {
     });
     it('renders if chartProps is not specified', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.DILIGENT} />,
+        <SuperChartCore chartType={ChartKeys.DILIGENT} isMobile />,
       );
 
       return promiseTimeout(() => {
@@ -183,7 +195,7 @@ describe('SuperChartCore', () => {
     });
     it('does not render anything while waiting for Chart code to load', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.SLOW} />,
+        <SuperChartCore chartType={ChartKeys.SLOW} isMobile />,
       );
 
       return promiseTimeout(() => {
@@ -193,7 +205,7 @@ describe('SuperChartCore', () => {
     it('eventually renders after Chart is loaded', () => {
       // Suppress warning
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.SLOW} />,
+        <SuperChartCore chartType={ChartKeys.SLOW} isMobile />,
       );
 
       return promiseTimeout(() => {
@@ -202,7 +214,11 @@ describe('SuperChartCore', () => {
     });
     it('does not render if chartProps is null', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType={ChartKeys.DILIGENT} chartProps={null} />,
+        <SuperChartCore
+          chartType={ChartKeys.DILIGENT}
+          chartProps={null}
+          isMobile
+        />,
       );
 
       return promiseTimeout(() => {
@@ -214,7 +230,11 @@ describe('SuperChartCore', () => {
   describe('unregistered charts', () => {
     it('renders error message', () => {
       const wrapper = styledMount(
-        <SuperChartCore chartType="4d-pie-chart" chartProps={chartProps} />,
+        <SuperChartCore
+          chartType="4d-pie-chart"
+          chartProps={chartProps}
+          isMobile
+        />,
       );
 
       return promiseTimeout(() => {
@@ -227,6 +247,7 @@ describe('SuperChartCore', () => {
     it('use identity functions for unspecified transforms', () => {
       const chart = new SuperChartCore({
         chartType: ChartKeys.DILIGENT,
+        isMobile: true,
       });
       const chartProps2 = new ChartProps();
       expect(chart.processChartProps({ chartProps: chartProps2 })).toBe(

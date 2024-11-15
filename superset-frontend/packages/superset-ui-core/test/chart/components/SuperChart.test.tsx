@@ -117,6 +117,7 @@ describe('SuperChart', () => {
           queriesData={[DEFAULT_QUERY_DATA]}
           width="200"
           height="200"
+          isMobile
         />,
       );
       await new Promise(resolve => setImmediate(resolve));
@@ -134,6 +135,7 @@ describe('SuperChart', () => {
           queriesData={[DEFAULT_QUERY_DATA]}
           width="200"
           height="200"
+          isMobile
           FallbackComponent={CustomFallbackComponent}
         />,
       );
@@ -152,6 +154,7 @@ describe('SuperChart', () => {
           queriesData={[DEFAULT_QUERY_DATA]}
           width="200"
           height="200"
+          isMobile
           onErrorBoundary={handleError}
         />,
       );
@@ -171,6 +174,7 @@ describe('SuperChart', () => {
             chartType={ChartKeys.BUGGY}
             queriesData={[DEFAULT_QUERY_DATA]}
             width="200"
+            isMobile
             height="200"
             onErrorBoundary={inactiveErrorHandler}
           />
@@ -192,6 +196,7 @@ describe('SuperChart', () => {
         width={101}
         height={118}
         formData={{ abc: 1 }}
+        isMobile
       />,
     );
 
@@ -210,6 +215,7 @@ describe('SuperChart', () => {
         width={101}
         height={118}
         formData={{ abc: 1 }}
+        isMobile
       />,
     );
 
@@ -228,6 +234,7 @@ describe('SuperChart', () => {
         width={101}
         height={118}
         formData={{ abc: 1 }}
+        isMobile
       />,
     );
 
@@ -241,7 +248,12 @@ describe('SuperChart', () => {
   describe('supports NoResultsComponent', () => {
     it('renders NoResultsComponent when queriesData is missing', () => {
       const wrapper = mount(
-        <SuperChart chartType={ChartKeys.DILIGENT} width="200" height="200" />,
+        <SuperChart
+          chartType={ChartKeys.DILIGENT}
+          width="200"
+          height="200"
+          isMobile
+        />,
       );
 
       expect(wrapper.find(NoResultsComponent)).toHaveLength(1);
@@ -254,6 +266,7 @@ describe('SuperChart', () => {
           queriesData={[{ data: null }]}
           width="200"
           height="200"
+          isMobile
         />,
       );
 
@@ -269,6 +282,7 @@ describe('SuperChart', () => {
           queriesData={[DEFAULT_QUERY_DATA]}
           width={100}
           height={100}
+          isMobile
         />,
       );
 
@@ -286,6 +300,7 @@ describe('SuperChart', () => {
           debounceTime={1}
           width="100%"
           height="100%"
+          isMobile
         />,
       );
       triggerResizeObserver();
@@ -304,6 +319,7 @@ describe('SuperChart', () => {
           debounceTime={1}
           width="50%"
           height="125"
+          isMobile
         />,
       );
       // @ts-ignore
@@ -330,6 +346,7 @@ describe('SuperChart', () => {
           debounceTime={1}
           width="50"
           height="25%"
+          isMobile
         />,
       );
       // @ts-ignore
@@ -354,6 +371,7 @@ describe('SuperChart', () => {
           chartType={ChartKeys.DILIGENT}
           queriesData={[DEFAULT_QUERY_DATA]}
           debounceTime={1}
+          isMobile
         />,
       );
       triggerResizeObserver();
@@ -386,6 +404,7 @@ describe('SuperChart', () => {
           width={100}
           height={100}
           Wrapper={MyWrapper}
+          isMobile
         />,
       );
 
@@ -409,6 +428,7 @@ describe('SuperChart', () => {
           width="100%"
           height="100%"
           Wrapper={MyWrapper}
+          isMobile
         />,
       );
       triggerResizeObserver();

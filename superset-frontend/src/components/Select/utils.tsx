@@ -142,7 +142,13 @@ export const getSuffixIcon = (
   if (showSearch && isDropdownVisible) {
     return <Icons.SearchOutlined iconSize="s" />;
   }
-  return <Icons.DownOutlined iconSize="s" />;
+
+  return (
+    <Icons.Dropdown
+      iconSize="xl"
+      style={{ transform: 'translate(-5px, -4.5px)' }}
+    />
+  );
 };
 
 export const dropDownRenderHelper = (

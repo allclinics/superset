@@ -67,6 +67,7 @@ export default function DrillByChart({
         inContextMenu={inContextMenu}
         height="100%"
         width="100%"
+        isMobile
       />
     </div>
   );

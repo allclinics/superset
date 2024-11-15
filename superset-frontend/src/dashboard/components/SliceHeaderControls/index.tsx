@@ -59,6 +59,7 @@ import Button from 'src/components/Button';
 import ViewQueryModal from 'src/explore/components/controls/ViewQueryModal';
 import { ResultsPaneOnDashboard } from 'src/explore/components/DataTablesPane';
 import Modal from 'src/components/Modal';
+import useDetectDevice from 'src/hooks/useDetectDevice';
 import { DrillDetailMenuItems } from 'src/components/Chart/DrillDetail';
 import { LOG_ACTIONS_CHART_DOWNLOAD_AS_IMAGE } from 'src/logger/LogUtils';
 import { RootState } from 'src/dashboard/types';
@@ -420,6 +421,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
     supersetCanShare = false,
     isCached = [],
   } = props;
+  const { isMobile } = useDetectDevice();
   const isTable = slice.viz_type === 'table';
   const cachedWhen = (cachedDttm || []).map(itemCachedDttm =>
     moment.utc(itemCachedDttm).fromNow(),
@@ -621,7 +623,8 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
       {props?.formData?.showPopUpLegend && props?.formData?.legendContent && (
         <InfoWrapper>
           <Popover
-            placement="bottom"
+            placement={isMobile ? 'bottomLeft' : 'bottom'}
+            trigger={isMobile ? 'click' : 'hover'}
             overlayClassName="chart-guidance-popover"
             content={
               <MarkdownWrapper>
@@ -630,6 +633,12 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
                     .chart-guidance-popover {
                       border-radius: 10px;
                       min-width: 250px;
+
+                      @media (max-width: 768px) {
+                        width: 300px;
+                        left: 50% !important;
+                        transform: translate(-50%, 0%) !important;
+                      }
 
                       h3 {
                         line-height: 24px;

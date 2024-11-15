@@ -21,7 +21,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { styled, t } from '@superset-ui/core';
 import { connect } from 'react-redux';
+import { Menu, Dropdown, Button } from 'antd';
+import Icons from 'src/components/Icons';
 import { LineEditableTabs } from 'src/components/Tabs';
+import withMobileDetection from 'src/dashboard/hocs/withMobileDetection';
 import { LOG_ACTIONS_SELECT_DASHBOARD_TAB } from 'src/logger/LogUtils';
 import { AntdModal } from 'src/components';
 import { Draggable } from '../dnd/DragDroppable';
@@ -88,6 +91,60 @@ const SubTitle = styled.span`
   font-weight: 700;
   line-height: 24px;
   color: #31323f;
+
+  @media (max-width: 768px) {
+    max-width: 167px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+`;
+
+const MobileSpaceForControls = styled.div`
+  background: white;
+  padding: 24px;
+  position: fixed;
+  left: 0px;
+  width: 100vw;
+  top: 80px;
+  z-index: 70;
+  display: flex;
+  height: 80px;
+  justify-content: end;
+`;
+
+const StyledDropdown = styled.div`
+  position: fixed;
+  right: 24px;
+  top: 106px;
+  z-index: 100;
+
+  .ant-dropdown-trigger {
+    border: 1px solid #f5f6fa;
+    border-radius: 20px;
+    color: #a8adc6;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    width: 214px;
+    height: 36px;
+    position: relative;
+    text-align: start;
+    padding-left: 12px;
+  }
+
+  .ant-btn > span {
+    max-width: 158px;
+    overflow: auto;
+    text-overflow: ellipsis;
+  }
+
+  .dropdown {
+    position: absolute !important;
+    right: 12px;
+    top: 5px;
+    font-size: 24px;
+  }
 `;
 
 const Caption = styled.span`
@@ -116,7 +173,7 @@ const StyledTabsContainer = styled.div`
     padding: ${({ isChild }) => (isChild ? '0px' : '0px 24px')};
 
     @media (max-width: 768px) {
-      padding: ${({ isChild }) => (isChild ? '0px' : '0px 16px')};
+      padding: ${({ isChild }) => (isChild ? '0px' : '0px')};
     }
   }
 
@@ -125,6 +182,11 @@ const StyledTabsContainer = styled.div`
 
     .ant-tabs-nav-wrap {
       min-height: ${({ theme }) => theme.gridUnit * 12.5}px;
+
+      @media (max-width: 768px) {
+        min-height: ${({ theme, isChild }) =>
+          isChild ? 0 : theme.gridUnit * 12.5}px;
+      }
     }
 
     .ant-tabs-content-holder {
@@ -232,7 +294,6 @@ export class Tabs extends React.PureComponent {
     }
     const { children: tabIds } = props.component;
     const activeKey = tabIds[tabIndex];
-
     return {
       tabIndex,
       activeKey,
@@ -362,6 +423,7 @@ export class Tabs extends React.PureComponent {
       isChild,
       isCurrentPartChartsLoading,
       onChangeParentTab,
+      isMobile,
     } = this.props;
 
     const { children: tabIds } = tabsComponent;
@@ -383,6 +445,16 @@ export class Tabs extends React.PureComponent {
     const hospitalsLength = isMultiTabs
       ? mapboxChartsArray?.[0]?.queriesResponse?.[0]?.data?.bounds?.length
       : 0;
+
+    const menu = (
+      <Menu>
+        {tabIds.map((tabId, tabIndex) => (
+          <Menu.Item key={tabId} onClick={() => this.handleClickTab(tabIndex)}>
+            {this.props.getComponentById(tabId)?.meta?.text}
+          </Menu.Item>
+        ))}
+      </Menu>
+    );
 
     return (
       <Draggable
@@ -414,6 +486,17 @@ export class Tabs extends React.PureComponent {
                 <Caption>{`Found: ${hospitalsLength ?? 0} hospitals`}</Caption>
               </Card>
             )}
+            {!isChild && isMobile && <MobileSpaceForControls />}
+            {isMobile && isChild && !isMultiTabs && (
+              <StyledDropdown>
+                <Dropdown overlay={menu} trigger={['click']}>
+                  <Button>
+                    {`${this.props.getComponentById(activeKey)?.meta?.text}`}{' '}
+                    <Icons.Dropdown iconSize="xl" className="dropdown" />
+                  </Button>
+                </Dropdown>
+              </StyledDropdown>
+            )}
             <LineEditableTabs
               id={tabsComponent.id}
               activeKey={activeKey}
@@ -421,6 +504,7 @@ export class Tabs extends React.PureComponent {
                 this.handleClickTab(tabIds.indexOf(key));
               }}
               isChild={isChild}
+              isMultiTabs={isMultiTabs}
               onEdit={this.handleEdit}
               data-test="nav-list"
               type={editMode ? 'editable-card' : 'card'}
@@ -495,4 +579,4 @@ function mapStateToProps(state) {
     directPathToChild: state.dashboardState.directPathToChild,
   };
 }
-export default connect(mapStateToProps)(Tabs);
+export default connect(mapStateToProps)(withMobileDetection(Tabs));

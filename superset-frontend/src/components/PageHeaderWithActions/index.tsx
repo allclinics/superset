@@ -117,6 +117,10 @@ const headerStyles = (
     position: fixed;
     top: 24px;
     left: 0px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .expend {

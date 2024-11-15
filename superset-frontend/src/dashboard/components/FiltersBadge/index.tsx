@@ -80,9 +80,9 @@ const StyledFilterCount = styled.div`
 
      & > .dropdown {
       position: absolute;
-      right: -10px;
-      top: 9px;
-      font-size: 30px;
+    right: 6px;
+    top: 5px;
+    font-size: 16px;
      }
   `}
 `;

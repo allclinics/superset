@@ -322,6 +322,7 @@ const FilterValue: React.FC<FilterControlProps> = ({
         <Loading position="inline-centered" />
       ) : (
         <SuperChart
+          isMobile
           height={HEIGHT}
           width={RESPONSIVE_WIDTH}
           showOverflow={showOverflow}

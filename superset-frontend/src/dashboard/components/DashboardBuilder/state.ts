@@ -27,7 +27,7 @@ import {
 } from '../nativeFilters/FilterBar/state';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useNativeFilters = () => {
+export const useNativeFilters = (isMobile?: boolean) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const canEdit = useSelector<RootState, boolean>(
     ({ dashboardInfo }) => dashboardInfo.dash_edit_perm,
@@ -75,6 +75,12 @@ export const useNativeFilters = () => {
       toggleDashboardFiltersOpen(true);
     }
   }, [filterValues.length]);
+
+  useEffect(() => {
+    if (isMobile) {
+      toggleDashboardFiltersOpen(false);
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     if (showDashboard) {

@@ -73,6 +73,8 @@ import {
 } from 'src/dashboard/util/constants';
 import FilterBar from 'src/dashboard/components/nativeFilters/FilterBar';
 import Loading from 'src/components/Loading';
+// eslint-disable-next-line import/no-unresolved
+import useDetectDevice from 'src/hooks/useDetectDevice';
 import { EmptyStateBig } from 'src/components/EmptyState';
 import { useUiConfig } from 'src/components/UiConfigContext';
 import ResizableSidebar from 'src/components/ResizableSidebar';
@@ -336,7 +338,7 @@ const StyledDashboardContent = styled.div<{
         : '0px 24px 24px 48px'};
 
       @media (max-width: 768px) {
-        margin: 0px 10px 24px 10px;
+        margin: 0px 0px 24px 0px;
       }
 
       ${editMode &&
@@ -543,12 +545,14 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
     };
   }, []);
 
+  const { isMobile } = useDetectDevice();
+
   const {
     showDashboard,
     dashboardFiltersOpen,
     toggleDashboardFiltersOpen,
     nativeFiltersEnabled,
-  } = useNativeFilters();
+  } = useNativeFilters(isMobile);
 
   const [containerRef, isSticky] = useElementOnScreen<HTMLDivElement>({
     threshold: [1],
@@ -672,8 +676,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
 
   return (
     <DashboardWrapper>
-      {dashboardFiltersOpen &&
-        showFilterBar &&
+      {((dashboardFiltersOpen && showFilterBar) || isMobile) &&
         filterBarOrientation === FilterBarOrientation.Vertical && (
           <>
             <ResizableSidebar
