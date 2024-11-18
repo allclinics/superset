@@ -335,7 +335,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
         </div>
         <div className="header-controls">{!editMode && <HeaderControls />}</div>
       </div>
-      {!uiConfig.hideChartControls && <FiltersBadge chartId={slice.slice_id} />}
+      <FiltersBadge chartId={slice.slice_id} />
     </ChartHeaderStyles>
   );
 };

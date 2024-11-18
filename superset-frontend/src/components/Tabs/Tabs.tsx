@@ -237,7 +237,7 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     }
 
     @media (max-width: 768px) {
-      margin-bottom: ${({ isChild }) => (isChild ? '0px' : '13px')};
+      margin-bottom: ${({ isChild }) => (isChild ? '0px' : '28px')};
       transform: ${({ isMultiTabs }) =>
         isMultiTabs && 'translate(0px, 10px) !important'};
 
