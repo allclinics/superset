@@ -49,6 +49,10 @@ const Conteiner = styled.div`
   align-items: center;
   padding: 16px 16px 16px 20px;
   background: #f4f6fa;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const WrapperDetails = styled.div`

@@ -51,6 +51,7 @@ export type Chart = ChartState & {
   form_data: {
     viz_type: string;
     datasource: string;
+    mobileHeight?: number;
   };
 };
 

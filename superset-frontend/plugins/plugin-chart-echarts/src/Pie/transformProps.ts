@@ -326,7 +326,7 @@ export default function transformProps(
       ...getLegendProps(legendType, legendOrientation, showLegend, theme),
       data: keys,
       ...(pieChartLegendsTopPosition
-        ? { top: pieChartLegendsTopPosition }
+        ? { top: isMobile ? 27 : pieChartLegendsTopPosition }
         : {}),
     },
     graphic: showTotal
@@ -337,7 +337,11 @@ export default function transformProps(
           style: {
             text: `${pieChartLegend} ${keys.length}`,
             fontSize: isMobile ? 12 : 16,
-            fontWeight: 'bold',
+            fontWeight: isMobile ? 'bold' : 'unset',
+            width: isMobile ? 300 : 'unset',
+            overflow: isMobile ? 'break' : 'unset',
+            lineHeight: isMobile ? 18 : 'unset',
+            align: isMobile ? 'center' : 'unset',
           },
           z: 10,
         }

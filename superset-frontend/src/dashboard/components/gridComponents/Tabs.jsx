@@ -173,7 +173,7 @@ const StyledTabsContainer = styled.div`
     padding: ${({ isChild }) => (isChild ? '0px' : '0px 24px')};
 
     @media (max-width: 768px) {
-      padding: ${({ isChild }) => (isChild ? '0px' : '0px')};
+      padding: 0px;
     }
   }
 
@@ -193,6 +193,10 @@ const StyledTabsContainer = styled.div`
       overflow: visible;
       padding-top: 24px;
       border-radius: 20px;
+
+      @media (max-width: 768px) {
+        padding-top: 0px;
+      }
     }
   }
 

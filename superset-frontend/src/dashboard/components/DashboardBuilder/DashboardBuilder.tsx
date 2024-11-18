@@ -290,6 +290,10 @@ const DashboardContentWrapper = styled.div`
     & .dashboard-component-tabs-content {
       & > div:not(.empty-droptarget) {
         margin-bottom: ${theme.gridUnit * 6}px;
+
+        @media (max-width: 768px) {
+          margin-bottom: 8px;
+        }
       }
 
       & > .empty-droptarget {

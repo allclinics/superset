@@ -60,6 +60,26 @@ const config: ControlPanelConfig = {
       controlSetRows: [[showMapControl]],
     },
     {
+      label: t('Mobile Height Chart'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'mobileHeight',
+            config: {
+              type: 'TextControl',
+              label: 'Mobile Height Chart',
+              renderTrigger: true,
+              default: 0,
+              initialValue: 0,
+              isFloat: true,
+              description: 'Mobile Height Chart',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Query'),
       expanded: true,
       controlSetRows: [

@@ -87,6 +87,7 @@ const verticalStyle = (theme: SupersetTheme, width: number) => css`
   @media (max-width: 768px) {
     width: 100vw;
     flex-direction: row-reverse;
+    justify-content: center;
     column-gap: 12px;
     border-top: 1px solid #e8ecfc;
 

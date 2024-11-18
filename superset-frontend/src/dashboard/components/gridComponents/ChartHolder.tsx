@@ -139,6 +139,8 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
   const dashboardState = useSelector(
     (state: RootState) => state.dashboardState,
   );
+
+  const charts = useSelector((state: RootState) => state.charts);
   const [extraControls, setExtraControls] = useState<Record<string, unknown>>(
     {},
   );
@@ -273,6 +275,14 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
     }));
   }, []);
 
+  const mobileHeight = useMemo(
+    () =>
+      component.meta.chartId && charts[component.meta.chartId]
+        ? charts[component.meta.chartId]?.form_data?.mobileHeight
+        : undefined,
+    [charts, component.meta.chartId],
+  );
+
   return (
     <Draggable
       component={component}
@@ -300,6 +310,7 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
           onResize={onResize}
           onResizeStop={onResizeStop}
           editMode={editMode}
+          mobileHeight={mobileHeight}
         >
           <div
             ref={dragSourceRef}

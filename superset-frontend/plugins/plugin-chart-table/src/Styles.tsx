@@ -239,6 +239,10 @@ export default styled.div`
       font-weight: 500;
       line-height: 24px;
       width: 100px;
+
+      @media (max-width: 768px) {
+        display: flex;
+      }
     }
 
     .select-page-size {
