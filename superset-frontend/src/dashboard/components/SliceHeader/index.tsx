@@ -95,6 +95,10 @@ const ChartHeaderStyles = styled.div`
     flex-direction: column;
     row-gap: 8px;
 
+    @media (max-width: 768px) {
+      min-height: 56px;
+    }
+
     & > .header {
       display: flex;
       width: 100%;

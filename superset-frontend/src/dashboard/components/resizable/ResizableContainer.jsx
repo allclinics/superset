@@ -245,6 +245,7 @@ class ResizableContainer extends React.PureComponent {
       maxHeightMultiple,
       editMode,
       isMobile,
+      mobileHeight,
     } = this.props;
 
     const widthStep = isMobile ? 24 : this.props?.widthStep;
@@ -259,11 +260,14 @@ class ResizableContainer extends React.PureComponent {
           : (staticWidthMultiple && staticWidthMultiple * widthStep) ||
             staticWidth ||
             undefined,
-      height: adjustableHeight
-        ? heightStep * heightMultiple
-        : (staticHeightMultiple && staticHeightMultiple * heightStep) ||
-          staticHeight ||
-          undefined,
+      height:
+        isMobile && mobileHeight
+          ? mobileHeight
+          : adjustableHeight
+            ? heightStep * heightMultiple
+            : (staticHeightMultiple && staticHeightMultiple * heightStep) ||
+              staticHeight ||
+              undefined,
     };
 
     let enableConfig = resizableConfig.notAdjustable;

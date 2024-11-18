@@ -171,9 +171,11 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     width: ${({ isChild }) => (isChild ? '100%' : 'unset')};
     height: ${({ isChild }) => (isChild ? '48px' : 'unset')};
 
-    &:hover {
-      span {
-        color: #3876f6 !important;
+    @media (min-width: 768px) {
+      &:hover {
+        span {
+          color: #3876f6 !important;
+        }
       }
     }
   }
@@ -237,7 +239,8 @@ export const StyledLineEditableTabs = styled(EditableTabs)<{
     }
 
     @media (max-width: 768px) {
-      margin-bottom: ${({ isChild }) => (isChild ? '0px' : '28px')};
+      margin-bottom: ${({ isChild, isMultiTabs }) =>
+        isMultiTabs ? '24px' : isChild ? '0px' : '76px'};
       transform: ${({ isMultiTabs }) =>
         isMultiTabs && 'translate(0px, 10px) !important'};
 

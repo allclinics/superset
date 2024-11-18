@@ -27,4 +27,10 @@ export const Wrapper = styled.div`
   height: 240px;
   min-width: 350px;
   min-height: 240px;
+
+  @media (max-width: 768px) {
+    min-width: 300px;
+    width: 100%;
+    margin-top: 20px;
+  }
 `;
