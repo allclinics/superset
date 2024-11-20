@@ -335,13 +335,15 @@ export default function transformProps(
           ...getTotalValuePadding({ chartPadding, donut, width, height }),
           left: 'center',
           style: {
+            ...(isMobile && {
+              align: isMobile ? 'center' : 'unset',
+            }),
             text: `${pieChartLegend} ${keys.length}`,
             fontSize: isMobile ? 12 : 16,
-            fontWeight: isMobile ? 'bold' : 'unset',
-            width: isMobile ? 300 : 'unset',
-            overflow: isMobile ? 'break' : 'unset',
-            lineHeight: isMobile ? 18 : 'unset',
-            align: isMobile ? 'center' : 'unset',
+            fontWeight: 'bold',
+            overflow: 'break',
+            width: isMobile ? 300 : 480,
+            lineHeight: 18,
           },
           z: 10,
         }
