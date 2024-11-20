@@ -1431,6 +1431,10 @@ TALISMAN_CONFIG = {
             "'unsafe-inline'",
         ],
         "script-src": ["'self'", "'strict-dynamic'"],
+        "frame-src": [ 
+            "'self'",
+            "https://www.youtube.com",
+        ],
     },
     "content_security_policy_nonce_in": ["script-src"],
     "force_https": False,
