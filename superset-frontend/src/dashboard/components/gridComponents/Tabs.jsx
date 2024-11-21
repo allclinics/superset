@@ -447,7 +447,8 @@ export class Tabs extends React.PureComponent {
     const isMultiTabs = !!mapboxChartsArray?.length;
 
     const hospitalsLength = isMultiTabs
-      ? mapboxChartsArray?.[0]?.queriesResponse?.[0]?.data?.bounds?.length
+      ? mapboxChartsArray?.[0]?.queriesResponse?.[0]?.data?.geoJSON?.features
+          ?.length
       : 0;
 
     const menu = (
