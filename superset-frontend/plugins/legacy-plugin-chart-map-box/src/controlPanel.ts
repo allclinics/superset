@@ -115,6 +115,17 @@ const config: ControlPanelConfig = {
               description: t('Tabs ID'),
             },
           },
+          {
+            name: 'defaultTabIndex',
+            config: {
+              type: 'TextControl',
+              label: t('Default Tab Index'),
+              default: 0,
+              initialValue: 0,
+              isFloat: true,
+              description: t('Default Tab Index'),
+            },
+          },
         ],
       ],
     },
