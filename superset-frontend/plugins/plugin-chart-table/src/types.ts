@@ -80,6 +80,7 @@ export type TableChartFormData = QueryFormData & {
   include_search?: boolean;
   query_mode?: QueryMode;
   showPopUpLegend?: boolean;
+  showAllSizeOption?: boolean;
   showPopUpVideoLegend?: boolean;
   page_length?: string | number | null; // null means auto-paginate
   metrics?: QueryFormMetric[] | null;
@@ -131,6 +132,7 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   noMainBorder?: boolean;
   hideControlsOnCustomerView?: boolean;
   isRoundStyles?: boolean;
+  showAllSizeOption?: boolean;
   roundChartTitle?: string;
   // These are dashboard filters, don't be confused with in-chart search filter
   // enabled by `includeSearch`

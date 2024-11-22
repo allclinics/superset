@@ -277,6 +277,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     allowRearrangeColumns = false,
     onContextMenu,
     emitCrossFilters,
+    showAllSizeOption,
   } = props;
   const timestampFormatter = useCallback(
     value => getTimeFormatterForGranularity(timeGrain)(value),
@@ -293,10 +294,12 @@ export default function TableChart<D extends DataRecord = DataRecord>(
   // only take relevant page size options
   const pageSizeOptions = useMemo(() => {
     const getServerPagination = (n: number) => n <= rowCount;
-    return PAGE_SIZE_OPTIONS.filter(([n]) =>
+    return PAGE_SIZE_OPTIONS.filter(item =>
+      !showAllSizeOption ? item[0] !== 0 : showAllSizeOption,
+    ).filter(([n]) =>
       serverPagination ? getServerPagination(n) : n <= 2 * data.length,
     ) as SizeOption[];
-  }, [data.length, rowCount, serverPagination]);
+  }, [data.length, rowCount, serverPagination, showAllSizeOption]);
 
   const getValueRange = useCallback(
     function getValueRange(key: string, alignPositiveNegative: boolean) {
@@ -788,7 +791,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         )}
         isRoundStyles={isRoundStyles}
         roundChartTitle={roundChartTitle}
-        pageSize={pageSize}
+        pageSize={showAllSizeOption ? pageSize : pageSize === 0 ? 10 : pageSize}
         serverPaginationData={serverPaginationData}
         pageSizeOptions={pageSizeOptions}
         width={fullDisplay ? '100%' : widthFromState}
@@ -798,6 +801,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         onColumnOrderChange={() => setColumnOrderToggle(!columnOrderToggle)}
         maxPageItemCount={5}
         noResults={getNoResultsMessage}
+        showAllSizeOption={showAllSizeOption}
         searchInput={includeSearch && SelectedSearchInput}
         selectPageSize={pageSize !== null && SelectPageSize}
         // not in use in Superset, but needed for unit tests

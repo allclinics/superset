@@ -70,6 +70,7 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   onColumnOrderChange: () => void;
   isRoundStyles?: boolean;
   roundChartTitle?: string;
+  showAllSizeOption?: boolean;
 }
 
 export interface RenderHTMLCellProps extends HTMLProps<HTMLTableCellElement> {
