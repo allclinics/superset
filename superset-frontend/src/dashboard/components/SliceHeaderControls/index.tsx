@@ -87,6 +87,50 @@ const Wrapper = styled.div`
   column-gap: 4px;
 `;
 
+export const ModalBackground = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.3);
+`;
+
+export const VideoModal = styled.div`
+  position: fixed;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 648px;
+  border-radius: 40px;
+  width: 100%;
+  max-width: 1040px;
+  background: white;
+  flex-direction: column;
+  box-shadow: 0px 2px 10px 0px #262c4729;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+
+  .close-icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+`;
+
+export const VideoWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+`;
+
 const InfoWrapper = styled.div`
   display: flex;
 `;
@@ -421,6 +465,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
     supersetCanShare = false,
     isCached = [],
   } = props;
+  const [videoModal, setVideoModal] = useState({ open: false, link: '' });
   const { isMobile } = useDetectDevice();
   const isTable = slice.viz_type === 'table';
   const cachedWhen = (cachedDttm || []).map(itemCachedDttm =>
@@ -436,6 +481,15 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
     }
     return '';
   };
+
+  const handleOpenVideoModal = useCallback(() => {
+    setVideoModal({ open: true, link: props?.formData?.legendVideoLink });
+  }, [props?.formData?.legendVideoLink]);
+
+  const hanldeCloseVideoModal = useCallback(() => {
+    setVideoModal({ open: false, link: '' });
+  }, []);
+
   const refreshTooltipData = [...new Set(isCached.map(getCachedTitle) || '')];
   // If all queries have same cache time we can unit them to one
   const refreshTooltip = refreshTooltipData.map((item, index) => (
@@ -680,7 +734,35 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
         </InfoWrapper>
       )}
       {props?.formData?.showPopUpVideoLegend &&
-        props?.formData?.legendVideoLink && <Icons.VideoPlay />}
+        props?.formData?.legendVideoLink && (
+          <>
+            <Icons.VideoPlay onClick={handleOpenVideoModal} />
+            {videoModal.open && (
+              <ModalBackground>
+                <VideoModal className="video-modal">
+                  <Icons.Close
+                    iconSize="l"
+                    onClick={hanldeCloseVideoModal}
+                    className="close-icon"
+                  />
+                  <VideoWrapper>
+                    <iframe
+                      width="900"
+                      height="506"
+                      src={props?.formData?.legendVideoLink}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className="video-iframe"
+                    />
+                  </VideoWrapper>
+                </VideoModal>
+              </ModalBackground>
+            )}
+          </>
+        )}
       {!props?.hideChartControls && (
         <>
           <NoAnimationDropdown
