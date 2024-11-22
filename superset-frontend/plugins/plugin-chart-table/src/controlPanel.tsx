@@ -146,6 +146,25 @@ const percentMetricsControl: typeof sharedControls.metrics = {
 const config: ControlPanelConfig = {
   controlPanelSections: [
     {
+      label: t('Table Options'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'showAllSizeOption',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show select all size option',
+              renderTrigger: true,
+              default: false,
+              initialValue: false,
+              description: 'Show select all size option',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Show Loader'),
       expanded: true,
       controlSetRows: [
