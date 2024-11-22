@@ -223,6 +223,21 @@ export class Tabs extends React.PureComponent {
 
   componentDidMount() {
     this.props.setActiveTab(this.state.activeKey);
+
+    const mapboxChartsArray = this.props?.charts?.filter(
+      item =>
+        item?.form_data?.isMultiTabs &&
+        this.props?.id === item?.form_data?.tabsId,
+    );
+
+    const isMultiTabs = !!mapboxChartsArray?.length;
+
+    if (
+      isMultiTabs &&
+      mapboxChartsArray[0]?.form_data?.defaultTabIndex !== undefined
+    ) {
+      this.handleClickTab(mapboxChartsArray[0]?.form_data?.defaultTabIndex);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
