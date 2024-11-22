@@ -193,6 +193,20 @@ export default styled.div`
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
           border-left: 1px solid #e6e9f4;
+          width: 245px;
+
+          @media (max-width: 768px) {
+            width: unset;
+          }
+        }
+
+        th:nth-of-type(2),
+        td:nth-of-type(2) {
+          width: 150px;
+
+          @media (max-width: 768px) {
+            width: unset;
+          }
         }
 
         th:last-of-type,
