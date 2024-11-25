@@ -110,12 +110,15 @@ export default styled.div`
 
     .dt-global-filter {
       position: relative;
+      width: 100%;
+      max-width: 245px;
 
       input {
         border-radius: 10px;
         padding-left: 38px;
         height: 36px;
-        width: 245px;
+        width: 100%;
+        max-width: 245px;
         border: 1px solid #e8ecfc;
         font-size: 14px;
 
@@ -193,7 +196,8 @@ export default styled.div`
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
           border-left: 1px solid #e6e9f4;
-          width: 245px;
+          width: 100%;
+          max-width: 245px;
 
           @media (max-width: 768px) {
             width: unset;

@@ -135,6 +135,11 @@ const InfoWrapper = styled.div`
   display: flex;
 `;
 
+const Iframe = styled.iframe`
+  border-radius: 40px;
+  border: 9px solid #d9e4ff;
+`;
+
 const HorizontalDotsContainer = styled.div`
   display: flex;
   border-radius: 50%;
@@ -746,7 +751,7 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
                     className="close-icon"
                   />
                   <VideoWrapper>
-                    <iframe
+                    <Iframe
                       width="900"
                       height="506"
                       src={props?.formData?.legendVideoLink}

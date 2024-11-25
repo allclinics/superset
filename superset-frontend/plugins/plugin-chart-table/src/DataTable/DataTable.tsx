@@ -344,17 +344,21 @@ export default typedMemo(function DataTable<D extends object>({
 
   const columnStyles: CSSProperties = {
     display: 'flex',
-    width: '100%',
     paddingRight: '0px',
+    paddingLeft: '0px',
+    marginLeft: 'auto',
   };
 
   const controlSearchStyles: CSSProperties = {
     padding: '0px',
+    width: '100%',
+    maxWidth: '245px',
   };
 
   const selectPageWrapperStyles: CSSProperties = {
     display: 'flex',
     marginLeft: 'auto',
+    paddingLeft: '24px',
   };
 
   let resultPageCount = pageCount;
