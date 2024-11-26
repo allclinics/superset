@@ -130,8 +130,8 @@ export default styled.div`
       svg {
         position: absolute;
         left: 10px;
-        top: 55%;
-        transform: translateY(-50%);
+        top: 6px;
+        z-index: 100;
       }
     }
 
