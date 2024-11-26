@@ -85,6 +85,42 @@ const defaultProps = {
   onResizeStop() {},
 };
 
+const MobileTabsWrapper = styled.div`
+  display: flex;
+  top: 24px;
+  padding: 10px 24px 0px 24px;
+  flex-direction: row;
+  overflow: hidden;
+  position: sticky;
+  z-index: 100;
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-bottom: 76px;
+`;
+
+const MobileTabs = styled.div`
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  width: 100%;
+  overflow: scroll;
+`;
+
+const MobileTab = styled.div`
+  display: flex;
+  padding: 6px 12px;
+  font-weight: 500;
+  font-size: 16px;
+  min-width: max-content;
+  cursor: pointer;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24px;
+  color: ${({ isActive }) => (isActive ? '#3876f6' : '#5a607f')};
+  border-bottom: ${({ isActive }) => isActive && '2px solid #3876f6'};
+`;
+
 const SubTitle = styled.span`
   font-family: ${({ theme }) => theme.typography.families.sansSerif};
   font-size: 16px;
@@ -516,6 +552,21 @@ export class Tabs extends React.PureComponent {
                   </Button>
                 </Dropdown>
               </StyledDropdown>
+            )}
+            {!isChild && isMobile && (
+              <MobileTabsWrapper>
+                <MobileTabs>
+                  {tabIds.map((tabId, tabIndex) => (
+                    <MobileTab
+                      key={tabId}
+                      onClick={() => this.handleClickTab(tabIndex)}
+                      isActive={tabId === activeKey}
+                    >
+                      {this.props.getComponentById(tabId)?.meta?.text}
+                    </MobileTab>
+                  ))}
+                </MobileTabs>
+              </MobileTabsWrapper>
             )}
             <LineEditableTabs
               id={tabsComponent.id}

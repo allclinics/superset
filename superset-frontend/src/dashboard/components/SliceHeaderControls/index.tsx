@@ -104,7 +104,8 @@ export const VideoModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 648px;
+  height: calc(100vh - 50px);
+  max-height: 648px;
   border-radius: 40px;
   width: 100%;
   max-width: 1040px;
@@ -113,22 +114,30 @@ export const VideoModal = styled.div`
   box-shadow: 0px 2px 10px 0px #262c4729;
   justify-content: center;
   align-items: center;
+  padding: 40px;
 
   @media (max-width: 768px) {
-    width: 100vw;
+    width: calc(100vw - 28px);
+    height: 340px;
+    padding: 20px;
   }
 
   .close-icon {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 25px;
+    right: 25px;
+
+    @media (max-width: 768px) {
+      top: 15px;
+      right: 15px;
+    }
   }
 `;
 
 export const VideoWrapper = styled.div`
   display: flex;
   width: 100%;
-  max-width: 900px;
+  height: 100%;
 `;
 
 const InfoWrapper = styled.div`
@@ -138,6 +147,10 @@ const InfoWrapper = styled.div`
 const Iframe = styled.iframe`
   border-radius: 40px;
   border: 9px solid #d9e4ff;
+
+  @media (max-width: 768px) {
+    border: 4px solid #d9e4ff;
+  }
 `;
 
 const HorizontalDotsContainer = styled.div`
@@ -752,8 +765,8 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
                   />
                   <VideoWrapper>
                     <Iframe
-                      width="900"
-                      height="506"
+                      width="100%"
+                      height="100%"
                       src={props?.formData?.legendVideoLink}
                       title="YouTube video player"
                       frameBorder="0"
