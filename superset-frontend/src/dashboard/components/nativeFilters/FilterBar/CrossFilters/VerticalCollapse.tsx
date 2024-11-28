@@ -17,9 +17,10 @@
  * under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Collapse from 'src/components/Collapse';
 import { styled, t, useTheme, css } from '@superset-ui/core';
+import Icons from 'src/components/Icons';
 import { FilterBarOrientation } from 'src/dashboard/types';
 import CrossFilter from './CrossFilter';
 import { CrossFilterIndicator } from '../../selectors';
@@ -43,9 +44,9 @@ const StyledCollapse = styled(Collapse)`
 `;
 
 const StyledCrossFiltersTitle = styled.span`
-  ${({ theme }) => `
-    font-size: ${theme.typography.sizes.s}px;
-  `}
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
 `;
 
 const CrossFiltersVerticalCollapse = (props: {
@@ -65,6 +66,22 @@ const CrossFiltersVerticalCollapse = (props: {
     [crossFilters],
   );
 
+  const renderExpendIcon = useCallback(
+    ({ isActive }: { isActive: boolean }) => (
+      <Icons.Dropdown
+        style={{
+          transform: `translate(-5px, 6px) rotate(${
+            isActive ? '180deg' : '0deg'
+          })`,
+          fontSize: '22px',
+          padding: 0,
+          transition: 'transform 0.3s ease',
+        }}
+      />
+    ),
+    [],
+  );
+
   if (!crossFilters.length) {
     return null;
   }
@@ -74,6 +91,7 @@ const CrossFiltersVerticalCollapse = (props: {
       ghost
       defaultActiveKey="crossFilters"
       expandIconPosition="right"
+      expandIcon={renderExpendIcon}
     >
       <Collapse.Panel
         key="crossFilters"
@@ -91,7 +109,7 @@ const CrossFiltersVerticalCollapse = (props: {
             height: 1px;
             display: block;
             background: ${theme.colors.grayscale.light3};
-            margin: ${theme.gridUnit * 8}px auto 0 auto;
+            margin: 24px auto 0 auto;
           `}
         />
       </Collapse.Panel>

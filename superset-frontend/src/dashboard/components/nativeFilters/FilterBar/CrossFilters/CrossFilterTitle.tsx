@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -41,18 +42,13 @@ const StyledCrossFilterTitle = styled.div`
 `;
 
 const StyledIconSearch = styled(Icons.SearchOutlined)`
-  ${({ theme }) => `
-    & > span.anticon.anticon-search {
-      color: ${theme.colors.grayscale.light1};
-      margin-left: ${theme.gridUnit}px;
-      transition: 0.3s;
-      vertical-align: middle;
-      line-height: 0;
-      &:hover {
-        color: ${theme.colors.grayscale.base};
-      }
-    }
-  `}
+  & > span.anticon.anticon-search {
+    color: #797e9d;
+    margin-left: 8px;
+    transition: 0.3s;
+    vertical-align: middle;
+    line-height: 0;
+  }
 `;
 
 const CrossFilterChartTitle = (props: {
@@ -72,6 +68,11 @@ const CrossFilterChartTitle = (props: {
               ? `${theme.gridUnit * 45}px`
               : `${theme.gridUnit * 15}px`};
             line-height: 1.4;
+            font-family: Inter;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: #a1a7c4;
             ${ellipsisCss}
           `}
           ref={titleRef}

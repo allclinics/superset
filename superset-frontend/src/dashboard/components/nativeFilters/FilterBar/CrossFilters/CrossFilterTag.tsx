@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -28,12 +29,15 @@ import {
 import { CrossFilterIndicator } from 'src/dashboard/components/nativeFilters/selectors';
 import { Tag } from 'src/components';
 import { Tooltip } from 'src/components/Tooltip';
+import WeightCross from 'src/assets/images/icons/weight_cross.svg';
 import { FilterBarOrientation } from 'src/dashboard/types';
 import { ellipsisCss } from './styles';
 
 const StyledCrossFilterValue = styled.b`
   ${({ theme }) => `
     max-width: ${theme.gridUnit * 25}px;
+    font-size: 14px;
+    line-height: 20px;
   `}
   ${ellipsisCss}
 `;
@@ -42,18 +46,26 @@ const StyledCrossFilterColumn = styled('span')`
   ${({ theme }) => `
     max-width: ${theme.gridUnit * 25}px;
     padding-right: ${theme.gridUnit}px;
+    font-size: 14px;
+    line-height: 20px;
   `}
   ${ellipsisCss}
 `;
 
 const StyledTag = styled(Tag)`
-  ${({ theme }) => `
-    border: 1px solid ${theme.colors.grayscale.light3};
-    border-radius: 2px;
-    .anticon-close {
-      vertical-align: middle;
-    }
-  `}
+  border: 1px solid #3876f6;
+  border-radius: 10px;
+  background: #d9e4ff;
+  color: #3876f6;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0px 4px 0px 12px;
+
+  .anticon-close {
+    vertical-align: middle;
+    color: #3876f6;
+  }
 `;
 
 const CrossFilterTag = (props: {
@@ -71,6 +83,10 @@ const CrossFilterTag = (props: {
   return (
     <StyledTag
       css={css`
+        .ant-tag-close-icon {
+          justify-content: center;
+          display: flex;
+        }
         ${orientation === FilterBarOrientation.Vertical
           ? `
             margin-top: ${theme.gridUnit * 2}px;
@@ -80,6 +96,7 @@ const CrossFilterTag = (props: {
           `}
       `}
       closable
+      closeIcon={<WeightCross />}
       onClose={() => removeCrossFilter(filter.emitterId)}
     >
       <Tooltip title={columnIsTruncated ? columnLabel : null}>
