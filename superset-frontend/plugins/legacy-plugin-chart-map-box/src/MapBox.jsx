@@ -18,14 +18,23 @@
  */
 /* eslint-disable react/jsx-sort-default-props, react/sort-prop-types */
 /* eslint-disable react/forbid-prop-types, react/require-default-props */
+/* eslint-disable camelcase */
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-template */
+/* eslint-disable react/require-default-props */
+/* eslint-disable theme-colors/no-literal-colors */
 import React from 'react';
 import PropTypes from 'prop-types';
-import MapGL from 'react-map-gl';
+import MapGL, { Marker, Popup } from 'react-map-gl';
 import ViewportMercator from 'viewport-mercator-project';
-import ScatterPlotGlowOverlay from './ScatterPlotGlowOverlay';
 import './MapBox.css';
 import ZoomIn from './icons/zoom-in';
 import ZoomOut from './icons/zoom-out';
+import Point from './icons/point.svg';
+import LocationIcon from './icons/location';
+import PhoneIcon from './icons/phone';
+import WorldIcon from './icons/world';
+import './popup.css';
 
 const NOOP = () => {};
 export const DEFAULT_MAX_ZOOM = 16;
@@ -72,6 +81,11 @@ class MapBox extends React.Component {
     const { latitude, longitude, zoom } = mercator;
 
     this.state = {
+      modal: {
+        showModal: false,
+        popupCoords: null,
+        modal_data: null,
+      },
       viewport: {
         longitude,
         latitude,
@@ -82,6 +96,8 @@ class MapBox extends React.Component {
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
     this.handleViewDetail = this.handleViewDetail.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   zoomIn() {
@@ -106,6 +122,28 @@ class MapBox extends React.Component {
     this.setState({ viewport });
     const { onViewportChange } = this.props;
     onViewportChange(viewport);
+  }
+
+  handleOpenModal(pixel, modal_data) {
+    this.setState(prevState => ({
+      ...prevState,
+      modal: {
+        showModal: true,
+        popupCoords: pixel,
+        modal_data,
+      },
+    }));
+  }
+
+  closeModal() {
+    this.setState(prevState => ({
+      ...prevState,
+      modal: {
+        showModal: false,
+        popupCoords: null,
+        modal_data: null,
+      },
+    }));
   }
 
   handleViewDetail(value) {
@@ -141,22 +179,14 @@ class MapBox extends React.Component {
     const {
       width,
       height,
-      aggregatorName,
       clusterer,
-      globalOpacity,
       mapStyle,
       mapboxApiKey,
-      pointRadius,
-      pointRadiusUnit,
-      renderWhileDragging,
-      rgb,
-      hasCustomMetric,
       bounds,
       namesDisappearZoomLevel,
     } = this.props;
-    const { viewport } = this.state;
-    const isDragging =
-      viewport.isDragging === undefined ? false : viewport.isDragging;
+    const { viewport, modal } = this.state;
+    const { modal_data, popupCoords, showModal } = modal;
 
     // Compute the clusters based on the original bounds and current zoom level. Note when zoom/pan
     // to an area outside of the original bounds, no additional queries are made to the backend to
@@ -182,6 +212,76 @@ class MapBox extends React.Component {
         onViewportChange={this.handleViewportChange}
         preserveDrawingBuffer
       >
+        {clusters.map((item, index) => (
+          <>
+            {item?.properties?.modal_data?.longitude &&
+              item?.properties?.modal_data?.latitude && (
+                <Marker
+                  key={`marker-${index}`}
+                  longitude={item?.properties?.modal_data?.longitude}
+                  latitude={item?.properties?.modal_data?.latitude}
+                  onClick={() => {
+                    this.handleOpenModal(
+                      item?.geometry.coordinates,
+                      item?.properties?.modal_data,
+                    );
+                  }}
+                >
+                  <Point className="point" />
+                  {viewport?.zoom >= namesDisappearZoomLevel && (
+                    <span className="pointText">
+                      {item?.properties?.modal_data?.hospital_name}
+                    </span>
+                  )}
+                </Marker>
+              )}
+          </>
+        ))}
+        {showModal && popupCoords && modal_data && (
+          <Popup
+            longitude={popupCoords[0]}
+            latitude={popupCoords[1]}
+            anchor="right"
+            onClose={this.closeModal}
+            className="popup"
+            offsetLeft={10}
+            offsetTop={10}
+          >
+            <div className="wrapper">
+              <h3 className="title">{modal_data?.hospital_name}</h3>
+              <div className="divider" />
+              <div className="infoList">
+                {modal_data?.map_address && (
+                  <div className="listItem">
+                    <LocationIcon />
+                    <span className="listItemText">
+                      {modal_data?.map_address}
+                    </span>
+                  </div>
+                )}
+                {modal_data?.phone && (
+                  <div className="listItem">
+                    <PhoneIcon />
+                    <span className="listItemText">{modal_data?.phone}</span>
+                  </div>
+                )}
+                {modal_data?.website && (
+                  <div className="listItem">
+                    <WorldIcon />
+                    <span className="listItemText">{modal_data?.website}</span>
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                className="button"
+                onClick={() => this.handleViewDetail(modal_data?.hospital_name)}
+              >
+                Hospital Details
+              </button>
+            </div>
+          </Popup>
+        )}
         <div className="zoom-controls">
           <button
             type="button"
@@ -201,25 +301,6 @@ class MapBox extends React.Component {
             <ZoomOut />
           </button>
         </div>
-        <ScatterPlotGlowOverlay
-          {...viewport}
-          isDragging={isDragging}
-          locations={clusters}
-          dotRadius={pointRadius}
-          pointRadiusUnit={pointRadiusUnit}
-          rgb={rgb}
-          namesDisappearZoomLevel={namesDisappearZoomLevel}
-          globalOpacity={globalOpacity}
-          compositeOperation="screen"
-          handleViewDetail={this.handleViewDetail}
-          renderWhileDragging={renderWhileDragging}
-          aggregation={hasCustomMetric ? aggregatorName : null}
-          lngLatAccessor={location => {
-            const { coordinates } = location.geometry;
-
-            return [coordinates[0], coordinates[1]];
-          }}
-        />
       </MapGL>
     );
   }

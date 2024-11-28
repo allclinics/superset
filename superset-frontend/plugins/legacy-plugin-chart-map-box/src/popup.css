@@ -102,3 +102,22 @@
   background: transparent;
   padding: 20px;
 }
+
+.pointText {
+  position: absolute;
+  left: 50%;
+  width: 120px;
+  transform: translate(-50%, 0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #3876f6;
+}
+
+.point {
+  cursor: pointer;
+}
