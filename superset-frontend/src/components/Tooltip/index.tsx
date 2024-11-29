@@ -16,18 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { useTheme, css } from '@superset-ui/core';
 import { Tooltip as AntdTooltip } from 'antd';
 import {
-  TooltipProps,
+  TooltipProps as AntdTooltipProps,
   TooltipPlacement as AntdTooltipPlacement,
 } from 'antd/lib/tooltip';
 import { Global } from '@emotion/react';
 
-export type TooltipPlacement = AntdTooltipPlacement;
+export type TooltipPlacement = AntdTooltipPlacement & {};
 
-export const Tooltip = (props: TooltipProps) => {
+export type TooltipProps = {
+  overlayInnerStyles?: CSSProperties;
+} & AntdTooltipProps;
+
+export const Tooltip = ({
+  overlayInnerStyles = {},
+  ...props
+}: TooltipProps) => {
   const theme = useTheme();
   return (
     <>
@@ -47,13 +54,17 @@ export const Tooltip = (props: TooltipProps) => {
         `}
       />
       <AntdTooltip
-        overlayStyle={{ fontSize: theme.typography.sizes.s, lineHeight: '1.6' }}
+        overlayStyle={{
+          fontSize: theme.typography.sizes.s,
+          lineHeight: '1.6',
+        }}
         overlayInnerStyle={{
           display: '-webkit-box',
           overflow: 'hidden',
           WebkitLineClamp: 40,
           WebkitBoxOrient: 'vertical',
           textOverflow: 'ellipsis',
+          ...overlayInnerStyles,
         }}
         color={`${theme.colors.grayscale.dark2}e6`}
         {...props}

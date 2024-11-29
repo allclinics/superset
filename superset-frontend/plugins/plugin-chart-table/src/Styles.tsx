@@ -20,8 +20,8 @@
 
 import { css, styled } from '@superset-ui/core';
 
-export default styled.div`
-  ${({ theme }) => css`
+export default styled.div<{ isRoundStyles?: boolean }>`
+  ${({ theme, isRoundStyles }) => css`
     table {
       width: 100%;
       min-width: auto;
@@ -130,7 +130,7 @@ export default styled.div`
       svg {
         position: absolute;
         left: 10px;
-        top: 6px;
+        top: ${isRoundStyles ? '6px' : '-1px'};
         z-index: 100;
       }
     }
@@ -196,20 +196,24 @@ export default styled.div`
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
           border-left: 1px solid #e6e9f4;
-          width: 100%;
+          min-width: 200px;
+          width: 200px;
           max-width: 245px;
 
           @media (max-width: 768px) {
             width: unset;
+            min-width: unset;
           }
         }
 
         th:nth-of-type(2),
         td:nth-of-type(2) {
-          width: 150px;
+          width: 200px;
+          min-width: 200px;
 
           @media (max-width: 768px) {
             width: unset;
+            min-width: unset;
           }
         }
 
@@ -218,6 +222,7 @@ export default styled.div`
           border-right: 1px solid #e6e9f4;
           border-top-right-radius: 20px;
           border-bottom-right-radius: 20px;
+          width: 100%;
         }
       }
     }

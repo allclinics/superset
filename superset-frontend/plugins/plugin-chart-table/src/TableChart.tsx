@@ -778,7 +778,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
   const SelectedSearchInput = isRoundStyles ? RoundSearchInput : SearchInput;
 
   return (
-    <Styles>
+    <Styles isRoundStyles={isRoundStyles}>
       <DataTable<D>
         columns={columns}
         data={data}
