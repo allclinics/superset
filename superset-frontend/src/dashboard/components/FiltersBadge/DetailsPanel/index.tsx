@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -76,7 +77,9 @@ const DetailsPanelPopover = ({
         styles={theme => css`
           .filterStatusPopover {
             .ant-popover-inner {
-              background-color: ${theme.colors.grayscale.dark2}cc;
+              background-color: #ffffff;
+              border-radius: 16px;
+              padding: 8px;
               .ant-popover-inner-content {
                 padding: ${theme.gridUnit * 2}px;
               }
@@ -85,36 +88,36 @@ const DetailsPanelPopover = ({
             &.ant-popover-placement-bottomLeft,
             &.ant-popover-placement-bottomRight {
               & > .ant-popover-content > .ant-popover-arrow {
-                border-top-color: ${theme.colors.grayscale.dark2}cc;
-                border-left-color: ${theme.colors.grayscale.dark2}cc;
+                border-top-color: #ffffff;
+                border-left-color: #ffffff;
               }
             }
             &.ant-popover-placement-top,
             &.ant-popover-placement-topLeft,
             &.ant-popover-placement-topRight {
               & > .ant-popover-content > .ant-popover-arrow {
-                border-bottom-color: ${theme.colors.grayscale.dark2}cc;
-                border-right-color: ${theme.colors.grayscale.dark2}cc;
+                border-bottom-color: #ffffff;
+                border-right-color: #ffffff;
               }
             }
             &.ant-popover-placement-left,
             &.ant-popover-placement-leftTop,
             &.ant-popover-placement-leftBottom {
               & > .ant-popover-content > .ant-popover-arrow {
-                border-top-color: ${theme.colors.grayscale.dark2}cc;
-                border-right-color: ${theme.colors.grayscale.dark2}cc;
+                border-top-color: #ffffff;
+                border-right-color: #ffffff;
               }
             }
             &.ant-popover-placement-right,
             &.ant-popover-placement-rightTop,
             &.ant-popover-placement-rightBottom {
               & > .ant-popover-content > .ant-popover-arrow {
-                border-bottom-color: ${theme.colors.grayscale.dark2}cc;
-                border-left-color: ${theme.colors.grayscale.dark2}cc;
+                border-bottom-color: #ffffff;
+                border-left-color: #ffffff;
               }
             }
             &.ant-popover {
-              color: ${theme.colors.grayscale.light4};
+              color: #535353;
               z-index: 99;
             }
           }

@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -59,6 +60,8 @@ export const Pill = styled.div`
 
 export const SectionName = styled.span`
   ${({ theme }) => css`
+    color: #535353;
+    font-size: 12px;
     font-weight: ${theme.typography.weights.bold};
   `}
 `;
@@ -101,6 +104,8 @@ export const FilterItem = styled.button`
 
 export const FiltersContainer = styled.div`
   ${({ theme }) => css`
+    color: #535353;
+    font-size: 12px;
     margin-top: ${theme.gridUnit}px;
     &:not(:last-child) {
       padding-bottom: ${theme.gridUnit * 3}px;
@@ -110,6 +115,8 @@ export const FiltersContainer = styled.div`
 
 export const FiltersDetailsContainer = styled.div`
   ${({ theme }) => css`
+    color: #535353;
+    font-size: 12px;
     min-width: 200px;
     max-width: 300px;
     overflow-x: hidden;
@@ -119,6 +126,8 @@ export const FiltersDetailsContainer = styled.div`
 `;
 
 export const FilterValue = styled.span`
+  color: #535353;
+  font-size: 12px;
   max-width: 100%;
   flex-grow: 1;
   overflow: auto;
@@ -126,6 +135,8 @@ export const FilterValue = styled.span`
 
 export const Separator = styled.div`
   ${({ theme }) => css`
+    color: #535353;
+    font-size: 12px;
     width: 100%;
     height: 1px;
     background-color: ${theme.colors.grayscale.light1};

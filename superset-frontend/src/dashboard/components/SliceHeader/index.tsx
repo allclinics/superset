@@ -197,7 +197,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
   const SliceHeaderExtension = extensionsRegistry.get('dashboard.slice.header');
   const uiConfig = useUiConfig();
   const dashboardPageId = useContext(DashboardPageIdContext);
-  const [headerTooltip, setHeaderTooltip] = useState<ReactNode | null>(null);
+  const [, setHeaderTooltip] = useState<ReactNode | null>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   // TODO: change to indicator field after it will be implemented
   const crossFilterValue = useSelector<RootState, any>(
@@ -296,7 +296,19 @@ const SliceHeader: FC<SliceHeaderProps> = ({
     <ChartHeaderStyles data-test="slice-header" ref={innerRef}>
       <div className="header">
         <div className="header-title" ref={headerRef} style={{ width: '100%' }}>
-          <Tooltip title={headerTooltip}>
+          <Tooltip
+            title="This chart shows up to 250 elements for optimal vizualization."
+            color="#ffffff"
+            overlayInnerStyles={{
+              color: '#535353',
+              fontSize: '12px',
+              lineHeight: '18px',
+              padding: '16px',
+              boxShadow: '2px 0px 10px 0px #262C4729',
+              borderRadius: '16px',
+              maxWidth: '236px',
+            }}
+          >
             <EditableTitle
               title={
                 sliceName ||
@@ -307,7 +319,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
               canEdit={editMode}
               onSaveTitle={updateSliceName}
               showTooltip={false}
-              url={canExplore ? exploreUrl : undefined}
+              url={!editMode ? '#' : canExplore ? exploreUrl : undefined}
             />
           </Tooltip>
           {!!Object.values(annotationQuery).length && (
