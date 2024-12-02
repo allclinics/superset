@@ -19,18 +19,34 @@
  */
 import { styled } from '@superset-ui/core';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ width: string; height: string }>`
   border-radius: ${({ theme }) => theme.gridUnit * 5}px;
   border: 1px solid #e6e9f4;
   overflow: auto;
-  width: 350px;
-  height: 240px;
-  min-width: 350px;
-  min-height: 240px;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  min-width: ${({ width }) => width};
+  min-height: ${({ height }) => height};
 
   @media (max-width: 768px) {
     min-width: 300px;
+    min-height: 300px;
     width: 100%;
     margin-top: 20px;
   }
+`;
+
+export const PointText = styled.span`
+  position: absolute;
+  left: 50%;
+  width: 120px;
+  transform: translate(-50%, 0px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #3876f6;
 `;

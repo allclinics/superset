@@ -61,4 +61,5 @@ export type HandlebarsProps = HandlebarsStylesProps &
     // add typing here for the props you pass in from transformProps.ts!
     formData: HandlebarsQueryFormData;
     mapboxApiKey: string;
+    isMobile?: boolean;
   };

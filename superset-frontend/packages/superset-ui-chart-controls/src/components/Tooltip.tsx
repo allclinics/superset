@@ -52,7 +52,7 @@ export const Tooltip = ({ overlayStyle, color, ...props }: TooltipProps) => {
         }}
         // make the tooltip display closer to the label
         align={{ offset: [0, 1] }}
-        color={defaultColor || color}
+        color={color ?? defaultColor}
         trigger="hover"
         placement="bottom"
         // don't allow hovering over the tooltip

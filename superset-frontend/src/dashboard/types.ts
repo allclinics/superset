@@ -52,6 +52,7 @@ export type Chart = ChartState & {
     viz_type: string;
     datasource: string;
     mobileHeight?: number;
+    isFullHeight?: boolean;
   };
 };
 
