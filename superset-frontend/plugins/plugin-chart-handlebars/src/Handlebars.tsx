@@ -22,9 +22,11 @@ import React, { createRef } from 'react';
 import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
 import Map from './components/Map';
+import LocationMetrics from './components/LocationMetrics';
 import CallIcon from './icons/call.svg';
 import PinIcon from './icons/pin.svg';
 import GlobeIcon from './icons/globe.svg';
+import { ClinicItem } from './components/Map/Map.interface';
 
 const Styles = styled.div<HandlebarsStylesProps>`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
@@ -48,6 +50,7 @@ const Conteiner = styled.div`
   justify-content: center;
   align-items: center;
   padding: 16px 16px 16px 20px;
+  min-height: 278px;
   background: #f4f6fa;
 
   @media (max-width: 768px) {
@@ -133,61 +136,77 @@ export default function Handlebars(props: HandlebarsProps) {
       fullDisplay={formData?.fullDisplay}
     >
       {props?.formData?.showMap ? (
-        <Conteiner>
-          <WrapperDetails>
-            <Header>
-              <Title>{data[0].hospital_name}</Title>
-              {data[0]?.id && (
-                <div>
-                  <Text>
-                    <Bold>AllClinics ID:</Bold>
-                    {` ${data[0]?.id}`}
-                  </Text>
-                </div>
-              )}
-              {data[0]?.description && (
-                <div>
-                  <Text>
-                    <Bold>Descriptions:</Bold>
-                    {` ${data[0]?.description}`}
-                  </Text>
-                </div>
-              )}
-            </Header>
-            <Divider />
-            <Footer>
-              {data[0]?.address && (
-                <Item>
-                  <PinIcon />
-                  <Text>{data[0].address}</Text>
-                </Item>
-              )}
-              {data[0]?.phone && (
-                <Item>
-                  <CallIcon />
-                  <Text>{data[0]?.phone}</Text>
-                </Item>
-              )}
-              {data[0]?.website && (
-                <Item>
-                  <GlobeIcon />
-                  <Text>{data[0].website}</Text>
-                </Item>
-              )}
-            </Footer>
-          </WrapperDetails>
-          {props?.mapboxApiKey && data[0]?.latitude && data[0]?.longitude && (
-            <Map
-              latitude={
-                typeof data[0]?.latitude === 'number' ? data[0].latitude : 0
-              }
-              longitude={
-                typeof data[0]?.longitude === 'number' ? data[0].longitude : 0
-              }
-              mapboxApiKey={props?.mapboxApiKey}
-            />
+        <>
+          {props?.formData?.isLocationMatrics ? (
+            <LocationMetrics {...props} />
+          ) : (
+            <Conteiner>
+              <WrapperDetails>
+                <Header>
+                  <Title>{data[0]?.hospital_name}</Title>
+                  {data[0]?.id && (
+                    <div>
+                      <Text>
+                        <Bold>AllClinics ID:</Bold>
+                        {` ${data[0]?.id}`}
+                      </Text>
+                    </div>
+                  )}
+                  {data[0]?.description && (
+                    <div>
+                      <Text>
+                        <Bold>Descriptions:</Bold>
+                        {` ${data[0]?.description}`}
+                      </Text>
+                    </div>
+                  )}
+                </Header>
+                <Divider />
+                <Footer>
+                  {data[0]?.address && (
+                    <Item>
+                      <PinIcon />
+                      <Text>{data[0].address}</Text>
+                    </Item>
+                  )}
+                  {data[0]?.phone && (
+                    <Item>
+                      <CallIcon />
+                      <Text>{data[0]?.phone}</Text>
+                    </Item>
+                  )}
+                  {data[0]?.website && (
+                    <Item>
+                      <GlobeIcon />
+                      <Text>{data[0].website}</Text>
+                    </Item>
+                  )}
+                </Footer>
+              </WrapperDetails>
+              {props?.mapboxApiKey &&
+                data[0]?.latitude &&
+                data[0]?.longitude && (
+                  <Map
+                    width="350px"
+                    height="240px"
+                    isMobile={!!props?.isMobile}
+                    list={data as unknown as ClinicItem[]}
+                    defaultLatitude={
+                      typeof data[0]?.latitude === 'number'
+                        ? data[0].latitude
+                        : 0
+                    }
+                    defaultLongitude={
+                      typeof data[0]?.longitude === 'number'
+                        ? data[0].longitude
+                        : 0
+                    }
+                    mapboxApiKey={props?.mapboxApiKey}
+                  />
+                )}
+            </Conteiner>
           )}
-        </Conteiner>
+        </>
       ) : (
         <HandlebarsViewer data={{ data }} templateSource={templateSource} />
       )}

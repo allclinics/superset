@@ -351,7 +351,9 @@ class ChartRenderer extends React.Component {
             chartType={vizType}
             isMobile={isMobile}
             width={isMobile ? '100%' : width}
-            height={height}
+            height={
+              this.props?.formData?.isFullHeight && isMobile ? '100%' : height
+            }
             annotationData={annotationData}
             datasource={datasource}
             initialValues={initialValues}

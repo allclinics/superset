@@ -16,18 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { ChartProps, TimeseriesDataRecord } from '@superset-ui/core';
+import { ControlSetItem } from '@superset-ui/chart-controls';
 
-export default function transformProps(chartProps: ChartProps) {
-  const { width, height, formData, queriesData, isMobile } = chartProps;
-  const data = queriesData[0].data as TimeseriesDataRecord[];
-
-  return {
-    width,
-    height,
-    data,
-    formData,
-    isMobile,
-    mapboxApiKey: queriesData[0]?.mapbox_api_key,
-  };
-}
+export const isLocationMatricsControl: ControlSetItem = {
+  name: 'isLocationMatrics',
+  config: {
+    type: 'CheckboxControl',
+    label: 'Show Location Matrics',
+    renderTrigger: true,
+    default: false,
+    description: 'Show Location Matrics',
+  },
+};

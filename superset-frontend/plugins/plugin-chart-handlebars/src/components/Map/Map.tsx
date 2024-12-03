@@ -20,42 +20,57 @@
 import React, { useState, useEffect, useCallback, type FC } from 'react';
 import MapGL, { Marker, ViewState } from 'react-map-gl';
 import { MapProps } from './Map.interface';
-import { Wrapper } from './Map.styled';
+import { Wrapper, PointText } from './Map.styled';
 import Point from '../../icons/point.svg';
 
-const Map: FC<MapProps> = ({ mapboxApiKey, latitude, longitude }) => {
+const Map: FC<MapProps> = ({
+  width,
+  height,
+  mapboxApiKey,
+  list,
+  defaultLatitude,
+  defaultLongitude,
+  isMobile,
+}) => {
   const [viewport, setViewport] = useState({
-    latitude,
-    longitude,
+    latitude: defaultLatitude,
+    longitude: defaultLongitude,
     zoom: 15,
   });
 
   useEffect(() => {
     setViewport({
-      latitude,
-      longitude,
+      latitude: defaultLatitude,
+      longitude: defaultLongitude,
       zoom: 15,
     });
-  }, [latitude, longitude]);
+  }, [defaultLatitude, defaultLongitude]);
 
   const handleViewportChange = useCallback((newViewport: ViewState) => {
     setViewport(newViewport);
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper width={width} height={height}>
       <MapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/light-v9"
         mapboxApiAccessToken={mapboxApiKey}
         onViewportChange={handleViewportChange}
         preserveDrawingBuffer
-        width={350}
-        height={240}
+        width="100%"
+        height={isMobile ? '300px' : '100%'}
       >
-        <Marker longitude={longitude} latitude={latitude}>
-          <Point />
-        </Marker>
+        {list?.map((item, index) => (
+          <Marker
+            key={index}
+            longitude={item?.longitude}
+            latitude={item?.latitude}
+          >
+            <Point />
+            <PointText>{item?.hospital_name}</PointText>
+          </Marker>
+        ))}
       </MapGL>
     </Wrapper>
   );

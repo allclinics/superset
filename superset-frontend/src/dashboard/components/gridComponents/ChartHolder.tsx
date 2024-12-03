@@ -283,6 +283,14 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
     [charts, component.meta.chartId],
   );
 
+  const isFullHeight = useMemo(
+    () =>
+      component.meta.chartId && charts[component.meta.chartId]
+        ? charts[component.meta.chartId]?.form_data?.isFullHeight
+        : undefined,
+    [charts, component.meta.chartId],
+  );
+
   return (
     <Draggable
       component={component}
@@ -311,6 +319,7 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
           onResizeStop={onResizeStop}
           editMode={editMode}
           mobileHeight={mobileHeight}
+          isFullHeight={isFullHeight}
         >
           <div
             ref={dragSourceRef}

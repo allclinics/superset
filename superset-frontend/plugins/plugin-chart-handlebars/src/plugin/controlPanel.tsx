@@ -46,6 +46,8 @@ import { queryModeControlSetItem } from './controls/queryMode';
 import { styleControlSetItem } from './controls/style';
 import { fullDisplayControl } from './controls/fullDisplay';
 import { showMapControl } from './controls/showMap';
+import { isLocationMatricsControl } from './controls/isLocationMetrics';
+import { isFullHeightControl } from './controls/isFullHeight';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -53,6 +55,16 @@ const config: ControlPanelConfig = {
       label: t('Full display'),
       expanded: true,
       controlSetRows: [[fullDisplayControl]],
+    },
+    {
+      label: t('Show Location Matrics'),
+      expanded: true,
+      controlSetRows: [[isLocationMatricsControl]],
+    },
+    {
+      label: t('Show Full Height'),
+      expanded: true,
+      controlSetRows: [[isFullHeightControl]],
     },
     {
       label: t('Show map'),
