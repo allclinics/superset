@@ -184,6 +184,7 @@ class MapBox extends React.Component {
       mapboxApiKey,
       bounds,
       namesDisappearZoomLevel,
+      isMobile,
     } = this.props;
     const { viewport, modal } = this.state;
     const { modal_data, popupCoords, showModal } = modal;
@@ -207,7 +208,7 @@ class MapBox extends React.Component {
         {...viewport}
         mapStyle={mapStyle}
         width={width}
-        height={height}
+        height={isMobile ? 450 : height}
         mapboxApiAccessToken={mapboxApiKey}
         onViewportChange={this.handleViewportChange}
         preserveDrawingBuffer

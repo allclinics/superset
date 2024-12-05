@@ -22,7 +22,7 @@ import { DEFAULT_POINT_RADIUS, DEFAULT_MAX_ZOOM } from './MapBox';
 const NOOP = () => {};
 
 export default function transformProps(chartProps) {
-  const { width, height, formData, hooks, queriesData } = chartProps;
+  const { width, height, formData, hooks, queriesData, isMobile } = chartProps;
   const { onError = NOOP, setControlValue = NOOP } = hooks;
   const { bounds, geoJSON, hasCustomMetric, mapboxApiKey } =
     queriesData[0].data;
@@ -80,6 +80,7 @@ export default function transformProps(chartProps) {
   return {
     width,
     height,
+    isMobile,
     aggregatorName: pandasAggfunc,
     bounds,
     clusterer,

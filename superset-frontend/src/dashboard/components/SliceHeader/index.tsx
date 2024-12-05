@@ -34,7 +34,6 @@ import SliceHeaderControls, {
   SliceHeaderControlsProps,
 } from 'src/dashboard/components/SliceHeaderControls';
 import FiltersBadge from 'src/dashboard/components/FiltersBadge';
-import Icons from 'src/components/Icons';
 import { RootState } from 'src/dashboard/types';
 import { getSliceHeaderTooltip } from 'src/dashboard/util/getSliceHeaderTooltip';
 import { DashboardPageIdContext } from 'src/dashboard/containers/DashboardPage';
@@ -57,13 +56,6 @@ type SliceHeaderProps = SliceHeaderControlsProps & {
 
 const annotationsLoading = t('Annotation layers are still loading.');
 const annotationsError = t('One ore more annotation layers failed loading.');
-const CrossFilterIcon = styled(Icons.ApartmentOutlined)`
-  ${({ theme }) => `
-    cursor: default;
-    color: ${theme.colors.primary.base};
-    line-height: 1.8;
-  `}
-`;
 
 const NoHeaderStyles = styled.div<{ $isFloating?: boolean }>`
   display: flex;
@@ -234,16 +226,6 @@ const SliceHeader: FC<SliceHeaderProps> = ({
           dashboardId={dashboardId}
         />
       )}
-      {crossFilterValue && (
-        <Tooltip
-          placement="top"
-          title={t(
-            'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
-          )}
-        >
-          <CrossFilterIcon iconSize="m" />
-        </Tooltip>
-      )}
       <SliceHeaderControls
         slice={slice}
         hideChartControls={uiConfig.hideChartControls}
@@ -273,6 +255,7 @@ const SliceHeader: FC<SliceHeaderProps> = ({
         formData={formData}
         exploreUrl={exploreUrl}
         crossFiltersEnabled={isCrossFiltersEnabled}
+        crossFilterValue={crossFilterValue}
       />
     </>
   );
