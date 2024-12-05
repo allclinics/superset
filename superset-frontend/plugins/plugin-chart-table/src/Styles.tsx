@@ -132,6 +132,10 @@ export default styled.div<{ isRoundStyles?: boolean }>`
         left: 10px;
         top: ${isRoundStyles ? '6px' : '-1px'};
         z-index: 100;
+
+        @media (max-width: 768px) {
+          top: 6px;
+        }
       }
     }
 

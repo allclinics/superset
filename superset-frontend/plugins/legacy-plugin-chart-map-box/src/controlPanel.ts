@@ -58,6 +58,24 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Show Full Height'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'isFullHeight',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show Full Height',
+              renderTrigger: true,
+              default: false,
+              description: 'Show Full Height',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Map custom config'),
       expanded: true,
       controlSetRows: [

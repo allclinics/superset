@@ -85,6 +85,7 @@ const MENU_KEYS = {
 const Wrapper = styled.div`
   display: flex;
   column-gap: 4px;
+  align-items: center;
 `;
 
 export const ModalBackground = styled.div`
@@ -190,6 +191,12 @@ const RefreshTooltip = styled.div`
   justify-content: flex-start;
 `;
 
+const CrossFilterIcon = styled(Icons.ApartmentOutlined)`
+  cursor: default;
+  color: #a8adc6;
+  line-height: 1.8;
+`;
+
 const MarkdownWrapper = styled.div`
   h3 {
     font-weight: 700;
@@ -253,6 +260,7 @@ export interface SliceHeaderControlsProps {
   isDescriptionExpanded?: boolean;
   formData: QueryFormData;
   exploreUrl: string;
+  crossFilterValue?: string;
 
   forceRefresh: (sliceId: number, dashboardId: number) => void;
   logExploreChart?: (sliceId: number) => void;
@@ -691,6 +699,26 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
             props.handleToggleFullSize();
           }}
         />
+      )}
+      {props?.crossFilterValue && (
+        <Tooltip
+          placement="top"
+          title={t(
+            'This chart applies cross-filters to charts whose datasets contain columns with the same name.',
+          )}
+          color="#ffffff"
+          overlayInnerStyles={{
+            color: '#535353',
+            fontSize: '12px',
+            lineHeight: '18px',
+            padding: '16px',
+            boxShadow: '2px 0px 10px 0px #262C4729',
+            borderRadius: '16px',
+            maxWidth: '236px',
+          }}
+        >
+          <CrossFilterIcon iconSize="l" />
+        </Tooltip>
       )}
       {props?.formData?.showPopUpLegend && props?.formData?.legendContent && (
         <InfoWrapper>
