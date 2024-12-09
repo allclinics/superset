@@ -180,6 +180,41 @@ class ResizableContainer extends React.PureComponent {
     this.handleResizeStart = this.handleResizeStart.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleResizeStop = this.handleResizeStop.bind(this);
+    this.handleCalculateHeight = this.handleCalculateHeight.bind(this);
+  }
+
+  handleCalculateHeight() {
+    const {
+      isMobile,
+      isFullHeight,
+      mobileHeight,
+      adjustableHeight,
+      heightStep,
+      heightMultiple,
+      staticHeightMultiple,
+      staticHeight,
+      isTable,
+      isRoundStyles,
+    } = this.props;
+
+    if (isTable && isMobile) {
+      return isRoundStyles ? 800 : 500;
+    }
+
+    if (isFullHeight) {
+      return '100%';
+    }
+    if (isMobile && mobileHeight) {
+      return mobileHeight;
+    }
+    if (adjustableHeight) {
+      return heightStep * heightMultiple;
+    }
+    if (staticHeightMultiple) {
+      return staticHeightMultiple * heightStep;
+    }
+
+    return staticHeight || undefined;
   }
 
   handleResizeStart(event, direction, ref) {
@@ -234,9 +269,6 @@ class ResizableContainer extends React.PureComponent {
       adjustableWidth,
       adjustableHeight,
       heightStep,
-      heightMultiple,
-      staticHeight,
-      staticHeightMultiple,
       staticWidth,
       staticWidthMultiple,
       minWidthMultiple,
@@ -245,8 +277,6 @@ class ResizableContainer extends React.PureComponent {
       maxHeightMultiple,
       editMode,
       isMobile,
-      mobileHeight,
-      isFullHeight,
     } = this.props;
 
     const widthStep = isMobile ? 24 : this.props?.widthStep;
@@ -261,15 +291,7 @@ class ResizableContainer extends React.PureComponent {
           : (staticWidthMultiple && staticWidthMultiple * widthStep) ||
             staticWidth ||
             undefined,
-      height: isFullHeight
-        ? '100%'
-        : isMobile && mobileHeight
-          ? mobileHeight
-          : adjustableHeight
-            ? heightStep * heightMultiple
-            : (staticHeightMultiple && staticHeightMultiple * heightStep) ||
-              staticHeight ||
-              undefined,
+      height: this.handleCalculateHeight(),
     };
 
     let enableConfig = resizableConfig.notAdjustable;
@@ -308,12 +330,14 @@ class ResizableContainer extends React.PureComponent {
             : undefined
         }
         maxHeight={
-          adjustableHeight
-            ? Math.max(
-                size.height,
-                Math.min(proxyToInfinity, maxHeightMultiple * heightStep),
-              )
-            : undefined
+          isMobile
+            ? '100%'
+            : adjustableHeight
+              ? Math.max(
+                  size.height,
+                  Math.min(proxyToInfinity, maxHeightMultiple * heightStep),
+                )
+              : undefined
         }
         size={size}
         onResizeStart={this.handleResizeStart}

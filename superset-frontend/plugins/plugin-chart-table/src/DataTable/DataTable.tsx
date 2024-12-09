@@ -71,6 +71,7 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   isRoundStyles?: boolean;
   roundChartTitle?: string;
   showAllSizeOption?: boolean;
+  isMobile?: boolean;
 }
 
 export interface RenderHTMLCellProps extends HTMLProps<HTMLTableCellElement> {
@@ -105,6 +106,7 @@ export default typedMemo(function DataTable<D extends object>({
   onColumnOrderChange,
   isRoundStyles,
   roundChartTitle,
+  isMobile,
   ...moreUseTableOptions
 }: DataTableProps<D>): JSX.Element {
   const tableHooks: PluginHook<D>[] = [
@@ -330,7 +332,7 @@ export default typedMemo(function DataTable<D extends object>({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: '24px',
+        paddingTop: isMobile ? '16px' : '24px',
       }
     : { visibility: 'hidden' };
 

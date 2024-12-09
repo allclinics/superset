@@ -291,6 +291,22 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
     [charts, component.meta.chartId],
   );
 
+  const isTable = useMemo(() => {
+    if (component.meta.chartId && charts[component.meta.chartId]) {
+      return charts[component.meta.chartId].form_data.viz_type === 'table';
+    }
+
+    return false;
+  }, [charts, component.meta.chartId]);
+
+  const isRoundStyles = useMemo(() => {
+    if (component.meta.chartId && charts[component.meta.chartId]) {
+      return charts[component.meta.chartId].form_data.isRoundStyles;
+    }
+
+    return false;
+  }, [charts, component.meta.chartId]);
+
   return (
     <Draggable
       component={component}
@@ -320,6 +336,8 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
           editMode={editMode}
           mobileHeight={mobileHeight}
           isFullHeight={isFullHeight}
+          isTable={isTable}
+          isRoundStyles={isRoundStyles}
         >
           <div
             ref={dragSourceRef}

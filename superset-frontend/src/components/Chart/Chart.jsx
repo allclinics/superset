@@ -34,6 +34,7 @@ import { EmptyStateBig } from 'src/components/EmptyState';
 import ErrorBoundary from 'src/components/ErrorBoundary';
 import { Logger, LOG_ACTIONS_RENDER_CHART } from 'src/logger/LogUtils';
 import { URL_PARAMS } from 'src/constants';
+import withMobileDetection from 'src/dashboard/hocs/withMobileDetection';
 import { getUrlParam } from 'src/utils/urlUtils';
 import { isCurrentUserBot } from 'src/utils/isBot';
 import { ChartSource } from 'src/types/ChartSource';
@@ -166,6 +167,10 @@ const LoaderWrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 68px);
+  }
 `;
 
 class Chart extends React.PureComponent {
@@ -275,7 +280,20 @@ class Chart extends React.PureComponent {
       queriesResponse = [],
       width,
       chartId,
+      isMobile,
     } = this.props;
+
+    const chartHeight =
+      this.props.vizType === 'table' && isMobile
+        ? this.props.formData?.isRoundStyles
+          ? 750
+          : 380
+        : height;
+
+    const chartRenderProps = {
+      ...this.props,
+      height: chartHeight,
+    };
 
     const isLoading = chartStatus === 'loading';
     this.renderContainerStartTime = Logger.getTimestamp();
@@ -331,7 +349,7 @@ class Chart extends React.PureComponent {
           data-ui-anchor="chart"
           className="chart-container"
           data-test="chart-container"
-          height={height}
+          height={chartHeight}
           width={width}
           fullDisplay={!!this.props.formData?.fullDisplay}
         >
@@ -340,7 +358,7 @@ class Chart extends React.PureComponent {
             !isFeatureEnabled(FeatureFlag.DashboardVirtualization) ||
             isCurrentUserBot() ? (
               <ChartRenderer
-                {...this.props}
+                {...chartRenderProps}
                 source={this.props.dashboardId ? 'dashboard' : 'explore'}
                 data-test={this.props.vizType}
               />
@@ -349,7 +367,7 @@ class Chart extends React.PureComponent {
                 {this.props.formData?.showLoader && (
                   <LoaderWrapper
                     isTransparent={isLoading}
-                    height={height}
+                    height={chartHeight}
                     width={width}
                   >
                     <Loading />
@@ -359,7 +377,7 @@ class Chart extends React.PureComponent {
             )}
           </div>
           {isLoading && this.props.formData?.showLoader && (
-            <LoaderWrapper height={height} width={width}>
+            <LoaderWrapper height={chartHeight} width={width}>
               <Loading />
             </LoaderWrapper>
           )}
@@ -372,4 +390,4 @@ class Chart extends React.PureComponent {
 Chart.propTypes = propTypes;
 Chart.defaultProps = defaultProps;
 
-export default Chart;
+export default withMobileDetection(Chart);

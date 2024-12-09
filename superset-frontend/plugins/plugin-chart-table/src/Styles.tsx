@@ -75,9 +75,9 @@ export default styled.div<{ isRoundStyles?: boolean }>`
 
       .dt-control-row {
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         flex: 1;
-        align-items: flex-end;
+        align-items: end !important;
 
         .dt-control-search {
           margin-bottom: 8px;
@@ -131,7 +131,7 @@ export default styled.div<{ isRoundStyles?: boolean }>`
         position: absolute;
         left: 10px;
         top: ${isRoundStyles ? '6px' : '-1px'};
-        z-index: 100;
+        z-index: 10;
 
         @media (max-width: 768px) {
           top: 6px;
@@ -146,8 +146,10 @@ export default styled.div<{ isRoundStyles?: boolean }>`
       border-radius: 10px;
       border: 1px solid ${theme.colors.primary.light4};
       margin: 4px;
-      min-width: 360px;
-      height: auto;
+      min-width: 245px;
+      height: 38px;
+      max-width: 245px;
+      margin-top: 0px !important;
 
       &:focus-within {
         border: 1px solid ${theme.colors.primary.base};
@@ -161,6 +163,7 @@ export default styled.div<{ isRoundStyles?: boolean }>`
         border: none;
         outline: none;
         flex: 1;
+        height: 36px;
 
         &:focus {
           border: none;
