@@ -202,7 +202,7 @@ function RoundSearchInput({ count, value, onChange }: SearchInputProps) {
       </svg>
       <input
         className="dt-global-filter-input-round"
-        placeholder={t('Find term')}
+        placeholder={t('Search...')}
         value={value}
         aria-label={t('Find term')}
         onChange={onChange}
