@@ -53,6 +53,7 @@ export type Chart = ChartState & {
     datasource: string;
     mobileHeight?: number;
     isFullHeight?: boolean;
+    isRoundStyles?: boolean;
   };
 };
 

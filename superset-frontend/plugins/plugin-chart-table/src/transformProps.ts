@@ -223,6 +223,7 @@ const transformProps = (
       onContextMenu,
     },
     emitCrossFilters,
+    isMobile,
   } = chartProps;
 
   const {
@@ -270,6 +271,7 @@ const transformProps = (
   return {
     height,
     width,
+    isMobile,
     isRawRecords: queryMode === QueryMode.Raw,
     data,
     totals,

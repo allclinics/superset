@@ -132,6 +132,7 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   noMainBorder?: boolean;
   hideControlsOnCustomerView?: boolean;
   isRoundStyles?: boolean;
+  isMobile?: boolean;
   showAllSizeOption?: boolean;
   roundChartTitle?: string;
   // These are dashboard filters, don't be confused with in-chart search filter

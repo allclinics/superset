@@ -260,6 +260,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     rowCount = 0,
     fullDisplay,
     isRoundStyles,
+    isMobile,
     roundChartTitle,
     columns: columnsMeta,
     alignPositiveNegative: defaultAlignPN = false,
@@ -790,6 +791,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
           isRoundStyles && 'table-custom',
         )}
         isRoundStyles={isRoundStyles}
+        isMobile={isMobile}
         roundChartTitle={roundChartTitle}
         pageSize={showAllSizeOption ? pageSize : pageSize === 0 ? 10 : pageSize}
         serverPaginationData={serverPaginationData}
