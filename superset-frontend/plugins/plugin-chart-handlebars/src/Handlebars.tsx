@@ -65,6 +65,7 @@ const WrapperDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-bottom: auto;
 `;
 
 const Divider = styled.div`
