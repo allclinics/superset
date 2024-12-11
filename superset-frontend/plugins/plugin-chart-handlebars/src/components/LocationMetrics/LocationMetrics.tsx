@@ -162,7 +162,6 @@ const LocationMetrics: FC<HandlebarsProps> = ({
               fontSize: '12px',
               lineHeight: '18px',
               padding: '16px',
-
               boxShadow: '2px 0px 10px 0px #262C4729',
               borderRadius: '16px',
               maxWidth: '236px',

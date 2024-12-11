@@ -186,6 +186,10 @@ export default styled.div<{ isRoundStyles?: boolean }>`
       tbody > tr {
         th {
           font-weight: 700;
+
+          @media (max-width: 768px) {
+            padding: 16px 20px !important;
+          }
         }
 
         th,
@@ -196,6 +200,10 @@ export default styled.div<{ isRoundStyles?: boolean }>`
           border-top: 1px solid #e6e9f4;
           border-bottom: 1px solid #e6e9f4;
           padding: 16px 20px;
+
+          @media (max-width: 768px) {
+            padding: 10px 12px;
+          }
         }
 
         th:first-of-type,
