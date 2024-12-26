@@ -145,7 +145,7 @@ export default styled.div<{ isRoundStyles?: boolean }>`
       align-items: center;
       border-radius: 10px;
       border: 1px solid ${theme.colors.primary.light4};
-      margin: 4px;
+      margin: 4px 0px;
       min-width: 245px;
       height: 38px;
       max-width: 245px;
@@ -277,6 +277,8 @@ export default styled.div<{ isRoundStyles?: boolean }>`
       font-weight: 500;
       line-height: 24px;
       width: 100px;
+      display: ${isRoundStyles ? 'flex' : 'block'};
+      justify-content: ${isRoundStyles ? 'flex-end' : 'unset'};
 
       @media (max-width: 768px) {
         display: flex;

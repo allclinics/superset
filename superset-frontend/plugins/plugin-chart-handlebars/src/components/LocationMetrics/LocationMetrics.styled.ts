@@ -25,6 +25,7 @@ export const Wrapper = styled.div`
   padding: 16px 16px 16px 20px;
   background: #f4f6fa;
   min-height: 176px;
+  border-radius: 20px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -34,6 +35,7 @@ export const Wrapper = styled.div`
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  border-radius: 16px;
 `;
 
 export const ProcedureWrapper = styled.div`
