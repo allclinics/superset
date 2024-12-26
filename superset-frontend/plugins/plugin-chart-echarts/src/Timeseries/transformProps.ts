@@ -503,6 +503,7 @@ export default function transformProps(
         defaultFormatter,
         yAxisFormat,
       ),
+      margin: -10,
     },
     scale: truncateYAxis,
     name: yAxisTitle,

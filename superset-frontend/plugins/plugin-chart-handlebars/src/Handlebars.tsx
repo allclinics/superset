@@ -52,6 +52,7 @@ const Conteiner = styled.div`
   padding: 16px 16px 16px 20px;
   min-height: 278px;
   background: #f4f6fa;
+  border-radius: 20px;
 
   @media (max-width: 768px) {
     flex-direction: column;
