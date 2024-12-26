@@ -166,7 +166,7 @@ class MapBox extends React.Component {
       ownState: {},
     };
 
-    this?.props?.onChangeParentTab(4);
+    this?.props?.onChangeParentTab(1);
     this?.props?.handleApply(dataMask, this.props?.filterIdForDetails, () => {
       window.scrollTo({
         top: 0,

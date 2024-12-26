@@ -190,7 +190,7 @@ const LocationMetrics: FC<HandlebarsProps> = ({
             </Value>
           </Item>
           <Item>
-            <Key>Insurance name:</Key>
+            <Key>Hospital name:</Key>
             <Value>{insuranceNames?.length ? insuranceNames : 'N/A'}</Value>
           </Item>
         </ListInfo>
