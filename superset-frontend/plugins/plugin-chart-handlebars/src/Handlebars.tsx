@@ -154,11 +154,11 @@ export default function Handlebars(props: HandlebarsProps) {
                       </Text>
                     </div>
                   )}
-                  {data[0]?.description && (
+                  {data[0]?.specialization && (
                     <div>
                       <Text>
-                        <Bold>Descriptions:</Bold>
-                        {` ${data[0]?.description}`}
+                        <Bold>Hospital specialisation:</Bold>
+                        {` ${data[0]?.specialization}`}
                       </Text>
                     </div>
                   )}
