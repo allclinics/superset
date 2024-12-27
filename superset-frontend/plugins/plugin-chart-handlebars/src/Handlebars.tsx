@@ -67,6 +67,7 @@ const WrapperDetails = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: auto;
+  min-height: 240px;
 `;
 
 const Divider = styled.div`
@@ -80,12 +81,14 @@ const Header = styled.div`
   display: flex;
   row-gap: 10px;
   flex-direction: column;
+  margin-bottom: auto;
 `;
 
 const Footer = styled.div`
   display: flex;
   row-gap: 16px;
   flex-direction: column;
+  margin-top: auto;
 `;
 
 const Item = styled.div`
@@ -159,6 +162,14 @@ export default function Handlebars(props: HandlebarsProps) {
                       <Text>
                         <Bold>Hospital specialisation:</Bold>
                         {` ${data[0]?.specialization}`}
+                      </Text>
+                    </div>
+                  )}
+                  {data[0]?.description && (
+                    <div>
+                      <Text>
+                        <Bold>Description:</Bold>
+                        {` ${data[0]?.description}`}
                       </Text>
                     </div>
                   )}
