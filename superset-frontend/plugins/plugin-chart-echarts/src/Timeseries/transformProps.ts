@@ -503,11 +503,10 @@ export default function transformProps(
         defaultFormatter,
         yAxisFormat,
       ),
-      margin: -10,
     },
     scale: truncateYAxis,
     name: yAxisTitle,
-    nameGap: convertInteger(yAxisTitleMargin),
+    nameGap: convertInteger(50),
     nameLocation: yAxisTitlePosition === 'Left' ? 'middle' : 'end',
   };
 
