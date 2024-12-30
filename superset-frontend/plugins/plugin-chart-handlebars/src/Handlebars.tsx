@@ -157,7 +157,7 @@ export default function Handlebars(props: HandlebarsProps) {
                   {data[0]?.specialization && (
                     <div>
                       <Text>
-                        <Bold>Hospital specialisation:</Bold>
+                        <Bold>Hospital specialization:</Bold>
                         {` ${data[0]?.specialization}`}
                       </Text>
                     </div>
