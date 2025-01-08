@@ -100,6 +100,27 @@ class MapBox extends React.Component {
     this.closeModal = this.closeModal.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.clusterer?.points.length !== prevProps.clusterer?.points.length
+    ) {
+      const { width, height, bounds } = this.props;
+
+      const mercator = new ViewportMercator({
+        width,
+        height,
+      }).fitBounds(bounds);
+
+      const { latitude, longitude, zoom } = mercator;
+
+      this.handleViewportChange({
+        longitude,
+        latitude,
+        zoom,
+      });
+    }
+  }
+
   zoomIn() {
     this.setState(prevState => ({
       viewport: {
