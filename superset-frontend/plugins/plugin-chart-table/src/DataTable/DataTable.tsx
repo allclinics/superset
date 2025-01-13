@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -71,6 +72,8 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   isRoundStyles?: boolean;
   roundChartTitle?: string;
   showAllSizeOption?: boolean;
+  handleViewDetail: (rowData: unknown) => void;
+  isWithHospitalDetailsButton?: boolean;
   isMobile?: boolean;
 }
 
@@ -80,6 +83,15 @@ export interface RenderHTMLCellProps extends HTMLProps<HTMLTableCellElement> {
 
 const sortTypes = {
   alphanumeric: sortAlphanumericCaseInsensitive,
+};
+
+const viewButtonStyles: CSSProperties = {
+  display: 'flex',
+  background: '#fff',
+  border: 'none',
+  color: '#3876F6',
+  fontWeight: '700',
+  padding: '0px',
 };
 
 // Be sure to pass our updateMyData and the skipReset option
@@ -107,6 +119,8 @@ export default typedMemo(function DataTable<D extends object>({
   isRoundStyles,
   roundChartTitle,
   isMobile,
+  isWithHospitalDetailsButton,
+  handleViewDetail,
   ...moreUseTableOptions
 }: DataTableProps<D>): JSX.Element {
   const tableHooks: PluginHook<D>[] = [
@@ -273,6 +287,9 @@ export default typedMemo(function DataTable<D extends object>({
                   onDrop,
                 }),
               )}
+              {isWithHospitalDetailsButton && (
+                <th id="details-column">Details</th>
+              )}
             </tr>
           );
         })}
@@ -286,6 +303,17 @@ export default typedMemo(function DataTable<D extends object>({
               <tr key={rowKey || row.id} {...rowProps}>
                 {row.cells.map(cell =>
                   cell.render('Cell', { key: cell.column.id }),
+                )}
+                {isWithHospitalDetailsButton && (
+                  <td>
+                    <button
+                      style={viewButtonStyles}
+                      type="button"
+                      onClick={() => handleViewDetail(row)}
+                    >
+                      Open Clinic
+                    </button>
+                  </td>
                 )}
               </tr>
             );
