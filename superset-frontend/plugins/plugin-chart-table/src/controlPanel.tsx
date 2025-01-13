@@ -162,6 +162,32 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'isWithHospitalDetailsButton',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Add button hospital details',
+              renderTrigger: true,
+              default: false,
+              description: 'Add button hospital details',
+            },
+          },
+        ],
+        [
+          {
+            name: 'filterIdForDetails',
+            config: {
+              type: 'TextControl',
+              label: t('Filter ID for item details'),
+              default: '',
+              isFloat: false,
+              description: t(
+                'Filter id for item details. Which will take us to the details tab',
+              ),
+            },
+          },
+        ],
       ],
     },
     {

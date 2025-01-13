@@ -81,6 +81,8 @@ export type TableChartFormData = QueryFormData & {
   query_mode?: QueryMode;
   showPopUpLegend?: boolean;
   showAllSizeOption?: boolean;
+  isWithHospitalDetailsButton?: boolean;
+  filterIdForDetails?: string;
   showPopUpVideoLegend?: boolean;
   page_length?: string | number | null; // null means auto-paginate
   metrics?: QueryFormMetric[] | null;
@@ -134,6 +136,14 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   isRoundStyles?: boolean;
   isMobile?: boolean;
   showAllSizeOption?: boolean;
+  isWithHospitalDetailsButton?: boolean;
+  filterIdForDetails?: string;
+  onChangeParentTab?: (tabId: number) => void;
+  handleApply?: (
+    dataMask: unknown,
+    filterIdForDetails?: string,
+    callbackFn?: () => void,
+  ) => void;
   roundChartTitle?: string;
   // These are dashboard filters, don't be confused with in-chart search filter
   // enabled by `includeSearch`

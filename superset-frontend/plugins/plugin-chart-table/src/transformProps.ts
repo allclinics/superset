@@ -221,6 +221,8 @@ const transformProps = (
       onAddFilter: onChangeFilter,
       setDataMask = () => {},
       onContextMenu,
+      onChangeParentTab,
+      handleApply,
     },
     emitCrossFilters,
     isMobile,
@@ -244,6 +246,8 @@ const transformProps = (
     conditional_formatting: conditionalFormatting,
     allow_rearrange_columns: allowRearrangeColumns,
     showAllSizeOption,
+    filterIdForDetails,
+    isWithHospitalDetailsButton,
   } = formData;
   const timeGrain = extractTimegrain(formData);
 
@@ -299,11 +303,15 @@ const transformProps = (
     filters: filterState.filters,
     emitCrossFilters,
     onChangeFilter,
+    onChangeParentTab,
+    filterIdForDetails,
+    handleApply,
     columnColorFormatters,
     timeGrain,
     allowRearrangeColumns,
     onContextMenu,
     showAllSizeOption: !!showAllSizeOption,
+    isWithHospitalDetailsButton: !!isWithHospitalDetailsButton,
   };
 };
 

@@ -279,7 +279,47 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     onContextMenu,
     emitCrossFilters,
     showAllSizeOption,
+    isWithHospitalDetailsButton,
+    onChangeParentTab,
+    handleApply,
+    filterIdForDetails,
   } = props;
+
+  const handleViewDetail = useCallback(
+    rowData => {
+      const dataMask = {
+        id: filterIdForDetails,
+        extraFormData: {
+          filters: [
+            {
+              col: 'hospital_name',
+              op: 'IN',
+              val: [rowData?.original?.hospital_name],
+            },
+          ],
+        },
+        filterState: {
+          validateMessage: false,
+          label: rowData?.original?.hospital_name,
+          value: [rowData?.original?.hospital_name],
+        },
+        ownState: {},
+      };
+
+      if (onChangeParentTab && handleApply) {
+        onChangeParentTab(1);
+
+        handleApply(dataMask, filterIdForDetails, () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        });
+      }
+    },
+    [filterIdForDetails, handleApply, onChangeParentTab],
+  );
+
   const timestampFormatter = useCallback(
     value => getTimeFormatterForGranularity(timeGrain)(value),
     [timeGrain],
@@ -804,6 +844,8 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         maxPageItemCount={5}
         noResults={getNoResultsMessage}
         showAllSizeOption={showAllSizeOption}
+        isWithHospitalDetailsButton={isWithHospitalDetailsButton}
+        handleViewDetail={handleViewDetail}
         searchInput={includeSearch && SelectedSearchInput}
         selectPageSize={pageSize !== null && SelectPageSize}
         // not in use in Superset, but needed for unit tests
