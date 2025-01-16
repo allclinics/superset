@@ -143,7 +143,7 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
           {data[0]?.address && (
             <Item>
               <PinIcon />
-              <Text>{data[0].address}</Text>
+              <Text>{`${data[0]?.state}, ${data[0]?.county}, ${data[0].address}`}</Text>
             </Item>
           )}
           {data[0]?.phone && (
