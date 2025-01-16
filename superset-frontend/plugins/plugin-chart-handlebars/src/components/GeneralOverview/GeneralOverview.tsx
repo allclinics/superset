@@ -19,7 +19,7 @@
  * under the License.
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import React, { useCallback, type FC } from 'react';
+import React, { useCallback, useMemo, type FC } from 'react';
 import { Tooltip } from '@superset-ui/chart-controls';
 import Map from '../Map';
 import CallIcon from '../../icons/call.svg';
@@ -90,6 +90,14 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
     </div>
   );
 
+  const fullAddress = useMemo(
+    () =>
+      [data[0]?.state, data[0]?.county, data[0]?.address]
+        .filter(Boolean)
+        .join(', '),
+    [data],
+  );
+
   return (
     <Conteiner>
       <WrapperDetails>
@@ -143,7 +151,7 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
           {data[0]?.address && (
             <Item>
               <PinIcon />
-              <Text>{`${data[0]?.state}, ${data[0]?.county}, ${data[0].address}`}</Text>
+              <Text>{fullAddress}</Text>
             </Item>
           )}
           {data[0]?.phone && (
