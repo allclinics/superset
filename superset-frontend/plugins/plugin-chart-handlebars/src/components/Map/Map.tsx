@@ -31,6 +31,7 @@ const Map: FC<MapProps> = ({
   defaultLatitude,
   defaultLongitude,
   isMobile,
+  styles = {},
 }) => {
   const [viewport, setViewport] = useState({
     latitude: defaultLatitude,
@@ -51,7 +52,7 @@ const Map: FC<MapProps> = ({
   }, []);
 
   return (
-    <Wrapper width={width} height={height}>
+    <Wrapper width={width} height={height} style={styles}>
       <MapGL
         {...viewport}
         mapStyle="mapbox://styles/mapbox/light-v9"

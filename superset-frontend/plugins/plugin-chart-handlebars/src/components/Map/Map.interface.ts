@@ -17,6 +17,8 @@
  * under the License.
  */
 
+import { CSSProperties } from 'react';
+
 export interface ClinicItem {
   latitude: number;
   longitude: number;
@@ -31,4 +33,5 @@ export interface MapProps {
   width: string;
   height: string;
   isMobile: boolean;
+  styles?: CSSProperties;
 }
