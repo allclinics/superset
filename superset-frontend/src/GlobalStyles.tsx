@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -25,6 +26,14 @@ import 'react-js-cron/dist/styles.css';
 export const GlobalStyles = () => (
   <Global
     styles={theme => css`
+      &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #e6e9f4;
+        border-radius: 5px;
+      }
       h1,
       h2,
       h3,
