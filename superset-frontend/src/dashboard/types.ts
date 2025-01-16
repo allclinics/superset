@@ -54,6 +54,7 @@ export type Chart = ChartState & {
     mobileHeight?: number;
     isFullHeight?: boolean;
     isRoundStyles?: boolean;
+    isOffFocusHighligh?: boolean;
   };
 };
 

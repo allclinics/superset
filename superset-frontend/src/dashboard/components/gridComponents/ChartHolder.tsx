@@ -307,6 +307,14 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
     return false;
   }, [charts, component.meta.chartId]);
 
+  const isOffFocusHighligh = useMemo(() => {
+    if (component.meta.chartId && charts[component.meta.chartId]) {
+      return charts[component.meta.chartId].form_data.isOffFocusHighligh;
+    }
+
+    return false;
+  }, [charts, component.meta.chartId]);
+
   return (
     <Draggable
       component={component}
@@ -342,7 +350,7 @@ const ChartHolder: React.FC<ChartHolderProps> = ({
           <div
             ref={dragSourceRef}
             data-test="dashboard-component-chart-holder"
-            style={focusHighlightStyles}
+            style={isOffFocusHighligh ? {} : focusHighlightStyles}
             css={isFullSize ? fullSizeStyle : undefined}
             className={cx(
               'dashboard-component',
