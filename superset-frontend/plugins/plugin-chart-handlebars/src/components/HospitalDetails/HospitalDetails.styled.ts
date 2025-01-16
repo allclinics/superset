@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,30 +17,39 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { debounce } from 'lodash';
-import { formatSelectOptions } from '@superset-ui/chart-controls';
-import { SLOW_DEBOUNCE, t } from '@superset-ui/core';
 
-export const PAGE_SIZE_OPTIONS = formatSelectOptions<number>([
-  [0, t('page_size.all')],
-  1,
-  2,
-  3,
-  4,
-  5,
-  10,
-  20,
-  50,
-  100,
-  200,
-]);
+import { styled } from '@superset-ui/core';
 
-export const debounceFunc = debounce(
-  (func: (val: string) => void, source: string) => func(source),
-  SLOW_DEBOUNCE,
-);
+export const Wrapper = styled.div`
+  display: flex;
+  height: 100%;
+  padding: 16px 20px;
+  background: #f4f6fa;
+  border-radius: 20px;
+  flex-direction: column;
+`;
 
-export enum HospitalDetailsTabs {
-  GeneralOverview = 'General Overview',
-  HospitalServices = 'Hospital Services',
-}
+export const TabsWrapper = styled.div`
+  display: flex;
+  column-gap: 40px;
+  border-bottom: 1px solid #e6e9f4;
+`;
+
+export const Tab = styled.button<{ isActive: boolean }>`
+  ${({ isActive }) => `
+  display: flex;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: ${isActive ? '#3876F6' : '#5A607F'};
+  box-shadow: 0px 2px 0px 0px ${isActive ? '#3876F6' : 'none'};
+  padding: 0px 0px 6px 0px;
+  `}
+`;
+
+export const TabContent = styled.div`
+  display: flex;
+  padding-top: 20px;
+`;
