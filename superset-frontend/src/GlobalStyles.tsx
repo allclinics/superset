@@ -31,7 +31,7 @@ export const GlobalStyles = () => (
         height: 5px;
       }
       &::-webkit-scrollbar-thumb {
-        background: #e6e9f4;
+        background: #c0c0c0;
         border-radius: 5px;
       }
       h1,
