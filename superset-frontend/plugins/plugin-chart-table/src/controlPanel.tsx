@@ -258,6 +258,18 @@ const config: ControlPanelConfig = {
             },
           },
         ],
+        [
+          {
+            name: 'isOffFocusHighligh',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Off focus highligh',
+              renderTrigger: true,
+              default: false,
+              description: 'Off focus highligh for the chart',
+            },
+          },
+        ],
       ],
     },
     {
