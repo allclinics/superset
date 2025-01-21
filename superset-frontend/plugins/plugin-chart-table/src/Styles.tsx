@@ -65,6 +65,7 @@ export default styled.div<{ isRoundStyles?: boolean }>`
         display: flex;
         flex-direction: column;
         gap: 8px;
+        margin-left: 2px;
       }
 
       .dt-title {
