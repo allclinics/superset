@@ -52,6 +52,36 @@ import { isFullHeightControl } from './controls/isFullHeight';
 const config: ControlPanelConfig = {
   controlPanelSections: [
     {
+      label: t('Show Loader'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'showLoader',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Show Loader',
+              renderTrigger: true,
+              default: true,
+              description: 'Show Loader',
+            },
+          },
+        ],
+        [
+          {
+            name: 'isFullSizeLoader',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Full size loader',
+              renderTrigger: true,
+              default: false,
+              description: 'Full size loader',
+            },
+          },
+        ],
+      ],
+    },
+    {
       label: t('Full display'),
       expanded: true,
       controlSetRows: [[fullDisplayControl]],

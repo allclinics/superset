@@ -160,8 +160,9 @@ const MonospaceDiv = styled.div`
 const LoaderWrapper = styled.div`
   background: ${p =>
     p.isTransparent ? 'transparent' : 'rgba(19, 21, 35, 0.6)'};
-  width: ${p => p.width}px;
-  height: ${p => p.height}px;
+  width: ${p => (p.isFullSizeLoader ? 'calc(100% - 40px)' : `${p.width}px`)};
+  height: ${p =>
+    p.isFullSizeLoader ? 'calc(100% - 32px) !important' : `${p.height}px`};
   display: flex;
   position: absolute;
   left: 50%;
@@ -366,6 +367,7 @@ class Chart extends React.PureComponent {
               <>
                 {this.props.formData?.showLoader && (
                   <LoaderWrapper
+                    isFullSizeLoader={!!this.props.formData?.isFullSizeLoader}
                     isTransparent={isLoading}
                     height={chartHeight}
                     width={width}
@@ -377,7 +379,11 @@ class Chart extends React.PureComponent {
             )}
           </div>
           {isLoading && this.props.formData?.showLoader && (
-            <LoaderWrapper height={chartHeight} width={width}>
+            <LoaderWrapper
+              isFullSizeLoader={!!this.props.formData?.isFullSizeLoader}
+              height={chartHeight}
+              width={width}
+            >
               <Loading />
             </LoaderWrapper>
           )}

@@ -371,6 +371,7 @@ const StyledDashboardContent = styled.div<{
       padding: 0px;
       overflow-y: visible;
       border: 1px solid #e6e9f4;
+      min-height: 150px;
 
       // transitionable traits to show filter relevance
       transition:
