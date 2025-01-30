@@ -45,6 +45,7 @@ import { URL_PARAMS } from 'src/constants';
 import { getUrlParam } from 'src/utils/urlUtils';
 import { useTabId } from 'src/hooks/useTabId';
 import { logEvent } from 'src/logger/actions';
+import { WritableDraft } from 'immer/dist/internal';
 import { LOG_ACTIONS_CHANGE_DASHBOARD_FILTER } from 'src/logger/LogUtils';
 import { FilterBarOrientation, RootState } from 'src/dashboard/types';
 import { UserWithPermissionsAndRoles } from 'src/types/bootstrapTypes';
@@ -159,6 +160,51 @@ const FilterBar: React.FC<FiltersBarProps> = ({
 
   const dataMaskSelectedRef = useRef(dataMaskSelected);
   dataMaskSelectedRef.current = dataMaskSelected;
+
+  const handleFindFilterId = useCallback(
+    (data: DataMaskStateWithId, colName: string) =>
+      Object.values(data).find(
+        item =>
+          item?.extraFormData?.filters?.some(filter => filter.col === colName),
+      )?.id,
+    [],
+  );
+
+  const sliceArray = useCallback((arr: string[], value: string) => {
+    const index = arr.indexOf(value);
+    return index !== -1 ? arr.slice(index + 1) : [];
+  }, []);
+
+  const handleResetLowerHierarchyFields = useCallback(
+    (
+      fieldName: string,
+      filterId: string,
+      fieldsArray: string[],
+      data: DataMaskStateWithId,
+      draft: WritableDraft<DataMaskStateWithId>,
+    ) => {
+      const fieldId = handleFindFilterId(data, fieldName);
+
+      if (fieldId === filterId) {
+        const fields = sliceArray(fieldsArray, fieldName);
+
+        fields.forEach(item => {
+          const id = handleFindFilterId(data, item);
+
+          const enableEmptyFilter = filtersInScope.find(item => item.id === id)
+            ?.controlValues?.enableEmptyFilter;
+
+          if (id && !enableEmptyFilter) {
+            draft[id] = {
+              ...(getInitialDataMask(id) as DataMaskWithId),
+            };
+          }
+        });
+      }
+    },
+    [filtersInScope, handleFindFilterId, sliceArray],
+  );
+
   const handleFilterSelectionChange = useCallback(
     (
       filter: Pick<Filter, 'id'> & Partial<Filter>,
@@ -179,9 +225,28 @@ const FilterBar: React.FC<FiltersBarProps> = ({
           ...(getInitialDataMask(filter.id) as DataMaskWithId),
           ...dataMask,
         };
+
+        const filtersInScopeNames: string[] = filtersInScope
+          .map(item => item.targets?.[0]?.column?.name ?? '')
+          .filter(item => item);
+
+        filtersInScopeNames.forEach(item => {
+          handleResetLowerHierarchyFields(
+            item,
+            filter.id,
+            filtersInScopeNames,
+            dataMaskSelectedRef.current,
+            draft,
+          );
+        });
       });
     },
-    [dispatch, setDataMaskSelected],
+    [
+      dispatch,
+      filtersInScope,
+      handleResetLowerHierarchyFields,
+      setDataMaskSelected,
+    ],
   );
 
   useEffect(() => {
