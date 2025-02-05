@@ -60,6 +60,7 @@ export default function transformProps(
     behaviors,
     height,
     data,
+    isCustomSearch: formData?.isCustomSearch,
     formData: newFormData,
     isRefreshing,
     setDataMask,

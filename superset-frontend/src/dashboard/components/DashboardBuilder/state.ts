@@ -65,6 +65,10 @@ export const useNativeFilters = (isMobile?: boolean) => {
     [dashboardFiltersOpen],
   );
 
+  const toggleFiltersPanel = useCallback(() => {
+    setDashboardFiltersOpen(prev => !prev);
+  }, []);
+
   useEffect(() => {
     if (
       expandFilters === false ||
@@ -91,6 +95,7 @@ export const useNativeFilters = (isMobile?: boolean) => {
   return {
     showDashboard,
     dashboardFiltersOpen,
+    toggleFiltersPanel,
     toggleDashboardFiltersOpen,
     nativeFiltersEnabled,
   };

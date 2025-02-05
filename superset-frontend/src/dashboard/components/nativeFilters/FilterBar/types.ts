@@ -17,7 +17,7 @@
  * under the License.
  */
 
-import { ReactNode } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import {
   DataMask,
   DataMaskStateWithId,
@@ -25,6 +25,7 @@ import {
   Filter,
 } from '@superset-ui/core';
 import { FilterBarOrientation } from 'src/dashboard/types';
+import { Updater } from 'use-immer';
 
 interface CommonFiltersBarProps {
   actions: ReactNode;
@@ -50,6 +51,11 @@ export interface FiltersBarProps {
   hidden?: boolean;
   orientation: FilterBarOrientation;
   verticalConfig?: VerticalBarConfig;
+  updateKey: number;
+  setUpdateKey: Dispatch<SetStateAction<number>>;
+  dataMaskApplied: DataMaskStateWithId;
+  dataMaskSelected: DataMaskStateWithId;
+  setDataMaskSelected: Updater<DataMaskStateWithId>;
 }
 
 export type HorizontalBarProps = CommonFiltersBarProps & {

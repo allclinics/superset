@@ -173,6 +173,11 @@ class Column extends React.PureComponent {
       editMode,
       onChangeTab,
       isComponentVisible,
+      renderHospitalNameFilter,
+      handleDeleteFilterOption,
+      toggleDashboardFiltersOpen,
+      filtersInScope,
+      dataMaskApplied,
     } = this.props;
 
     const columnItems = columnComponent.children || [];
@@ -280,6 +285,11 @@ class Column extends React.PureComponent {
                         onResizeStop={onResizeStop}
                         isComponentVisible={isComponentVisible}
                         onChangeTab={onChangeTab}
+                        renderHospitalNameFilter={renderHospitalNameFilter}
+                        handleDeleteFilterOption={handleDeleteFilterOption}
+                        toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
+                        filtersInScope={filtersInScope}
+                        dataMaskApplied={dataMaskApplied}
                         onChangeParentTab={this.props?.onChangeParentTab}
                       />
                       {editMode && (

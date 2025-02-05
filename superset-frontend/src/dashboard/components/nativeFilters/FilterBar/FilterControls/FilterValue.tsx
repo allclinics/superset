@@ -96,6 +96,7 @@ const FilterValue: React.FC<FilterControlProps> = ({
   orientation = FilterBarOrientation.Vertical,
   overflow = false,
   validateStatus,
+  isCustomSearch,
 }) => {
   const { id, targets, filterType, adhoc_filters, time_range } = filter;
   const metadata = getChartMetadataRegistry().get(filterType);
@@ -145,6 +146,7 @@ const FilterValue: React.FC<FilterControlProps> = ({
     }
     const newFormData = getFormData({
       ...filter,
+      isCustomSearch,
       datasetId,
       dependencies,
       groupby,
@@ -221,10 +223,16 @@ const FilterValue: React.FC<FilterControlProps> = ({
     datasetId,
     groupby,
     handleFilterLoadFinish,
-    JSON.stringify(filter),
     hasDataSource,
     isRefreshing,
     shouldRefresh,
+    filter,
+    isCustomSearch,
+    adhoc_filters,
+    time_range,
+    dashboardId,
+    formData,
+    ownState,
   ]);
 
   useEffect(() => {
@@ -239,8 +247,9 @@ const FilterValue: React.FC<FilterControlProps> = ({
   }, [inputRef, outlinedFilterId, lastUpdated, filter.id, overflow]);
 
   const setDataMask = useCallback(
-    (dataMask: DataMask) => onFilterSelectionChange(filter, dataMask),
-    [filter, onFilterSelectionChange],
+    (dataMask: DataMask) =>
+      onFilterSelectionChange(filter, dataMask, isCustomSearch),
+    [filter, isCustomSearch, onFilterSelectionChange],
   );
 
   const setFocusedFilter = useCallback(() => {

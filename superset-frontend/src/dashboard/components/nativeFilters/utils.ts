@@ -57,6 +57,7 @@ export const getFormData = ({
   type,
   dashboardId,
   id,
+  isCustomSearch,
 }: Partial<Filter> & {
   dashboardId: number;
   datasetId?: number;
@@ -96,6 +97,7 @@ export const getFormData = ({
     viz_type: filterType,
     type,
     dashboardId,
+    isCustomSearch,
     native_filter_id: id,
   };
 };

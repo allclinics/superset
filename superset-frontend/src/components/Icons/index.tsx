@@ -170,6 +170,8 @@ const IconFileNames = [
   'video_play',
   'filter_setting',
   'cross',
+  'cross_gray',
+  'filter_icon',
 ];
 
 const iconOverrides: Record<string, React.FC<IconType>> = {};

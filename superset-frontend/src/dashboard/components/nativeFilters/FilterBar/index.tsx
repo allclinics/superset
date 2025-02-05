@@ -18,13 +18,7 @@
  */
 
 /* eslint-disable no-param-reassign */
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  useRef,
-} from 'react';
+import React, { useEffect, useCallback, createContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   DataMaskStateWithId,
@@ -38,25 +32,19 @@ import {
 } from '@superset-ui/core';
 import { useHistory } from 'react-router-dom';
 import { updateDataMask, clearDataMask } from 'src/dataMask/actions';
-import { useImmer } from 'use-immer';
 import { isEmpty, isEqual, debounce } from 'lodash';
 import { getInitialDataMask } from 'src/dataMask/reducer';
 import { URL_PARAMS } from 'src/constants';
 import { getUrlParam } from 'src/utils/urlUtils';
 import { useTabId } from 'src/hooks/useTabId';
 import { logEvent } from 'src/logger/actions';
-import { WritableDraft } from 'immer/dist/internal';
+/* import { WritableDraft } from 'immer/dist/internal'; */
 import { LOG_ACTIONS_CHANGE_DASHBOARD_FILTER } from 'src/logger/LogUtils';
 import { FilterBarOrientation, RootState } from 'src/dashboard/types';
 import { UserWithPermissionsAndRoles } from 'src/types/bootstrapTypes';
 import { checkIsApplyDisabled } from './utils';
 import { FiltersBarProps } from './types';
-import {
-  useNativeFiltersDataMask,
-  useFilters,
-  useFilterUpdates,
-  useInitialization,
-} from './state';
+import { useFilters, useFilterUpdates, useInitialization } from './state';
 import { createFilterKey, updateFilterKey } from './keyValue';
 import ActionButtons from './ActionButtons';
 import Horizontal from './Horizontal';
@@ -132,13 +120,14 @@ const FilterBar: React.FC<FiltersBarProps> = ({
   orientation = FilterBarOrientation.Vertical,
   verticalConfig,
   hidden = false,
+  updateKey,
+  setUpdateKey,
+  dataMaskSelected,
+  dataMaskApplied,
+  setDataMaskSelected,
 }) => {
   const history = useHistory();
-  const dataMaskApplied: DataMaskStateWithId = useNativeFiltersDataMask();
-  const [dataMaskSelected, setDataMaskSelected] =
-    useImmer<DataMaskStateWithId>(dataMaskApplied);
   const dispatch = useDispatch();
-  const [updateKey, setUpdateKey] = useState(0);
   const tabId = useTabId();
   const filters = useFilters();
   const previousFilters = usePrevious(filters);
@@ -161,21 +150,22 @@ const FilterBar: React.FC<FiltersBarProps> = ({
   const dataMaskSelectedRef = useRef(dataMaskSelected);
   dataMaskSelectedRef.current = dataMaskSelected;
 
-  const handleFindFilterId = useCallback(
+  // TODO: need fix
+  /*  const handleFindFilterId = useCallback(
     (data: DataMaskStateWithId, colName: string) =>
       Object.values(data).find(
         item =>
           item?.extraFormData?.filters?.some(filter => filter.col === colName),
       )?.id,
     [],
-  );
+  ); */
 
-  const sliceArray = useCallback((arr: string[], value: string) => {
+  /*  const sliceArray = useCallback((arr: string[], value: string) => {
     const index = arr.indexOf(value);
     return index !== -1 ? arr.slice(index + 1) : [];
-  }, []);
+  }, []); */
 
-  const handleResetLowerHierarchyFields = useCallback(
+  /*   const handleResetLowerHierarchyFields = useCallback(
     (
       fieldName: string,
       filterId: string,
@@ -203,7 +193,7 @@ const FilterBar: React.FC<FiltersBarProps> = ({
       }
     },
     [filtersInScope, handleFindFilterId, sliceArray],
-  );
+  ); */
 
   const handleFilterSelectionChange = useCallback(
     (
@@ -226,7 +216,8 @@ const FilterBar: React.FC<FiltersBarProps> = ({
           ...dataMask,
         };
 
-        const filtersInScopeNames: string[] = filtersInScope
+        // TODO: need fix
+        /*  const filtersInScopeNames: string[] = filtersInScope
           .map(item => item.targets?.[0]?.column?.name ?? '')
           .filter(item => item);
 
@@ -238,15 +229,10 @@ const FilterBar: React.FC<FiltersBarProps> = ({
             dataMaskSelectedRef.current,
             draft,
           );
-        });
+        }); */
       });
     },
-    [
-      dispatch,
-      filtersInScope,
-      handleResetLowerHierarchyFields,
-      setDataMaskSelected,
-    ],
+    [dispatch, setDataMaskSelected],
   );
 
   useEffect(() => {
@@ -306,7 +292,7 @@ const FilterBar: React.FC<FiltersBarProps> = ({
         dispatch(updateDataMask(filterId, dataMaskSelected[filterId]));
       }
     });
-  }, [dataMaskSelected, dispatch]);
+  }, [dataMaskSelected, dispatch, setUpdateKey]);
 
   const handleClearAll = useCallback(() => {
     const clearDataMaskIds: string[] = [];
@@ -374,6 +360,10 @@ const FilterBar: React.FC<FiltersBarProps> = ({
         onSelectionChange={handleFilterSelectionChange}
         toggleFiltersBar={verticalConfig.toggleFiltersBar}
         width={verticalConfig.width}
+        updateKey={updateKey}
+        setUpdateKey={setUpdateKey}
+        dataMaskApplied={dataMaskApplied}
+        setDataMaskSelected={setDataMaskSelected}
       />
     ) : null;
 

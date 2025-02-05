@@ -25,6 +25,7 @@ import { Menu, Dropdown, Button } from 'antd';
 import Icons from 'src/components/Icons';
 import { LineEditableTabs } from 'src/components/Tabs';
 import withMobileDetection from 'src/dashboard/hocs/withMobileDetection';
+import DashboardFilters from 'src/dashboard/containers/dashboard-filters/dashboard-filters';
 import { LOG_ACTIONS_SELECT_DASHBOARD_TAB } from 'src/logger/LogUtils';
 import { AntdModal } from 'src/components';
 import { Draggable } from '../dnd/DragDroppable';
@@ -479,6 +480,11 @@ export class Tabs extends React.PureComponent {
       isCurrentPartChartsLoading,
       onChangeParentTab,
       isMobile,
+      renderHospitalNameFilter,
+      handleDeleteFilterOption,
+      toggleDashboardFiltersOpen,
+      filtersInScope,
+      dataMaskApplied,
     } = this.props;
 
     const { children: tabIds } = tabsComponent;
@@ -548,6 +554,7 @@ export class Tabs extends React.PureComponent {
                 <Caption>{`Found: ${hospitalsLength ?? 0} hospitals`}</Caption>
               </Card>
             )}
+            {/* {renderHospitalNameFilter && renderHospitalNameFilter()} */}
             {!isChild && isMobile && <MobileSpaceForControls />}
             {isMobile && isChild && !isMultiTabs && (
               <StyledDropdown>
@@ -612,6 +619,16 @@ export class Tabs extends React.PureComponent {
                     />
                   }
                 >
+                  {!isChild && !isMobile && (
+                    <DashboardFilters
+                      handleDeleteFilterOption={handleDeleteFilterOption}
+                      toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
+                      filtersInScope={filtersInScope}
+                      dataMaskApplied={dataMaskApplied}
+                      isSearchInput={tabIndex === 1}
+                      renderHospitalNameFilter={renderHospitalNameFilter}
+                    />
+                  )}
                   {renderTabContent && (
                     <DashboardComponent
                       id={tabId}
@@ -621,6 +638,10 @@ export class Tabs extends React.PureComponent {
                       onChangeParentTab={
                         isChild ? onChangeParentTab : this.handleClickTab
                       }
+                      renderHospitalNameFilter={renderHospitalNameFilter}
+                      handleDeleteFilterOption={handleDeleteFilterOption}
+                      filtersInScope={filtersInScope}
+                      dataMaskApplied={dataMaskApplied}
                       isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                       renderType={RENDER_TAB_CONTENT}
                       availableColumnCount={availableColumnCount}

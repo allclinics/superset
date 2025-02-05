@@ -167,6 +167,11 @@ describe('FilterBar', () => {
           offset: 0,
           ...props,
         }}
+        updateKey={0}
+        setUpdateKey={() => {}}
+        dataMaskApplied={{}}
+        dataMaskSelected={{}}
+        setDataMaskSelected={() => {}}
       />,
       {
         initialState: state,

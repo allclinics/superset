@@ -37,7 +37,12 @@ const propTypes = {
   setDirectPathToChild: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   dashboardId: PropTypes.number,
+  renderHospitalNameFilter: PropTypes.func,
+  dataMaskApplied: PropTypes.array,
+  handleDeleteFilterOption: PropTypes.func,
+  toggleDashboardFiltersOpen: PropTypes.func,
   isCurrentPartChartsLoading: PropTypes.bool,
+  filtersInScope: PropTypes.array,
 };
 
 const defaultProps = {};
@@ -314,6 +319,13 @@ class DashboardGrid extends React.PureComponent {
                   onResizeStop={this.handleResizeStop}
                   onChangeTab={this.handleChangeTab}
                   onChangeParentTab={this.props?.onChangeParentTab}
+                  renderHospitalNameFilter={this.props.renderHospitalNameFilter}
+                  dataMaskApplied={this.props.dataMaskApplied}
+                  handleDeleteFilterOption={this.props.handleDeleteFilterOption}
+                  toggleDashboardFiltersOpen={
+                    this.props.toggleDashboardFiltersOpen
+                  }
+                  filtersInScope={this.props.filtersInScope}
                   isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                 />
                 {/* make the area below components droppable */}
