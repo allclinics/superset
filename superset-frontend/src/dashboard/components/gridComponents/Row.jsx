@@ -265,6 +265,11 @@ class Row extends React.PureComponent {
       editMode,
       onChangeTab,
       isComponentVisible,
+      renderHospitalNameFilter,
+      handleDeleteFilterOption,
+      toggleDashboardFiltersOpen,
+      filtersInScope,
+      dataMaskApplied,
     } = this.props;
     const { containerHeight, hoverMenuHovered } = this.state;
 
@@ -376,6 +381,11 @@ class Row extends React.PureComponent {
                       onResizeStop={onResizeStop}
                       isComponentVisible={isComponentVisible}
                       onChangeTab={onChangeTab}
+                      handleDeleteFilterOption={handleDeleteFilterOption}
+                      toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
+                      renderHospitalNameFilter={renderHospitalNameFilter}
+                      filtersInScope={filtersInScope}
+                      dataMaskApplied={dataMaskApplied}
                       onChangeParentTab={this.props?.onChangeParentTab}
                       isInView={this.state.isInView}
                     />

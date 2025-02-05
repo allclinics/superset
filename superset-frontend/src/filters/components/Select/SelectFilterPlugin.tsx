@@ -104,6 +104,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     inverseSelection,
     defaultToFirstItem,
     searchAllOptions,
+    isCustomSearch,
   } = formData;
   const groupby = useMemo(
     () => ensureIsArray(formData.groupby).map(getColumnLabel),
@@ -205,8 +206,9 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
     [updateDataMask],
   );
 
-  const placeholderText =
-    data.length === 0
+  const placeholderText = isCustomSearch
+    ? 'Search hospital name'
+    : data.length === 0
       ? t('No data')
       : tn('%s option', '%s options', data.length, data.length);
 
@@ -296,6 +298,7 @@ export default function PluginFilterSelect(props: PluginFilterSelectProps) {
           allowClear
           allowNewOptions={!searchAllOptions}
           allowSelectAll={!searchAllOptions}
+          isCustomSearch={isCustomSearch}
           // @ts-ignore
           value={filterState.value || []}
           disabled={isDisabled}

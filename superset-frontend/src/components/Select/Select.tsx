@@ -62,6 +62,7 @@ import {
   StyledHeader,
   StyledSelect,
   StyledStopOutlined,
+  StyledSearch,
 } from './styles';
 import {
   EMPTY_OPTIONS,
@@ -118,11 +119,12 @@ const Select = forwardRef(
       getPopupContainer,
       oneLine,
       maxTagCount: propsMaxTagCount,
+      isCustomSearch,
       ...props
     }: SelectProps,
     ref: RefObject<HTMLInputElement>,
   ) => {
-    const isSingleMode = mode === 'single';
+    const isSingleMode = isCustomSearch || mode === 'single';
     const shouldShowSearch = allowNewOptions ? true : showSearch;
     const [selectValue, setSelectValue] = useState(value);
     const [inputValue, setInputValue] = useState('');
@@ -591,15 +593,20 @@ const Select = forwardRef(
     };
 
     return (
-      <StyledContainer headerPosition={headerPosition}>
+      <StyledContainer
+        isCustomSearch={isCustomSearch}
+        headerPosition={headerPosition}
+      >
         {header && (
           <StyledHeader headerPosition={headerPosition}>{header}</StyledHeader>
         )}
+        {isCustomSearch && <StyledSearch aria-label="search" />}
         <StyledSelect
+          isCustomSearch={isCustomSearch}
           allowClear={!isLoading && allowClear}
           aria-label={ariaLabel || name}
           autoClearSearchValue={autoClearSearchValue}
-          dropdownRender={dropdownRender}
+          dropdownRender={isCustomSearch ? undefined : dropdownRender}
           filterOption={handleFilterOption}
           filterSort={sortComparatorWithSearch}
           getPopupContainer={
@@ -622,14 +629,14 @@ const Select = forwardRef(
           onClear={handleClear}
           placeholder={placeholder}
           showSearch={shouldShowSearch}
-          showArrow
+          showArrow={!isCustomSearch}
           tokenSeparators={tokenSeparators}
           value={selectValue}
-          suffixIcon={getSuffixIcon(
-            isLoading,
-            shouldShowSearch,
-            isDropdownVisible,
-          )}
+          suffixIcon={
+            isCustomSearch
+              ? undefined
+              : getSuffixIcon(isLoading, shouldShowSearch, isDropdownVisible)
+          }
           menuItemSelectedIcon={
             invertSelection ? (
               <StyledStopOutlined iconSize="m" aria-label="stop" />

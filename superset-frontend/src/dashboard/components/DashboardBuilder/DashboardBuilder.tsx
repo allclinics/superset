@@ -37,7 +37,14 @@ import {
   t,
   useTheme,
   useElementOnScreen,
+  DataMaskStateWithId,
+  Filter,
+  DataMask,
+  DataMaskWithId,
 } from '@superset-ui/core';
+import { logEvent } from 'src/logger/actions';
+import { updateDataMask } from 'src/dataMask/actions';
+import { getInitialDataMask } from 'src/dataMask/reducer';
 import { Global } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorBoundary from 'src/components/ErrorBoundary';
@@ -73,6 +80,8 @@ import {
 } from 'src/dashboard/util/constants';
 import FilterBar from 'src/dashboard/components/nativeFilters/FilterBar';
 import Loading from 'src/components/Loading';
+import { useImmer } from 'use-immer';
+import { LOG_ACTIONS_CHANGE_DASHBOARD_FILTER } from 'src/logger/LogUtils';
 // eslint-disable-next-line import/no-unresolved
 import useDetectDevice from 'src/hooks/useDetectDevice';
 import { EmptyStateBig } from 'src/components/EmptyState';
@@ -91,8 +100,18 @@ import { getRootLevelTabsComponent, shouldFocusTabs } from './utils';
 import DashboardContainer from './DashboardContainer';
 import { useNativeFilters } from './state';
 import DashboardWrapper from './DashboardWrapper';
+import { useSelectFiltersInScope } from '../nativeFilters/state';
+import { useNativeFiltersDataMask } from '../nativeFilters/FilterBar/state';
+import { useFilterControlFactory } from '../nativeFilters/FilterBar/useFilterControlFactory';
+import FilterControl from '../nativeFilters/FilterBar/FilterControls/FilterControl';
 
 type DashboardBuilderProps = {};
+
+interface IExtraFormDataFilter {
+  op: string;
+  val: string[];
+  col: string;
+}
 
 const LoadingWrapper = styled.div`
   position: fixed;
@@ -556,6 +575,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
     showDashboard,
     dashboardFiltersOpen,
     toggleDashboardFiltersOpen,
+    toggleFiltersPanel,
     nativeFiltersEnabled,
   } = useNativeFilters(isMobile);
 
@@ -612,6 +632,138 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
     currentTopLevelTabs.current = topLevelTabs;
   }, [topLevelTabs]);
 
+  const [updateKey, setUpdateKey] = useState(0);
+
+  const dataMaskApplied: DataMaskStateWithId = useNativeFiltersDataMask();
+
+  const [dataMaskSelected, setDataMaskSelected] =
+    useImmer<DataMaskStateWithId>(dataMaskApplied);
+
+  const dataMaskSelectedRef = useRef(dataMaskSelected);
+  dataMaskSelectedRef.current = dataMaskSelected;
+
+  const handleFilterSelectionChange = useCallback(
+    (
+      filter: Pick<Filter, 'id'> & Partial<Filter>,
+      dataMask: Partial<DataMask>,
+      isApply?: boolean,
+    ) => {
+      setDataMaskSelected(draft => {
+        if (
+          dataMask.filterState?.value !== undefined &&
+          dataMaskSelectedRef.current[filter.id]?.filterState?.value ===
+            undefined &&
+          filter.requiredFirst
+        ) {
+          dispatch(updateDataMask(filter.id, dataMask));
+        }
+        // eslint-disable-next-line no-param-reassign
+        draft[filter.id] = {
+          ...(getInitialDataMask(filter.id) as DataMaskWithId),
+          ...dataMask,
+        };
+
+        if (isApply) {
+          const cleanDraft = JSON.parse(JSON.stringify(draft));
+          dispatch(logEvent(LOG_ACTIONS_CHANGE_DASHBOARD_FILTER, {}));
+          const filterIds = Object.keys(cleanDraft);
+          setUpdateKey(1);
+          filterIds.forEach(filterId => {
+            if (cleanDraft[filterId]) {
+              dispatch(updateDataMask(filterId, cleanDraft[filterId]));
+            }
+          });
+        }
+      });
+    },
+    [dispatch, setDataMaskSelected],
+  );
+
+  const handleDeleteFilterOption = useCallback(
+    (
+      filter: Pick<Filter, 'id'> & Partial<Filter>,
+      value: string,
+      filterDataMask: DataMaskWithId,
+    ) => {
+      const extraFormDataFilter = filterDataMask?.extraFormData
+        ?.filters?.[0] as IExtraFormDataFilter;
+      const extraFormDataFilterVal: string[] = extraFormDataFilter?.val?.filter(
+        item => item !== value,
+      );
+
+      if (
+        filter?.controlValues?.enableEmptyFilter &&
+        extraFormDataFilterVal.length === 0 &&
+        !dashboardFiltersOpen
+      ) {
+        toggleFiltersPanel();
+      }
+
+      const extraFormData = extraFormDataFilterVal.length
+        ? {
+            filters: [
+              {
+                col: extraFormDataFilter?.col,
+                op: extraFormDataFilter?.op,
+                val: extraFormDataFilterVal,
+              },
+            ],
+          }
+        : {};
+
+      const filterStateValues = (
+        filterDataMask?.filterState?.value as string[]
+      )?.filter(item => item !== value);
+
+      const filterStateLabel = (filterDataMask?.filterState?.label as string)
+        .split(', ')
+        .filter(word => word !== value)
+        .join(', ');
+
+      const filterState = {
+        ...filterDataMask.filterState,
+        value: filterStateValues.length ? filterStateValues : null,
+        label: filterStateLabel ?? undefined,
+      };
+
+      const data = {
+        extraFormData,
+        filterState,
+      } as Partial<DataMask>;
+
+      handleFilterSelectionChange(filter, data, true);
+    },
+    [dashboardFiltersOpen, handleFilterSelectionChange, toggleFiltersPanel],
+  );
+
+  const { filtersWithValues } = useFilterControlFactory(
+    dataMaskSelected,
+    handleFilterSelectionChange,
+  );
+
+  const [filtersInScope] = useSelectFiltersInScope(filtersWithValues);
+
+  const fillter = useMemo(
+    () => filtersWithValues.find(item => item.name === 'Hospital Name'),
+    [filtersWithValues],
+  );
+
+  const renderHospitalNameFilter = useCallback(() => {
+    if (!fillter) return null;
+
+    return (
+      <FilterControl
+        orientation={FilterBarOrientation.Vertical}
+        dataMaskSelected={dataMaskSelected}
+        overflow={false}
+        // @ts-ignore
+        filter={fillter}
+        isCustomSearch
+        onFilterSelectionChange={handleFilterSelectionChange}
+      />
+    );
+  }, [dataMaskSelected, fillter, handleFilterSelectionChange]);
+
   const renderDraggableContent = useCallback(
     ({ dropIndicatorProps }: { dropIndicatorProps: JsonObject }) => (
       <div>
@@ -625,6 +777,11 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
         {showFilterBar &&
           filterBarOrientation === FilterBarOrientation.Horizontal && (
             <FilterBar
+              updateKey={updateKey}
+              setUpdateKey={setUpdateKey}
+              dataMaskSelected={dataMaskSelected}
+              setDataMaskSelected={setDataMaskSelected}
+              dataMaskApplied={dataMaskApplied}
               orientation={FilterBarOrientation.Horizontal}
               hidden={isReport}
             />
@@ -642,7 +799,6 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
             ]}
             editMode={editMode}
           >
-            {/* @ts-ignore */}
             <DashboardComponent
               id={topLevelTabs?.id}
               parentId={DASHBOARD_ROOT_ID}
@@ -662,6 +818,10 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
       toggleDashboardFiltersOpen,
       showFilterBar,
       filterBarOrientation,
+      updateKey,
+      dataMaskSelected,
+      setDataMaskSelected,
+      dataMaskApplied,
       isReport,
       topLevelTabs,
       uiConfig.hideNav,
@@ -707,6 +867,11 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
                     <StickyPanel ref={containerRef} width={filterBarWidth}>
                       <ErrorBoundary>
                         <FilterBar
+                          updateKey={updateKey}
+                          dataMaskApplied={dataMaskApplied}
+                          setUpdateKey={setUpdateKey}
+                          dataMaskSelected={dataMaskSelected}
+                          setDataMaskSelected={setDataMaskSelected}
                           orientation={FilterBarOrientation.Vertical}
                           verticalConfig={{
                             filtersOpen: dashboardFiltersOpen,
@@ -787,6 +952,11 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
               <DashboardContainer
                 isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                 topLevelTabs={topLevelTabs}
+                renderHospitalNameFilter={renderHospitalNameFilter}
+                dataMaskApplied={dataMaskApplied}
+                filtersInScope={filtersInScope}
+                toggleDashboardFiltersOpen={toggleFiltersPanel}
+                handleDeleteFilterOption={handleDeleteFilterOption}
               />
             ) : (
               <>

@@ -37,10 +37,15 @@ export interface FilterControlProps extends BaseFilterProps {
   };
   icon?: React.ReactElement;
   focusedFilterId?: string;
-  onFilterSelectionChange: (filter: Filter, dataMask: DataMask) => void;
+  onFilterSelectionChange: (
+    filter: Filter,
+    dataMask: DataMask,
+    isApply?: boolean,
+  ) => void;
   inView?: boolean;
   showOverflow?: boolean;
   parentRef?: RefObject<any>;
   setFilterActive?: (isActive: boolean) => void;
   validateStatus?: string;
+  isCustomSearch?: boolean;
 }

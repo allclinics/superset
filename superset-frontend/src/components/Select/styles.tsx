@@ -31,26 +31,30 @@ export const StyledHeader = styled.span<{ headerPosition: string }>`
   `}
 `;
 
-export const StyledContainer = styled.div<{ headerPosition: string }>`
-  ${({ headerPosition }) => `
+export const StyledContainer = styled.div<{
+  headerPosition: string;
+  isCustomSearch?: boolean;
+}>`
+  ${({ headerPosition, isCustomSearch }) => `
     display: flex;
     flex-direction: ${headerPosition === 'top' ? 'column' : 'row'};
     align-items: ${headerPosition === 'left' ? 'center' : undefined};
     width: 100%;
+    position: ${isCustomSearch ? 'relative' : 'unset'};
   `}
 `;
 
 export const StyledSelect = styled(AntdSelect, {
   shouldForwardProp: prop => prop !== 'headerPosition' && prop !== 'oneLine',
-})<{ headerPosition: string; oneLine?: boolean }>`
-  ${({ theme, headerPosition, oneLine }) => `
+})<{ headerPosition: string; oneLine?: boolean; isCustomSearch?: boolean }>`
+  ${({ theme, headerPosition, oneLine, isCustomSearch }) => `
     flex: ${headerPosition === 'left' ? 1 : 0};
     && .ant-select-selector {
     border-color: #D9E1EC !important;
     border: 1px solid #D9E1EC;
     box-shadow: none !important;
     border-radius: 10px;
-    padding: 0px 28px 0px 12px;
+    padding: ${isCustomSearch ? '0px 12px 0px 40px' : '0px 28px 0px 12px'};
     height: 34px;
      &:hover {
         border: 1px solid #3876F6;
@@ -63,9 +67,14 @@ export const StyledSelect = styled(AntdSelect, {
     flex-wrap: nowrap;
     }
 
+   && .ant-select-selection-search {
+   left: ${isCustomSearch ? 40 : 11}px;
+   }
+
 
     && .ant-select-selection-placeholder {
     color: #A1A7C4;
+    left: ${isCustomSearch ? 40 : 11}px;
     }
     && .anticon-close-circle {
      color: #7E84A3;
@@ -159,6 +168,16 @@ export const StyledTag = styled(Tag)`
 
 export const StyledStopOutlined = styled(Icons.StopOutlined)`
   vertical-align: 0;
+`;
+
+export const StyledSearch = styled(Icons.Search)`
+  font-size: 24px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #7e84a3;
 `;
 
 export const StyledCheckOutlined = styled(Icons.CheckOutlined)`

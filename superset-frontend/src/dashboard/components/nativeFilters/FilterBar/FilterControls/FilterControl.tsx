@@ -237,6 +237,7 @@ const FilterControl = ({
   parentRef,
   orientation = FilterBarOrientation.Vertical,
   overflow = false,
+  isCustomSearch,
 }: FilterControlProps) => {
   const portalNode = useMemo(() => createHtmlPortalNode(), []);
   const [, setIsFilterActive] = useState(false);
@@ -294,6 +295,7 @@ const FilterControl = ({
           orientation={orientation}
           overflow={overflow}
           validateStatus={validateStatus}
+          isCustomSearch={isCustomSearch}
         />
       </InPortal>
       <FilterControlContainer
@@ -305,7 +307,7 @@ const FilterControl = ({
       >
         <div>
           <FormItem
-            label={label}
+            label={isCustomSearch ? undefined : label}
             aria-label={name}
             required={filter?.controlValues?.enableEmptyFilter}
             validateStatus={validateStatus}

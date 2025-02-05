@@ -61,6 +61,7 @@ export type Filter = {
   name: string;
   scope: NativeFilterScope;
   filterType: string;
+  isCustomSearch?: boolean;
   // for now there will only ever be one target
   // when multiple targets are supported, change this to Target[]
   targets: [Partial<NativeFilterTarget>];

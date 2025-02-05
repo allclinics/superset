@@ -462,7 +462,6 @@ class Header extends React.PureComponent {
       setRefreshFrequency,
       lastModifiedTime,
       logEvent,
-      toggleFiltersBar,
       isFiltersOpen,
     } = this.props;
 
@@ -507,7 +506,6 @@ class Header extends React.PureComponent {
         <PageHeaderWithActions
           isFiltersOpen={isFiltersOpen}
           userCanEdit={userCanEdit}
-          toggleFiltersBar={toggleFiltersBar}
           editableTitleProps={{
             title: dashboardTitle,
             canEdit: userCanEdit && editMode,

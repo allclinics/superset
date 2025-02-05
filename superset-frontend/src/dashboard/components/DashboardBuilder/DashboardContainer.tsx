@@ -23,9 +23,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Filter,
   Filters,
+  Divider,
   getCategoricalSchemeRegistry,
   SupersetClient,
   useComponentDidUpdate,
+  DataMaskWithId,
 } from '@superset-ui/core';
 import { ParentSize } from '@visx/responsive';
 import { pick } from 'lodash';
@@ -54,6 +56,15 @@ import { getRootLevelTabsComponent } from './utils';
 type DashboardContainerProps = {
   topLevelTabs?: LayoutItem;
   isCurrentPartChartsLoading?: boolean;
+  renderHospitalNameFilter: () => null | JSX.Element;
+  dataMaskApplied: any;
+  handleDeleteFilterOption: (
+    filter: Pick<Filter, 'id'> & Partial<Filter>,
+    value: string,
+    dataMask: DataMaskWithId,
+  ) => void;
+  filtersInScope: (Filter | Divider)[];
+  toggleDashboardFiltersOpen: () => void;
 };
 
 const useNativeFilterScopes = () => {
@@ -74,6 +85,11 @@ const useNativeFilterScopes = () => {
 const DashboardContainer: FC<DashboardContainerProps> = ({
   topLevelTabs,
   isCurrentPartChartsLoading,
+  renderHospitalNameFilter,
+  handleDeleteFilterOption,
+  toggleDashboardFiltersOpen,
+  filtersInScope,
+  dataMaskApplied,
 }) => {
   const nativeFilterScopes = useNativeFilterScopes();
   const dispatch = useDispatch();
@@ -252,6 +268,11 @@ const DashboardContainer: FC<DashboardContainerProps> = ({
                   width={width}
                   isComponentVisible={index === tabIndex}
                   isCurrentPartChartsLoading={isCurrentPartChartsLoading}
+                  renderHospitalNameFilter={renderHospitalNameFilter}
+                  dataMaskApplied={dataMaskApplied}
+                  handleDeleteFilterOption={handleDeleteFilterOption}
+                  toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
+                  filtersInScope={filtersInScope}
                 />
               </Tabs.TabPane>
             ))}

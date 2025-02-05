@@ -166,6 +166,7 @@ export interface SelectProps extends BaseSelectProps {
    * The options can be static, an array of options.
    */
   options: SelectOptionsType;
+  isCustomSearch?: boolean;
 }
 
 export type AsyncSelectRef = HTMLInputElement & { clearCache: () => void };

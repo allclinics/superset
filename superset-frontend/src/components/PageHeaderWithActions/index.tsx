@@ -162,7 +162,6 @@ export type PageHeaderWithActionsProps = {
     placement?: TooltipPlacement;
   };
   isFiltersOpen?: boolean;
-  toggleFiltersBar?: () => void;
   userCanEdit?: boolean;
 };
 
@@ -179,7 +178,6 @@ export const PageHeaderWithActions = ({
   showMenuDropdown = true,
   tooltipProps,
   isFiltersOpen,
-  toggleFiltersBar,
   userCanEdit,
 }: PageHeaderWithActionsProps) => {
   const theme = useTheme();
@@ -189,19 +187,6 @@ export const PageHeaderWithActions = ({
       className="header-with-actions"
     >
       <div className="title-panel">
-        {!isFiltersOpen && (
-          <div
-            role="button"
-            tabIndex={0}
-            className="collapse-button"
-            onClick={toggleFiltersBar}
-          >
-            <Icons.Expand
-              iconColor={theme.colors.grayscale.base}
-              className="expend"
-            />
-          </div>
-        )}
         {userCanEdit && <DynamicEditableTitle {...editableTitleProps} />}
         {showTitlePanelItems && (
           <div css={buttonsStyles}>
