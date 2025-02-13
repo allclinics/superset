@@ -54,6 +54,7 @@ export interface EchartsProps {
   selectedValues?: Record<number, string>;
   forceClear?: boolean;
   refs: Refs;
+  isTourChart?: boolean;
 }
 
 export interface EchartsHandler {

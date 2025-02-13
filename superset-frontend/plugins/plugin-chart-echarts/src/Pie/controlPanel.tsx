@@ -34,6 +34,7 @@ import {
   legendModalSection,
   showLoaderSection,
   pieChartLegendrSection,
+  customSettingSection,
 } from '../controls';
 
 const {
@@ -53,6 +54,11 @@ const config: ControlPanelConfig = {
       label: t('Pie Chart Legend'),
       expanded: true,
       controlSetRows: [...pieChartLegendrSection],
+    },
+    {
+      label: t('Custom Setting'),
+      expanded: true,
+      controlSetRows: [...customSettingSection],
     },
     {
       label: t('Show Loader'),

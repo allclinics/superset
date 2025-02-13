@@ -72,6 +72,7 @@ import {
   deleteTopLevelTabs,
   handleComponentDrop,
 } from 'src/dashboard/actions/dashboardLayout';
+import Tour from 'src/dashboard/containers/tour';
 import {
   DASHBOARD_GRID_ID,
   DASHBOARD_ROOT_DEPTH,
@@ -948,6 +949,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
             dashboardFiltersOpen={dashboardFiltersOpen}
             marginLeft={dashboardContentMarginLeft}
           >
+            {!editMode && !isMobile && <Tour />}
             {showDashboard ? (
               <DashboardContainer
                 isCurrentPartChartsLoading={isCurrentPartChartsLoading}

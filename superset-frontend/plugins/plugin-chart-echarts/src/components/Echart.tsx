@@ -43,6 +43,7 @@ function Echart(
     zrEventHandlers,
     selectedValues = {},
     refs,
+    isTourChart,
   }: EchartsProps,
   ref: React.Ref<EchartsHandler>,
 ) {
@@ -118,7 +119,14 @@ function Echart(
     handleSizeChange({ width, height });
   }, [width, height, handleSizeChange]);
 
-  return <Styles ref={divRef} height={height} width={width} />;
+  return (
+    <Styles
+      className={isTourChart ? 'tour-chart' : ''}
+      ref={divRef}
+      height={height}
+      width={width}
+    />
+  );
 }
 
 export default forwardRef(Echart);

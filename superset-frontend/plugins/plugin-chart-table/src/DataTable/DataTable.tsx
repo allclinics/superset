@@ -416,6 +416,7 @@ export default typedMemo(function DataTable<D extends object>({
     <div
       ref={wrapperRef}
       style={{ width: initialWidth, height: initialHeight }}
+      className="tour-table"
     >
       {hasGlobalControl ? (
         <div ref={globalControlRef} className="form-inline dt-controls">

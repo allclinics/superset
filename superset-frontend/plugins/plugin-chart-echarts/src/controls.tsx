@@ -175,6 +175,17 @@ const pieChartLegend: ControlSetItem = {
   },
 };
 
+const isTourChart: ControlSetItem = {
+  name: 'isTourChart',
+  config: {
+    type: 'CheckboxControl',
+    label: 'Tour Chart',
+    renderTrigger: true,
+    default: false,
+    description: 'Chart that will be displayed in the tour',
+  },
+};
+
 const pieChartLegendsTopPosition: ControlSetItem = {
   name: 'pieChartLegendsTopPosition',
   config: {
@@ -191,6 +202,11 @@ const pieChartLegendsTopPosition: ControlSetItem = {
 export const showLoaderSection: ControlSetRow[] = [
   [<ControlSubSectionHeader>{t('Loader')}</ControlSubSectionHeader>],
   [showLoader],
+];
+
+export const customSettingSection: ControlSetRow[] = [
+  [<ControlSubSectionHeader>{t('Custom Setting')}</ControlSubSectionHeader>],
+  [isTourChart],
 ];
 
 export const pieChartLegendrSection: ControlSetRow[] = [
