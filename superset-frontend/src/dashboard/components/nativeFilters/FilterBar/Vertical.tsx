@@ -246,7 +246,7 @@ const VerticalFilterBar: React.FC<VerticalBarProps> = ({
           />
         </FilterBarEmptyStateContainer>
       ) : (
-        <FilterControlsWrapper>
+        <FilterControlsWrapper className="filter-control-wrapper">
           <FilterControls
             dataMaskSelected={dataMaskSelected}
             onFilterSelectionChange={onSelectionChange}
@@ -283,7 +283,10 @@ const VerticalFilterBar: React.FC<VerticalBarProps> = ({
             </div>
           </Button>
         )}
-        <Bar className={cx({ open: filtersOpen })} width={width}>
+        <Bar
+          className={cx('vertical-filters', { open: filtersOpen })}
+          width={width}
+        >
           <Header toggleFiltersBar={toggleFiltersBar} />
           {!isInitialized ? (
             <div css={{ height }}>

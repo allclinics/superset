@@ -775,14 +775,17 @@ const SliceHeaderControls = (props: SliceHeaderControlsPropsWithRouter) => {
               </MarkdownWrapper>
             }
           >
-            <Icons.Information />
+            <Icons.Information className="tour-info-icon" />
           </Popover>
         </InfoWrapper>
       )}
       {props?.formData?.showPopUpVideoLegend &&
         props?.formData?.legendVideoLink && (
           <>
-            <Icons.VideoPlay onClick={handleOpenVideoModal} />
+            <Icons.VideoPlay
+              onClick={handleOpenVideoModal}
+              className="tour-video-icon"
+            />
             {videoModal.open && (
               <ModalBackground>
                 <VideoModal className="video-modal">

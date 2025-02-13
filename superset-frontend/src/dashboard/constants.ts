@@ -49,3 +49,5 @@ export const DEFAULT_CROSS_FILTER_SCOPING: NativeFilterScope = {
   rootPath: [DASHBOARD_ROOT_ID],
   excluded: [],
 };
+
+export const TOUR_STORAGE_KEY = 'hasCompletedTour';
