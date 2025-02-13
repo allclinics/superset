@@ -957,6 +957,9 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
                 renderHospitalNameFilter={renderHospitalNameFilter}
                 dataMaskApplied={dataMaskApplied}
                 filtersInScope={filtersInScope}
+                isOpenFilters={
+                  (dashboardFiltersOpen && showFilterBar) || isMobile
+                }
                 toggleDashboardFiltersOpen={toggleFiltersPanel}
                 handleDeleteFilterOption={handleDeleteFilterOption}
               />

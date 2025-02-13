@@ -24,6 +24,7 @@ import { Tooltip } from '@superset-ui/chart-controls';
 import Map from '../Map';
 import CallIcon from '../../icons/call.svg';
 import PinIcon from '../../icons/pin.svg';
+import StarGrayIcon from '../../icons/star-gray.svg';
 import StarFullIcon from '../../icons/star.svg';
 import StarHalfIcon from '../../icons/star-half.svg';
 import StarEmptyIcon from '../../icons/star-empty.svg';
@@ -52,6 +53,18 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
   patientExperience,
 }) => {
   const renderStars = useCallback((value: number, maxStars: number) => {
+    if (!value) {
+      return (
+        <StarsWrapper>
+          {[...Array(maxStars)].map((_, i) => (
+            <span key={i}>
+              <StarGrayIcon />
+            </span>
+          ))}
+        </StarsWrapper>
+      );
+    }
+
     const stars = [];
 
     for (let i = 1; i <= maxStars; i++) {
@@ -80,13 +93,24 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
 
   const overlay = (
     <div>
-      <span>
-        Scores are based on surveys taken from this hospital’s inpatients after
-        they were discharged inquiring about different aspects of their stay.
-      </span>
-      <Link href="https://www.medicare.gov" target="_blank" rel="noreferrer">
-        https://www.medicare.gov
-      </Link>
+      {patientExperience ? (
+        <>
+          <span>
+            Scores are based on surveys taken from this hospital’s inpatients
+            after they were discharged inquiring about different aspects of
+            their stay.
+          </span>
+          <Link
+            href="https://www.medicare.gov"
+            target="_blank"
+            rel="noreferrer"
+          >
+            https://www.medicare.gov
+          </Link>
+        </>
+      ) : (
+        <span>No reviews available for this hospital yet.</span>
+      )}
     </div>
   );
 
