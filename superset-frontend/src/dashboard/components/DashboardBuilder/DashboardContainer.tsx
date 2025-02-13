@@ -58,6 +58,7 @@ type DashboardContainerProps = {
   isCurrentPartChartsLoading?: boolean;
   renderHospitalNameFilter: () => null | JSX.Element;
   dataMaskApplied: any;
+  isOpenFilters: boolean;
   handleDeleteFilterOption: (
     filter: Pick<Filter, 'id'> & Partial<Filter>,
     value: string,
@@ -90,6 +91,7 @@ const DashboardContainer: FC<DashboardContainerProps> = ({
   toggleDashboardFiltersOpen,
   filtersInScope,
   dataMaskApplied,
+  isOpenFilters,
 }) => {
   const nativeFilterScopes = useNativeFilterScopes();
   const dispatch = useDispatch();
@@ -271,6 +273,7 @@ const DashboardContainer: FC<DashboardContainerProps> = ({
                   renderHospitalNameFilter={renderHospitalNameFilter}
                   dataMaskApplied={dataMaskApplied}
                   handleDeleteFilterOption={handleDeleteFilterOption}
+                  isOpenFilters={isOpenFilters}
                   toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
                   filtersInScope={filtersInScope}
                 />

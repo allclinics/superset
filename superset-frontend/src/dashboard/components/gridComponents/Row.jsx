@@ -270,6 +270,7 @@ class Row extends React.PureComponent {
       toggleDashboardFiltersOpen,
       filtersInScope,
       dataMaskApplied,
+      isOpenFilters,
     } = this.props;
     const { containerHeight, hoverMenuHovered } = this.state;
 
@@ -385,6 +386,7 @@ class Row extends React.PureComponent {
                       toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
                       renderHospitalNameFilter={renderHospitalNameFilter}
                       filtersInScope={filtersInScope}
+                      isOpenFilters={isOpenFilters}
                       dataMaskApplied={dataMaskApplied}
                       onChangeParentTab={this.props?.onChangeParentTab}
                       isInView={this.state.isInView}

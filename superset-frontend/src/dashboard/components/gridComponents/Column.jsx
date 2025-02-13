@@ -178,6 +178,7 @@ class Column extends React.PureComponent {
       toggleDashboardFiltersOpen,
       filtersInScope,
       dataMaskApplied,
+      isOpenFilters,
     } = this.props;
 
     const columnItems = columnComponent.children || [];
@@ -287,6 +288,7 @@ class Column extends React.PureComponent {
                         onChangeTab={onChangeTab}
                         renderHospitalNameFilter={renderHospitalNameFilter}
                         handleDeleteFilterOption={handleDeleteFilterOption}
+                        isOpenFilters={isOpenFilters}
                         toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
                         filtersInScope={filtersInScope}
                         dataMaskApplied={dataMaskApplied}

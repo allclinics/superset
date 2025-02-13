@@ -43,6 +43,7 @@ const propTypes = {
   toggleDashboardFiltersOpen: PropTypes.func,
   isCurrentPartChartsLoading: PropTypes.bool,
   filtersInScope: PropTypes.array,
+  isOpenFilters: PropTypes.bool,
 };
 
 const defaultProps = {};
@@ -325,6 +326,7 @@ class DashboardGrid extends React.PureComponent {
                   toggleDashboardFiltersOpen={
                     this.props.toggleDashboardFiltersOpen
                   }
+                  isOpenFilters={this.props.isOpenFilters}
                   filtersInScope={this.props.filtersInScope}
                   isCurrentPartChartsLoading={isCurrentPartChartsLoading}
                 />

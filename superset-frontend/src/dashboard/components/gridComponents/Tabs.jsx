@@ -485,6 +485,7 @@ export class Tabs extends React.PureComponent {
       toggleDashboardFiltersOpen,
       filtersInScope,
       dataMaskApplied,
+      isOpenFilters,
     } = this.props;
 
     const { children: tabIds } = tabsComponent;
@@ -619,7 +620,7 @@ export class Tabs extends React.PureComponent {
                     />
                   }
                 >
-                  {!isChild && !isMobile && (
+                  {!isChild && !isMobile && !isOpenFilters && (
                     <DashboardFilters
                       handleDeleteFilterOption={handleDeleteFilterOption}
                       toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
