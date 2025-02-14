@@ -74,6 +74,7 @@ export const Buttons = styled.div`
     margin: 0px;
     text-transform: unset;
     padding: 0px;
+    width: 100%;
   }
 `;
 
