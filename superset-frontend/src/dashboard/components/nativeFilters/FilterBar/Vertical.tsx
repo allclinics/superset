@@ -51,6 +51,7 @@ import { useSelectFiltersInScope } from '../state';
 
 const BarWrapper = styled.div<{ width: number }>`
   width: ${({ theme }) => theme.gridUnit * 8}px;
+  height: 100vh;
 
   & .ant-tabs-top > .ant-tabs-nav {
     margin: 0;
@@ -269,7 +270,7 @@ const VerticalFilterBar: React.FC<VerticalBarProps> = ({
       {filtersOpen && <MobileFilterBackground />}
       <BarWrapper
         {...getFilterBarTestId()}
-        className={cx({ open: filtersOpen })}
+        className={cx('vertical-filters', { open: filtersOpen })}
         width={width}
       >
         {isMobile && !filtersOpen && (
@@ -283,10 +284,7 @@ const VerticalFilterBar: React.FC<VerticalBarProps> = ({
             </div>
           </Button>
         )}
-        <Bar
-          className={cx('vertical-filters', { open: filtersOpen })}
-          width={width}
-        >
+        <Bar className={cx({ open: filtersOpen })} width={width}>
           <Header toggleFiltersBar={toggleFiltersBar} />
           {!isInitialized ? (
             <div css={{ height }}>

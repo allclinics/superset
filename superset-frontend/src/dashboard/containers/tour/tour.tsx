@@ -22,7 +22,7 @@ import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import CustomTooltip from 'src/dashboard/components/tour-tooltip';
 import Button from 'src/components/Button';
 import { TOUR_STORAGE_KEY } from 'src/dashboard/constants';
-import Rocket from '../../../assets/images/rocket.png';
+import Rocket from '../../../assets/images/icons/rocket.svg';
 import {
   Title,
   Modal,
@@ -70,6 +70,7 @@ const steps: Step[] = [
       'It contains detailed information about the selected chart and how to use it.',
     disableBeacon: true,
     placement: 'bottom',
+    spotlightPadding: 0,
   },
   {
     target: '.tour-video-icon',
@@ -78,6 +79,7 @@ const steps: Step[] = [
       'It contains detailed information about the selected chart and how to use it.',
     disableBeacon: true,
     placement: 'bottom',
+    spotlightPadding: 0,
   },
   {
     target: '.tour-table',
@@ -131,11 +133,18 @@ const Tour: FC = () => {
         callback={handleJoyrideCallback}
         showProgress
         disableScrolling
+        floaterProps={{
+          styles: {
+            floaterWithAnimation: {
+              transition: 'all 1s ease-in-out',
+            },
+          },
+        }}
       />
       {isOpenModal && (
         <ModalWrapper>
           <Modal>
-            <img src={Rocket} alt="arrow left" />
+            <Rocket />
             <Title>Welcome to AllClinics!</Title>
             <Description>
               Let’s take a quick tour to help you get started with key features.
