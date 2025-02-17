@@ -274,7 +274,7 @@ const VerticalFilterBar: React.FC<VerticalBarProps> = ({
         width={width}
       >
         {isMobile && !filtersOpen && (
-          <Button onClick={openFiltersBar}>
+          <Button onClick={openFiltersBar} className="mobile-filter">
             <div className="filterContainer">
               <span className="filterText">Filters</span>
               {!!filterCount && (
