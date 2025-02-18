@@ -949,7 +949,7 @@ const DashboardBuilder: FC<DashboardBuilderProps> = () => {
             dashboardFiltersOpen={dashboardFiltersOpen}
             marginLeft={dashboardContentMarginLeft}
           >
-            {!editMode && !isMobile && <Tour />}
+            {!editMode && <Tour isMobile={isMobile} />}
             {showDashboard ? (
               <DashboardContainer
                 isCurrentPartChartsLoading={isCurrentPartChartsLoading}

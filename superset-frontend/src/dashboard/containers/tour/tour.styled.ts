@@ -30,6 +30,10 @@ export const ModalWrapper = styled.div`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 export const Modal = styled.div`
@@ -43,6 +47,10 @@ export const Modal = styled.div`
   max-width: 500px;
   display: flex;
   column-gap: 20px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `;
 
 export const Title = styled.span`
@@ -74,5 +82,14 @@ export const ButtonsWrapper = styled.div`
     width: 174px;
     margin: 0;
     text-transform: unset;
+
+    @media (max-width: 768px) {
+      width: 220px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    row-gap: 16px;
   }
 `;

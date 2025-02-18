@@ -568,7 +568,7 @@ export class Tabs extends React.PureComponent {
               </StyledDropdown>
             )}
             {!isChild && isMobile && (
-              <MobileTabsWrapper>
+              <MobileTabsWrapper className="mobile-tabs">
                 <MobileTabs>
                   {tabIds.map((tabId, tabIndex) => (
                     <MobileTab

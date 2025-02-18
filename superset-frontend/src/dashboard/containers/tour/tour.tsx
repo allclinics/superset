@@ -17,7 +17,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { useState, useEffect, useCallback, type FC } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  type FC,
+  useMemo,
+} from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import CustomTooltip from 'src/dashboard/components/tour-tooltip';
 import Button from 'src/components/Button';
@@ -30,71 +36,82 @@ import {
   ModalWrapper,
   ButtonsWrapper,
 } from './tour.styled';
+import type { TourProps } from './tour.interface';
 
-const steps: Step[] = [
-  {
-    target: '.vertical-filters',
-    title: 'Data filters',
-    content:
-      'Using these filters, you can narrow your data search to a specific state, city, or clinic. Please note that the Update Date and State fields are required.',
-    placement: 'right',
-    disableBeacon: true,
-  },
-  {
-    target: '.ant-tabs-nav-list',
-    title: 'Main menu',
-    content: 'Select on of the categories in the main menu.',
-    disableBeacon: true,
-    placement: 'bottom',
-  },
-  {
-    target: '.tour-chart',
-    title: 'Chart',
-    content:
-      'The main window for visual display of data in a chart with a name and legend.',
-    disableBeacon: true,
-    placement: 'right',
-  },
-  {
-    target: '.filter-counts',
-    title: 'Chart filters',
-    content:
-      'The main window for visual display of data in a chart with a name and legend.',
-    disableBeacon: true,
-    placement: 'bottom',
-  },
-  {
-    target: '.tour-info-icon',
-    title: 'Text legend',
-    content:
-      'It contains detailed information about the selected chart and how to use it.',
-    disableBeacon: true,
-    placement: 'bottom',
-    spotlightPadding: 0,
-  },
-  {
-    target: '.tour-video-icon',
-    title: 'Video',
-    content:
-      'It contains detailed information about the selected chart and how to use it.',
-    disableBeacon: true,
-    placement: 'bottom',
-    spotlightPadding: 0,
-  },
-  {
-    target: '.tour-table',
-    title: 'Table',
-    content:
-      'The main window of the table displaying data with the name and legend. In the show window, you can select the number of displayed items in the table. In the search box, you can search for items by name, as well as scroll through the table by row.',
-    disableBeacon: true,
-    placement: 'left',
-  },
-];
-
-const Tour: FC = () => {
+const Tour: FC<TourProps> = ({ isMobile }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const [run, setRun] = useState(false);
+
+  const steps: Step[] = useMemo(
+    () => [
+      {
+        target: isMobile ? '.mobile-filter' : '.vertical-filters',
+        title: 'Data filters',
+        content:
+          'Using these filters, you can narrow your data search to a specific state, city, or clinic. Please note that the Update Date and State fields are required.',
+        placement: 'right',
+        disableBeacon: true,
+        disableScrolling: true,
+      },
+      {
+        target: isMobile ? '.mobile-tabs' : '.ant-tabs-nav-list',
+        title: 'Main menu',
+        content: 'Select on of the categories in the main menu.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'bottom',
+        disableScrolling: true,
+      },
+      {
+        target: '.tour-chart',
+        title: 'Chart',
+        content:
+          'The main window for visual display of data in a chart with a name and legend.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'right',
+        disableScrolling: true,
+      },
+      {
+        target: '.filter-counts',
+        title: 'Chart filters',
+        content:
+          'The main window for visual display of data in a chart with a name and legend.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'bottom',
+        disableScrolling: true,
+      },
+      {
+        target: '.tour-info-icon',
+        title: 'Text legend',
+        content:
+          'It contains detailed information about the selected chart and how to use it.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'bottom',
+        spotlightPadding: 0,
+        disableScrolling: true,
+      },
+      {
+        target: '.tour-video-icon',
+        title: 'Video',
+        content:
+          'It contains detailed information about the selected chart and how to use it.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'bottom',
+        spotlightPadding: 0,
+        disableScrolling: true,
+      },
+      {
+        target: '.tour-table',
+        title: 'Table',
+        content:
+          'The main window of the table displaying data with the name and legend. In the show window, you can select the number of displayed items in the table. In the search box, you can search for items by name, as well as scroll through the table by row.',
+        disableBeacon: true,
+        placement: isMobile ? 'top' : 'left',
+        disableScrolling: !isMobile,
+      },
+    ],
+    [isMobile],
+  );
 
   useEffect(() => {
     const hasCompletedTour = localStorage.getItem(TOUR_STORAGE_KEY);
@@ -132,7 +149,14 @@ const Tour: FC = () => {
         continuous
         callback={handleJoyrideCallback}
         showProgress
-        disableScrolling
+        styles={{
+          overlay: {
+            zIndex: 1000,
+          },
+          options: {
+            zIndex: 1001,
+          },
+        }}
         floaterProps={{
           styles: {
             floaterWithAnimation: {
