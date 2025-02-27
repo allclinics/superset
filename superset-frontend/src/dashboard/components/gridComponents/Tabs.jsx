@@ -620,7 +620,7 @@ export class Tabs extends React.PureComponent {
                     />
                   }
                 >
-                  {!isChild && !isMobile && !isOpenFilters && (
+                  {!isChild && !isMobile && !isOpenFilters && !editMode && (
                     <DashboardFilters
                       handleDeleteFilterOption={handleDeleteFilterOption}
                       toggleDashboardFiltersOpen={toggleDashboardFiltersOpen}
