@@ -23,6 +23,7 @@ import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
 import LocationMetrics from './components/LocationMetrics';
 import HospitalDetails from './components/HospitalDetails';
+import MedicalStaff from './components/MedicalStaff';
 
 const Styles = styled.div<HandlebarsStylesProps>`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
@@ -59,20 +60,33 @@ export default function Handlebars(props: HandlebarsProps) {
       width={width}
       fullDisplay={formData?.fullDisplay}
     >
-      {props?.formData?.showMap ? (
+      {formData?.isMedicalStaff ? (
+        <MedicalStaff
+          data={data}
+          isMedicalStaffScoresControl={!!formData?.isMedicalStaffScoresControl}
+          isMedicalStaffPerformedProcedures={
+            !!formData?.isMedicalStaffPerformedProcedures
+          }
+          isMedicalStaffOverview={!!formData?.isMedicalStaffOverview}
+        />
+      ) : (
         <>
-          {props?.formData?.isLocationMatrics ? (
-            <LocationMetrics {...props} />
+          {props?.formData?.showMap ? (
+            <>
+              {props?.formData?.isLocationMatrics ? (
+                <LocationMetrics {...props} />
+              ) : (
+                <HospitalDetails
+                  data={data}
+                  mapboxApiKey={props?.mapboxApiKey}
+                  isMobile={!!props?.isMobile}
+                />
+              )}
+            </>
           ) : (
-            <HospitalDetails
-              data={data}
-              mapboxApiKey={props?.mapboxApiKey}
-              isMobile={!!props?.isMobile}
-            />
+            <HandlebarsViewer data={{ data }} templateSource={templateSource} />
           )}
         </>
-      ) : (
-        <HandlebarsViewer data={{ data }} templateSource={templateSource} />
       )}
     </Styles>
   );

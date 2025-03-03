@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -43,3 +44,83 @@ export enum HospitalDetailsTabs {
   GeneralOverview = 'General Overview',
   HospitalServices = 'Hospital Services',
 }
+
+export const PERFORMED_PROCEDURES = [
+  {
+    name: 'Melanoma (skin cancer) excision',
+    color: '#3876F6',
+  },
+  {
+    name: 'Cataract surgery',
+    color: '#F4A79D',
+  },
+  {
+    name: 'Hip replacement',
+    color: '#FFDDCE',
+  },
+  {
+    name: 'Knee replacement',
+    color: '#FFD200',
+  },
+  {
+    name: 'Spinal fusion',
+    color: '#D5C6E7',
+  },
+  {
+    name: 'Laminectomy or laminotomy (partial removal of spine bones)',
+    color: '#F68D2B',
+  },
+  {
+    name: 'Cataract surgery',
+    color: '#E28086',
+  },
+  {
+    name: 'Upper gastrointestinal (GI) endoscopy for acid reflux',
+    color: '#39B480',
+  },
+  {
+    name: 'Varicose vein removal',
+    color: '#91B3FB',
+  },
+  {
+    name: 'Colonoscopy',
+    color: '#7E84DE',
+  },
+  {
+    name: 'Leg revascularization (restoring blood flow',
+    color: '#CEE26A',
+  },
+  {
+    name: 'Coronary artery bypass graft (CABG)',
+    color: '#64BEB9',
+  },
+
+  {
+    name: 'Hernia repair - groin (open)',
+    color: '#3440B9',
+  },
+  {
+    name: 'Hernia repair (minimally invasive)',
+    color: '#CE96A6',
+  },
+  {
+    name: 'Mastectomy',
+    color: '#CFB22E',
+  },
+  {
+    name: 'Laminectomy or laminotomy (partial removal of spine bones)',
+    color: '#9957AD',
+  },
+  {
+    name: 'Pacemaker insertion or repair',
+    color: '#8386CE',
+  },
+  {
+    name: 'Prostate resection',
+    color: '#CA504E',
+  },
+  {
+    name: 'Coronary angioplasty and stenting',
+    color: '#A97EDE',
+  },
+];

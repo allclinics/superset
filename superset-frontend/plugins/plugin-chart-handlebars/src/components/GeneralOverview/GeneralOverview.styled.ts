@@ -19,7 +19,7 @@
  */
 import { styled } from '@superset-ui/core';
 
-export const Conteiner = styled.div`
+export const Container = styled.div`
   display: flex;
   height: 100%;
   border-radius: 20px;

@@ -48,6 +48,12 @@ import { fullDisplayControl } from './controls/fullDisplay';
 import { showMapControl } from './controls/showMap';
 import { isLocationMatricsControl } from './controls/isLocationMetrics';
 import { isFullHeightControl } from './controls/isFullHeight';
+import {
+  isMedicalStaffControl,
+  isMedicalStaffOverviewControl,
+  isMedicalStaffPerformedProceduresControl,
+  isMedicalStaffScoresControl,
+} from './controls/MedicalStaff';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -90,6 +96,16 @@ const config: ControlPanelConfig = {
       label: t('Show Location Matrics'),
       expanded: true,
       controlSetRows: [[isLocationMatricsControl]],
+    },
+    {
+      label: t('Medical Staff'),
+      expanded: true,
+      controlSetRows: [
+        [isMedicalStaffControl],
+        [isMedicalStaffOverviewControl],
+        [isMedicalStaffPerformedProceduresControl],
+        [isMedicalStaffScoresControl],
+      ],
     },
     {
       label: t('Show Full Height'),
