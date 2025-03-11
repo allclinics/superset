@@ -321,6 +321,7 @@ class Row extends React.PureComponent {
               </HoverMenu>
             )}
             <GridRow
+              id={rowComponent?.id}
               className={cx(
                 'grid-row',
                 rowItems.length === 0 && 'grid-row--empty',

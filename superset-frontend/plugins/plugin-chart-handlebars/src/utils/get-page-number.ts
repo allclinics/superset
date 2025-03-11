@@ -16,10 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/* eslint-disable no-plusplus */
-/* eslint-disable theme-colors/no-literal-colors */
-import { TimeseriesDataRecord } from '@superset-ui/core';
+export const getPageNumbers = (
+  pageCount: number,
+  currentPage: number,
+  maxPageItemCount: number,
+) => {
+  const pageNumbers = [];
+  const halfMaxButtons = Math.floor(maxPageItemCount / 2);
+  // Ensure startPage is at least 1
+  let startPage = Math.max(currentPage - halfMaxButtons, 1);
+  const endPage = Math.min(startPage + maxPageItemCount - 1, pageCount);
 
-export interface MedicalStaffOverviewProps {
-  data: TimeseriesDataRecord[];
-}
+  // Adjust startPage if endPage doesn't cover enough pages
+  if (endPage - startPage < maxPageItemCount - 1) {
+    startPage = Math.max(endPage - maxPageItemCount + 1, 1);
+  }
+
+  for (let i = startPage; i <= endPage; i += 1) {
+    pageNumbers.push(i);
+  }
+
+  return pageNumbers;
+};

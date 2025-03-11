@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -18,6 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/* eslint-disable no-plusplus */
+/* eslint-disable theme-colors/no-literal-colors */
 import React, { type FC } from 'react';
 import GenderChip from '../GenderChip';
 import type { MedicalStaffOverviewProps } from './MedicalStaffOverview.interface';
@@ -33,7 +33,8 @@ import {
   Container,
   ChipsList,
 } from './MedicalStaffOverview.styled';
-import type { IStaff } from '../../types/medical-staff.types';
+// types
+import { IStaff } from '../../types';
 
 const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({ data }) => {
   const overviewData = data[0] as unknown as IStaff;

@@ -17,21 +17,33 @@
  * under the License.
  */
 import React, { type FC } from 'react';
-import type { MedicalStaffProps } from './MedicalStaff.interface';
+// components
 import MedicalStaffOverview from '../MedicalStaffOverview';
 import MedicalStaffPerformedProcedures from '../MedicalStaffPerformedProcedures';
+import MedicalStaffScores from '../MedicalStaffScores';
+import MedicalStaffTable from '../MedicalStaffTable/MedicalStaffTable';
+// types
+import type { MedicalStaffProps } from './MedicalStaff.interface';
+// styles
+import { Root } from './MedicalStaff.styled';
 
 const MedicalStaff: FC<MedicalStaffProps> = ({
   data,
+  mapboxApiKey,
   isMedicalStaffOverview,
   isMedicalStaffPerformedProcedures,
   isMedicalStaffScoresControl,
+  isMedicalStaffTableControl,
 }) => (
-  <div>
+  <Root>
     {isMedicalStaffOverview && <MedicalStaffOverview data={data} />}
     {isMedicalStaffPerformedProcedures && (
       <MedicalStaffPerformedProcedures data={data} />
     )}
-  </div>
+    {isMedicalStaffScoresControl && <MedicalStaffScores data={data} />}
+    {isMedicalStaffTableControl && (
+      <MedicalStaffTable mapboxApiKey={mapboxApiKey} data={data} />
+    )}
+  </Root>
 );
 export default MedicalStaff;

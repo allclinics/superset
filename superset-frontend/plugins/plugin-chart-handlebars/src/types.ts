@@ -28,6 +28,7 @@ export interface HandlebarsStylesProps {
   height: number;
   width: number;
   fullDisplay?: boolean;
+  isMedicalStaffTableControl?: boolean;
 }
 
 interface HandlebarsCustomizeProps {

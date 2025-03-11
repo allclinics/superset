@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { type FC } from 'react';
+import React, { useMemo, type FC } from 'react';
 import CircleIcon from '../../icons/circle.svg';
 import type { MedicalStaffPerformedProceduresProps } from './MedicalStaffPerformedProcedures.interface';
 import {
@@ -57,13 +57,18 @@ const MedicalStaffPerformedProcedures: FC<
     }, {}),
   );
 
+  const totalCount = useMemo(
+    () => groupedList.reduce((sum, item) => sum + item.count, 0),
+    [groupedList],
+  );
+
   return (
     <Container>
       <Title>Performed Procedures</Title>
       <Content>
         <CircleWrapper>
           <TotalWrapper>
-            <TotalCount>1903</TotalCount>
+            <TotalCount>{totalCount}</TotalCount>
             <TotalText>performed procedures</TotalText>
           </TotalWrapper>
           <CircleIcon />

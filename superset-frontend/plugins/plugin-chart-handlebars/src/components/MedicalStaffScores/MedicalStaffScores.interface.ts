@@ -16,10 +16,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-/* eslint-disable no-plusplus */
-/* eslint-disable theme-colors/no-literal-colors */
-import { TimeseriesDataRecord } from '@superset-ui/core';
+import type { TimeseriesDataRecord } from '@superset-ui/core';
 
-export interface MedicalStaffOverviewProps {
+export interface MedicalStaffScoresProps {
   data: TimeseriesDataRecord[];
 }

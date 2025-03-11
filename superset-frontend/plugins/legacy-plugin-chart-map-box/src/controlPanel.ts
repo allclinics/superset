@@ -81,6 +81,30 @@ const config: ControlPanelConfig = {
       controlSetRows: [
         [
           {
+            name: 'fullDisplay',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Full display',
+              renderTrigger: true,
+              default: false,
+              description: 'Slice take full space (No header, only controls)',
+            },
+          },
+        ],
+        [
+          {
+            name: 'isMedicalStaffMapControl',
+            config: {
+              type: 'CheckboxControl',
+              label: 'Indicator what is Medical Staff Map',
+              renderTrigger: true,
+              default: false,
+              description: 'Indicator what is Medical Map',
+            },
+          },
+        ],
+        [
+          {
             name: 'namesDisappearZoomLevel',
             config: {
               type: 'TextControl',

@@ -22,13 +22,15 @@ import { styled } from '@superset-ui/core';
 export const Container = styled.div`
   background: #f5f6fa;
   padding: 16px 20px;
-  min-height: 200px;
+  min-height: 250px;
 `;
 
 export const List = styled.div`
   display: flex;
   column-gap: 8px;
   flex-wrap: wrap;
+  height: fit-content;
+  row-gap: 8px;
 `;
 
 export const Option = styled.div`
@@ -84,8 +86,10 @@ export const CircleColor = styled.div<{ color?: string }>`
 
 export const Content = styled.div`
   display: flex;
-  column-gap: 24px;
+  column-gap: 40px;
   margin-top: 36px;
+  align-items: center;
+  margin-bottom: 36px;
 `;
 
 export const CircleWrapper = styled.div`
@@ -103,4 +107,5 @@ export const TotalWrapper = styled.div`
   transform: translate(-50%, -50%);
   justify-content: center;
   align-items: center;
+  row-gap: 4px;
 `;

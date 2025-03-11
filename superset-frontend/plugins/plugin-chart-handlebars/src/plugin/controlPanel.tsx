@@ -53,7 +53,8 @@ import {
   isMedicalStaffOverviewControl,
   isMedicalStaffPerformedProceduresControl,
   isMedicalStaffScoresControl,
-} from './controls/MedicalStaff';
+  isMedicalStaffTableControl,
+} from './controls/medicalStaff';
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -105,6 +106,7 @@ const config: ControlPanelConfig = {
         [isMedicalStaffOverviewControl],
         [isMedicalStaffPerformedProceduresControl],
         [isMedicalStaffScoresControl],
+        [isMedicalStaffTableControl],
       ],
     },
     {

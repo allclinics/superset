@@ -33,6 +33,15 @@ const Styles = styled.div<HandlebarsStylesProps>`
   overflow: auto;
 
   ${props =>
+    !!props?.isMedicalStaffTableControl &&
+    css`
+      border-top-right-radius: 0px;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 20px;
+    `};
+
+  ${props =>
     !!props?.fullDisplay &&
     css`
       height: 100%;
@@ -58,6 +67,7 @@ export default function Handlebars(props: HandlebarsProps) {
       ref={rootElem}
       height={height}
       width={width}
+      isMedicalStaffTableControl={!!formData?.isMedicalStaffTableControl}
       fullDisplay={formData?.fullDisplay}
     >
       {formData?.isMedicalStaff ? (
@@ -67,7 +77,9 @@ export default function Handlebars(props: HandlebarsProps) {
           isMedicalStaffPerformedProcedures={
             !!formData?.isMedicalStaffPerformedProcedures
           }
+          mapboxApiKey={props?.mapboxApiKey}
           isMedicalStaffOverview={!!formData?.isMedicalStaffOverview}
+          isMedicalStaffTableControl={!!formData?.isMedicalStaffTableControl}
         />
       ) : (
         <>

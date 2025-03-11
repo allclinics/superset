@@ -32,6 +32,6 @@ export interface MapProps {
   list?: ClinicItem[];
   width: string;
   height: string;
-  isMobile: boolean;
+  isMobile?: boolean;
   styles?: CSSProperties;
 }
