@@ -37,7 +37,7 @@ import {
   Header,
   Footer,
   Divider,
-  Conteiner,
+  Container,
   WrapperDetails,
   StarsWrapper,
   Top,
@@ -123,7 +123,7 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
   );
 
   return (
-    <Conteiner>
+    <Container>
       <WrapperDetails>
         <Header>
           <Top>
@@ -211,7 +211,7 @@ const GeneralOverview: FC<GeneralOverviewProps> = ({
           mapboxApiKey={mapboxApiKey}
         />
       )}
-    </Conteiner>
+    </Container>
   );
 };
 export default GeneralOverview;

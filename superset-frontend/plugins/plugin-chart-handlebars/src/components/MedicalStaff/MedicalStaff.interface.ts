@@ -16,22 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+import { TimeseriesDataRecord } from '@superset-ui/core';
 
-import { CSSProperties } from 'react';
-
-export interface ClinicItem {
-  latitude: number;
-  longitude: number;
-  hospital_name: string;
-}
-
-export interface MapProps {
-  defaultLatitude: number;
-  defaultLongitude: number;
+export interface MedicalStaffProps {
+  data: TimeseriesDataRecord[];
+  isMedicalStaffOverview: boolean;
+  isMedicalStaffTableControl: boolean;
+  isMedicalStaffScoresControl: boolean;
+  isMedicalStaffPerformedProcedures: boolean;
   mapboxApiKey: string;
-  list?: ClinicItem[];
-  width: string;
-  height: string;
-  isMobile?: boolean;
-  styles?: CSSProperties;
 }

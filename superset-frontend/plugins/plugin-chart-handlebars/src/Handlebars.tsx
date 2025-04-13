@@ -23,6 +23,7 @@ import { HandlebarsViewer } from './components/Handlebars/HandlebarsViewer';
 import { HandlebarsProps, HandlebarsStylesProps } from './types';
 import LocationMetrics from './components/LocationMetrics';
 import HospitalDetails from './components/HospitalDetails';
+import MedicalStaff from './components/MedicalStaff';
 
 const Styles = styled.div<HandlebarsStylesProps>`
   padding: ${({ theme }) => theme.gridUnit * 4}px;
@@ -30,6 +31,15 @@ const Styles = styled.div<HandlebarsStylesProps>`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
   overflow: auto;
+
+  ${props =>
+    !!props?.isMedicalStaffTableControl &&
+    css`
+      border-top-right-radius: 0px;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 20px;
+    `};
 
   ${props =>
     !!props?.fullDisplay &&
@@ -57,22 +67,38 @@ export default function Handlebars(props: HandlebarsProps) {
       ref={rootElem}
       height={height}
       width={width}
+      isMedicalStaffTableControl={!!formData?.isMedicalStaffTableControl}
       fullDisplay={formData?.fullDisplay}
     >
-      {props?.formData?.showMap ? (
+      {formData?.isMedicalStaff ? (
+        <MedicalStaff
+          data={data}
+          isMedicalStaffScoresControl={!!formData?.isMedicalStaffScoresControl}
+          isMedicalStaffPerformedProcedures={
+            !!formData?.isMedicalStaffPerformedProcedures
+          }
+          mapboxApiKey={props?.mapboxApiKey}
+          isMedicalStaffOverview={!!formData?.isMedicalStaffOverview}
+          isMedicalStaffTableControl={!!formData?.isMedicalStaffTableControl}
+        />
+      ) : (
         <>
-          {props?.formData?.isLocationMatrics ? (
-            <LocationMetrics {...props} />
+          {props?.formData?.showMap ? (
+            <>
+              {props?.formData?.isLocationMatrics ? (
+                <LocationMetrics {...props} />
+              ) : (
+                <HospitalDetails
+                  data={data}
+                  mapboxApiKey={props?.mapboxApiKey}
+                  isMobile={!!props?.isMobile}
+                />
+              )}
+            </>
           ) : (
-            <HospitalDetails
-              data={data}
-              mapboxApiKey={props?.mapboxApiKey}
-              isMobile={!!props?.isMobile}
-            />
+            <HandlebarsViewer data={{ data }} templateSource={templateSource} />
           )}
         </>
-      ) : (
-        <HandlebarsViewer data={{ data }} templateSource={templateSource} />
       )}
     </Styles>
   );

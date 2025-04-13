@@ -16,22 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+/* eslint-disable no-plusplus */
+/* eslint-disable theme-colors/no-literal-colors */
+import { TimeseriesDataRecord } from '@superset-ui/core';
 
-import { CSSProperties } from 'react';
-
-export interface ClinicItem {
-  latitude: number;
-  longitude: number;
-  hospital_name: string;
-}
-
-export interface MapProps {
-  defaultLatitude: number;
-  defaultLongitude: number;
-  mapboxApiKey: string;
-  list?: ClinicItem[];
-  width: string;
-  height: string;
-  isMobile?: boolean;
-  styles?: CSSProperties;
+export interface MedicalStaffOverviewProps {
+  data: TimeseriesDataRecord[];
 }

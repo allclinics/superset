@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -17,21 +18,6 @@
  * under the License.
  */
 
-import { CSSProperties } from 'react';
-
-export interface ClinicItem {
-  latitude: number;
-  longitude: number;
-  hospital_name: string;
-}
-
-export interface MapProps {
-  defaultLatitude: number;
-  defaultLongitude: number;
-  mapboxApiKey: string;
-  list?: ClinicItem[];
-  width: string;
-  height: string;
-  isMobile?: boolean;
-  styles?: CSSProperties;
+export interface GenderChipProps {
+  gender?: string | null;
 }

@@ -16,22 +16,4 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-import { CSSProperties } from 'react';
-
-export interface ClinicItem {
-  latitude: number;
-  longitude: number;
-  hospital_name: string;
-}
-
-export interface MapProps {
-  defaultLatitude: number;
-  defaultLongitude: number;
-  mapboxApiKey: string;
-  list?: ClinicItem[];
-  width: string;
-  height: string;
-  isMobile?: boolean;
-  styles?: CSSProperties;
-}
+export { default } from './MedicalStaffPerformedProcedures';

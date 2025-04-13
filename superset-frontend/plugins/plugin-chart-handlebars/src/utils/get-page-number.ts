@@ -16,22 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+export const getPageNumbers = (
+  pageCount: number,
+  currentPage: number,
+  maxPageItemCount: number,
+) => {
+  const pageNumbers = [];
+  const halfMaxButtons = Math.floor(maxPageItemCount / 2);
+  // Ensure startPage is at least 1
+  let startPage = Math.max(currentPage - halfMaxButtons, 1);
+  const endPage = Math.min(startPage + maxPageItemCount - 1, pageCount);
 
-import { CSSProperties } from 'react';
+  // Adjust startPage if endPage doesn't cover enough pages
+  if (endPage - startPage < maxPageItemCount - 1) {
+    startPage = Math.max(endPage - maxPageItemCount + 1, 1);
+  }
 
-export interface ClinicItem {
-  latitude: number;
-  longitude: number;
-  hospital_name: string;
-}
+  for (let i = startPage; i <= endPage; i += 1) {
+    pageNumbers.push(i);
+  }
 
-export interface MapProps {
-  defaultLatitude: number;
-  defaultLongitude: number;
-  mapboxApiKey: string;
-  list?: ClinicItem[];
-  width: string;
-  height: string;
-  isMobile?: boolean;
-  styles?: CSSProperties;
-}
+  return pageNumbers;
+};

@@ -28,6 +28,7 @@ export interface HandlebarsStylesProps {
   height: number;
   width: number;
   fullDisplay?: boolean;
+  isMedicalStaffTableControl?: boolean;
 }
 
 interface HandlebarsCustomizeProps {
@@ -63,3 +64,13 @@ export type HandlebarsProps = HandlebarsStylesProps &
     mapboxApiKey: string;
     isMobile?: boolean;
   };
+
+export interface IStaff {
+  doctor_name?: string;
+  gender?: string;
+  graduation_year?: string;
+  medical_degree?: string;
+  medical_school?: string;
+  other_specialization?: string;
+  primary_specialization?: string;
+}
