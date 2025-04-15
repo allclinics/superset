@@ -23,6 +23,9 @@ export interface ClinicItem {
   latitude: number;
   longitude: number;
   hospital_name: string;
+  address?: string;
+  phone?: string;
+  website?: string;
 }
 
 export interface MapProps {
@@ -32,6 +35,14 @@ export interface MapProps {
   list?: ClinicItem[];
   width: string;
   height: string;
+  isEnabledModal?: boolean;
   isMobile?: boolean;
   styles?: CSSProperties;
+  filterIdForDetails?: string;
+  onChangeParentTab?: (tabIndex: number) => void;
+  handleApply?: (
+    dataMask: any,
+    filterIdForDetails: string,
+    callback: () => void,
+  ) => void;
 }

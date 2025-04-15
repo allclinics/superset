@@ -25,4 +25,11 @@ export interface MedicalStaffProps {
   isMedicalStaffScoresControl: boolean;
   isMedicalStaffPerformedProcedures: boolean;
   mapboxApiKey: string;
+  filterIdForDetails?: string;
+  onChangeParentTab?: (tab: number) => void;
+  handleApply?: (
+    dataMask: any,
+    filterIdForDetails: string,
+    callback: () => void,
+  ) => void;
 }

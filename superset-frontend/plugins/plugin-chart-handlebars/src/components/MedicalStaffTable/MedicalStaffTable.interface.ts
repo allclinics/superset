@@ -21,4 +21,11 @@ import type { TimeseriesDataRecord } from '@superset-ui/core';
 export interface MedicalStaffTableProps {
   data: TimeseriesDataRecord[];
   mapboxApiKey: string;
+  filterIdForDetails?: string;
+  handleApply?: (
+    dataMask: any,
+    filterIdForDetails: string,
+    callback: () => void,
+  ) => void;
+  onChangeParentTab?: (tab: number) => void;
 }

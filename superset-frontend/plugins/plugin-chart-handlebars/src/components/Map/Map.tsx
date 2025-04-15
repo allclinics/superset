@@ -18,10 +18,23 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import React, { useState, useEffect, useCallback, type FC } from 'react';
-import MapGL, { Marker, ViewState } from 'react-map-gl';
-import { MapProps } from './Map.interface';
-import { Wrapper, PointText } from './Map.styled';
+import MapGL, { Marker, Popup, ViewState } from 'react-map-gl';
+import { ClinicItem, MapProps } from './Map.interface';
+import {
+  Button,
+  Wrapper,
+  PointText,
+  ModalWrapper,
+  ModalTitle,
+  Divider,
+  InfoList,
+  ListItem,
+  ListItemText,
+} from './Map.styled';
 import Point from '../../icons/point.svg';
+import CallIcon from '../../icons/call.svg';
+import WorldIcon from '../../icons/globe.svg';
+import PinIcon from '../../icons/pin.svg';
 
 const Map: FC<MapProps> = ({
   width,
@@ -31,8 +44,15 @@ const Map: FC<MapProps> = ({
   defaultLatitude,
   defaultLongitude,
   isMobile,
+  isEnabledModal,
+  filterIdForDetails,
+  onChangeParentTab,
+  handleApply,
   styles = {},
 }) => {
+  const [isModal, setModal] = useState<boolean>(false);
+  const [modalData, setModalData] = useState<ClinicItem | null>(null);
+
   const [viewport, setViewport] = useState({
     latitude: defaultLatitude,
     longitude: defaultLongitude,
@@ -51,6 +71,52 @@ const Map: FC<MapProps> = ({
     setViewport(newViewport);
   }, []);
 
+  const handleOpenModal = useCallback(
+    (item: ClinicItem) => () => {
+      if (isEnabledModal) {
+        setModal(true);
+        setModalData(item);
+      }
+    },
+    [isEnabledModal],
+  );
+
+  const closeModal = useCallback(() => {
+    setModal(false);
+    setModalData(null);
+  }, []);
+
+  const handleViewDetail = useCallback(
+    value => () => {
+      const dataMask = {
+        id: filterIdForDetails,
+        extraFormData: {
+          filters: [
+            {
+              col: 'hospital_name',
+              op: 'IN',
+              val: [value],
+            },
+          ],
+        },
+        filterState: {
+          validateMessage: false,
+          label: value,
+          value: [value],
+        },
+        ownState: {},
+      };
+      onChangeParentTab?.(1);
+      handleApply?.(dataMask, filterIdForDetails ?? '', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      });
+    },
+    [filterIdForDetails, handleApply, onChangeParentTab],
+  );
+
   return (
     <Wrapper width={width} height={height} style={styles}>
       <MapGL
@@ -67,11 +133,58 @@ const Map: FC<MapProps> = ({
             key={index}
             longitude={item?.longitude}
             latitude={item?.latitude}
+            onClick={handleOpenModal(item)}
           >
             <Point />
             <PointText>{item?.hospital_name}</PointText>
           </Marker>
         ))}
+        {isModal &&
+          modalData &&
+          modalData?.longitude &&
+          modalData?.latitude && (
+            <Popup
+              longitude={modalData?.longitude}
+              latitude={modalData?.latitude}
+              anchor="right"
+              onClose={closeModal}
+              className="popup"
+              offsetLeft={10}
+              offsetTop={10}
+            >
+              <ModalWrapper>
+                <ModalTitle>{modalData?.hospital_name}</ModalTitle>
+                <Divider />
+                <InfoList>
+                  {modalData?.address && (
+                    <ListItem>
+                      <PinIcon />
+                      <ListItemText>{modalData?.address}</ListItemText>
+                    </ListItem>
+                  )}
+                  {modalData?.phone && (
+                    <ListItem>
+                      <CallIcon />
+                      <ListItemText>{modalData?.phone}</ListItemText>
+                    </ListItem>
+                  )}
+                  {modalData?.website && (
+                    <ListItem>
+                      <WorldIcon />
+                      <ListItemText>{modalData?.website}</ListItemText>
+                    </ListItem>
+                  )}
+                </InfoList>
+                <Button
+                  type="button"
+                  className="button"
+                  onClick={handleViewDetail(modalData?.hospital_name)}
+                >
+                  Hospital Details
+                </Button>
+              </ModalWrapper>
+            </Popup>
+          )}
       </MapGL>
     </Wrapper>
   );

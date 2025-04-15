@@ -30,10 +30,13 @@ import { Root } from './MedicalStaff.styled';
 const MedicalStaff: FC<MedicalStaffProps> = ({
   data,
   mapboxApiKey,
+  filterIdForDetails,
   isMedicalStaffOverview,
   isMedicalStaffPerformedProcedures,
   isMedicalStaffScoresControl,
   isMedicalStaffTableControl,
+  onChangeParentTab,
+  handleApply,
 }) => (
   <Root>
     {isMedicalStaffOverview && <MedicalStaffOverview data={data} />}
@@ -42,7 +45,13 @@ const MedicalStaff: FC<MedicalStaffProps> = ({
     )}
     {isMedicalStaffScoresControl && <MedicalStaffScores data={data} />}
     {isMedicalStaffTableControl && (
-      <MedicalStaffTable mapboxApiKey={mapboxApiKey} data={data} />
+      <MedicalStaffTable
+        filterIdForDetails={filterIdForDetails}
+        mapboxApiKey={mapboxApiKey}
+        data={data}
+        onChangeParentTab={onChangeParentTab}
+        handleApply={handleApply}
+      />
     )}
   </Root>
 );
