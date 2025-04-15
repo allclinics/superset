@@ -73,6 +73,9 @@ export default function Handlebars(props: HandlebarsProps) {
       {formData?.isMedicalStaff ? (
         <MedicalStaff
           data={data}
+          filterIdForDetails={formData?.filterIdForDetails}
+          handleApply={props?.handleApply}
+          onChangeParentTab={props?.onChangeParentTab}
           isMedicalStaffScoresControl={!!formData?.isMedicalStaffScoresControl}
           isMedicalStaffPerformedProcedures={
             !!formData?.isMedicalStaffPerformedProcedures

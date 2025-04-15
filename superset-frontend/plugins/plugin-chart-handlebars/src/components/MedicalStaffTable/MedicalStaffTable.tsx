@@ -52,6 +52,9 @@ const ITEMS_PER_PAGE = 3;
 const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
   data,
   mapboxApiKey,
+  filterIdForDetails,
+  handleApply,
+  onChangeParentTab,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
@@ -168,6 +171,10 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
             list={mapList as unknown as ClinicItem[]}
             width="334px"
             height="100%"
+            isEnabledModal
+            filterIdForDetails={filterIdForDetails}
+            onChangeParentTab={onChangeParentTab}
+            handleApply={handleApply}
             defaultLatitude={
               typeof mapList[0]?.latitude === 'number' ? mapList[0].latitude : 0
             }

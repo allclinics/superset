@@ -63,6 +63,12 @@ export type HandlebarsProps = HandlebarsStylesProps &
     formData: HandlebarsQueryFormData;
     mapboxApiKey: string;
     isMobile?: boolean;
+    onChangeParentTab?: (tab: number) => void;
+    handleApply?: (
+      dataMask: any,
+      filterIdForDetails: string,
+      callback: () => void,
+    ) => void;
   };
 
 export interface IStaff {

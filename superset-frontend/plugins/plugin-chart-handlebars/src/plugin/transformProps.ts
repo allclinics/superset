@@ -19,7 +19,7 @@
 import { ChartProps, TimeseriesDataRecord } from '@superset-ui/core';
 
 export default function transformProps(chartProps: ChartProps) {
-  const { width, height, formData, queriesData, isMobile } = chartProps;
+  const { width, height, hooks, formData, queriesData, isMobile } = chartProps;
   const data = queriesData[0].data as TimeseriesDataRecord[];
 
   return {
@@ -29,5 +29,7 @@ export default function transformProps(chartProps: ChartProps) {
     formData,
     isMobile,
     mapboxApiKey: queriesData[0]?.mapbox_api_key,
+    handleApply: hooks?.handleApply,
+    onChangeParentTab: hooks?.onChangeParentTab,
   };
 }
