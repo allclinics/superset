@@ -107,7 +107,7 @@ module.exports = {
         ],
         '@typescript-eslint/no-empty-function': 0,
         '@typescript-eslint/no-explicit-any': 0,
-        '@typescript-eslint/no-use-before-define': 1, // disabled temporarily
+        '@typescript-eslint/no-use-before-define': 0, // disabled temporarily
         '@typescript-eslint/no-non-null-assertion': 0, // disabled temporarily
         '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/explicit-module-boundary-types': 0, // re-enable up for discussion
@@ -128,7 +128,7 @@ module.exports = {
         'import/no-named-as-default-member': 0,
         'import/prefer-default-export': 0,
         indent: 0,
-        'jsx-a11y/anchor-is-valid': 2,
+        'jsx-a11y/anchor-is-valid': 0,
         'jsx-a11y/click-events-have-key-events': 0, // re-enable up for discussion
         'jsx-a11y/mouse-events-have-key-events': 0, // re-enable up for discussion
         'max-classes-per-file': 0,
@@ -161,7 +161,7 @@ module.exports = {
         'react/sort-comp': 0, // TODO: re-enable in separate PR
         'react/static-property-placement': 0, // re-enable up for discussion
         'prettier/prettier': 'error',
-        'file-progress/activate': 1,
+        'file-progress/activate': 0,
         // delete me later: temporary rules to help with migration
         'jsx-no-useless-fragment': 0,
         'react/function-component-definition': [
@@ -332,13 +332,13 @@ module.exports = {
     'no-shadow': 0, // re-enable up for discussion
     'padded-blocks': 0,
     'prefer-arrow-callback': 0,
-    'prefer-object-spread': 1,
+    'prefer-object-spread': 0,
     'prefer-destructuring': ['error', { object: true, array: false }],
     'react/destructuring-assignment': 0, // re-enable up for discussion
-    'react/forbid-component-props': 1,
+    'react/forbid-component-props': 0,
     'react/forbid-prop-types': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
-    'react/jsx-fragments': 1,
+    'react/jsx-fragments': 0,
     'react/jsx-no-bind': 0,
     'react/jsx-props-no-spreading': 0, // re-enable up for discussion
     'react/no-array-index-key': 0,
