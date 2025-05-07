@@ -50,6 +50,7 @@ import SimplePagination from './components/Pagination';
 import useSticky from './hooks/useSticky';
 import { PAGE_SIZE_OPTIONS } from '../consts';
 import { sortAlphanumericCaseInsensitive } from './utils/sortAlphanumericCaseInsensitive';
+import CustomChartsContainer from '../CustomCharts/CustomChartsContainer';
 
 export interface DataTableProps<D extends object> extends TableOptions<D> {
   tableClassName?: string;
@@ -60,6 +61,7 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   hooks?: PluginHook<D>[]; // any additional hooks
   width?: string | number;
   height?: string | number;
+  customDisplayChart?: string | null;
   serverPagination?: boolean;
   onServerPaginationChange: (pageNumber: number, pageSize: number) => void;
   serverPaginationData: { pageSize?: number; currentPage?: number };
@@ -75,6 +77,14 @@ export interface DataTableProps<D extends object> extends TableOptions<D> {
   handleViewDetail: (rowData: unknown) => void;
   isWithHospitalDetailsButton?: boolean;
   isMobile?: boolean;
+  filterIdForDetails?: string;
+  foundItemText?: string;
+  onChangeParentTab?: (tabId: number) => void;
+  handleApply?: (
+    dataMask: unknown,
+    filterIdForDetails?: string,
+    callbackFn?: () => void,
+  ) => void;
 }
 
 export interface RenderHTMLCellProps extends HTMLProps<HTMLTableCellElement> {
@@ -119,8 +129,13 @@ export default typedMemo(function DataTable<D extends object>({
   isRoundStyles,
   roundChartTitle,
   isMobile,
+  customDisplayChart,
+  onChangeParentTab,
+  handleApply,
+  filterIdForDetails,
   isWithHospitalDetailsButton,
   handleViewDetail,
+  foundItemText,
   ...moreUseTableOptions
 }: DataTableProps<D>): JSX.Element {
   const tableHooks: PluginHook<D>[] = [
@@ -355,14 +370,15 @@ export default typedMemo(function DataTable<D extends object>({
     setPageSize(initialPageSize);
   }
 
-  const paginationStyle: CSSProperties = sticky.height
-    ? {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: isMobile ? '16px' : '24px',
-      }
-    : { visibility: 'hidden' };
+  const paginationStyle: CSSProperties =
+    !!customDisplayChart || sticky.height
+      ? {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop: isMobile ? '16px' : '24px',
+        }
+      : { visibility: 'hidden' };
 
   const rowStyles: CSSProperties = {
     width: '100%',
@@ -423,7 +439,7 @@ export default typedMemo(function DataTable<D extends object>({
           {isRoundStyles && (
             <div className="dt-title-row">
               <p className="dt-title">{roundChartTitle}</p>
-              <p>Found: {rows.length} terms</p>
+              <p>{`Found: ${rows.length} ${foundItemText}`}</p>
             </div>
           )}
 
@@ -466,7 +482,21 @@ export default typedMemo(function DataTable<D extends object>({
           </div>
         </div>
       ) : null}
-      {wrapStickyTable ? wrapStickyTable(renderTable) : renderTable()}
+
+      <>
+        {customDisplayChart ? (
+          <CustomChartsContainer
+            page={page}
+            filterIdForDetails={filterIdForDetails}
+            handleApply={handleApply}
+            onChangeParentTab={onChangeParentTab}
+            customDisplayChart={customDisplayChart}
+          />
+        ) : (
+          <>{wrapStickyTable ? wrapStickyTable(renderTable) : renderTable()}</>
+        )}
+      </>
+
       {hasPagination && resultPageCount > 1 ? (
         <SimplePagination
           ref={paginationRef}

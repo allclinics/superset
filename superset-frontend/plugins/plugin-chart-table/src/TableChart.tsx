@@ -261,6 +261,8 @@ export default function TableChart<D extends DataRecord = DataRecord>(
     fullDisplay,
     isRoundStyles,
     isMobile,
+    customDisplayChart,
+    foundItemText,
     roundChartTitle,
     columns: columnsMeta,
     alignPositiveNegative: defaultAlignPN = false,
@@ -832,6 +834,10 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         )}
         isRoundStyles={isRoundStyles}
         isMobile={isMobile}
+        foundItemText={foundItemText}
+        customDisplayChart={customDisplayChart}
+        onChangeParentTab={onChangeParentTab}
+        filterIdForDetails={filterIdForDetails}
         roundChartTitle={roundChartTitle}
         pageSize={showAllSizeOption ? pageSize : pageSize === 0 ? 10 : pageSize}
         serverPaginationData={serverPaginationData}
@@ -846,6 +852,7 @@ export default function TableChart<D extends DataRecord = DataRecord>(
         showAllSizeOption={showAllSizeOption}
         isWithHospitalDetailsButton={isWithHospitalDetailsButton}
         handleViewDetail={handleViewDetail}
+        handleApply={handleApply}
         searchInput={includeSearch && SelectedSearchInput}
         selectPageSize={pageSize !== null && SelectPageSize}
         // not in use in Superset, but needed for unit tests

@@ -273,6 +273,37 @@ const config: ControlPanelConfig = {
       ],
     },
     {
+      label: t('Custom display chart'),
+      expanded: true,
+      controlSetRows: [
+        [
+          {
+            name: 'customDisplayChart',
+            config: {
+              type: 'SelectControl',
+              freeForm: true,
+              renderTrigger: true,
+              label: t('Custom display chart'),
+              default: null,
+              choices: [['listOfDoctors', t('List Of Doctors')]],
+              description: t('Custom display chart'),
+            },
+          },
+          {
+            name: 'foundItemText',
+            config: {
+              type: 'TextControl',
+              label: 'Found item text',
+              renderTrigger: true,
+              default: '',
+              description: 'Found item text',
+            },
+          },
+          null,
+        ],
+      ],
+    },
+    {
       label: t('Round Chart Configuration'),
       expanded: true,
       controlSetRows: [
