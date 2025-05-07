@@ -236,6 +236,8 @@ const transformProps = (
     fullDisplay = false,
     noMainBorder = false,
     isRoundStyles = false,
+    customDisplayChart = null,
+    foundItemText = '',
     roundChartTitle = '',
     page_length: pageLength,
     server_pagination: serverPagination = false,
@@ -295,6 +297,8 @@ const transformProps = (
     fullDisplay,
     noMainBorder,
     isRoundStyles,
+    foundItemText,
+    customDisplayChart,
     roundChartTitle,
     rowCount,
     pageSize: serverPagination

@@ -137,6 +137,8 @@ export interface TableChartTransformedProps<D extends DataRecord = DataRecord> {
   isMobile?: boolean;
   showAllSizeOption?: boolean;
   isWithHospitalDetailsButton?: boolean;
+  customDisplayChart?: string | null;
+  foundItemText?: string;
   filterIdForDetails?: string;
   onChangeParentTab?: (tabId: number) => void;
   handleApply?: (
