@@ -21,7 +21,7 @@ import React, { type FC } from 'react';
 import MedicalStaffOverview from '../MedicalStaffOverview';
 import MedicalStaffPerformedProcedures from '../MedicalStaffPerformedProcedures';
 import MedicalStaffScores from '../MedicalStaffScores';
-import MedicalStaffTable from '../MedicalStaffTable/MedicalStaffTable';
+import MediacalStaffTabs from '../MedicalStaffTabs/MedicalStaffTabs';
 // types
 import type { MedicalStaffProps } from './MedicalStaff.interface';
 // styles
@@ -45,7 +45,7 @@ const MedicalStaff: FC<MedicalStaffProps> = ({
     )}
     {isMedicalStaffScoresControl && <MedicalStaffScores data={data} />}
     {isMedicalStaffTableControl && (
-      <MedicalStaffTable
+      <MediacalStaffTabs
         filterIdForDetails={filterIdForDetails}
         mapboxApiKey={mapboxApiKey}
         data={data}

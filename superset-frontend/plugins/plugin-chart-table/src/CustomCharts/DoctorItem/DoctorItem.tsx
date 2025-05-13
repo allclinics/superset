@@ -41,13 +41,14 @@ import {
   InfoWrapper,
   ChipsList,
 } from './DoctorItem.styled';
+import { formatPhoneNumber } from '../../utils/formatPhoneNumber';
 
 const DoctorItem: FC<DoctorItemProps> = ({
   npi,
-  address,
+  full_adress,
   gender,
   doctor_name,
-  last_phone,
+  best_physician_phone,
   other_specialization,
   primary_specialization,
   onOpenDoctor,
@@ -59,14 +60,16 @@ const DoctorItem: FC<DoctorItemProps> = ({
         <GenderChip gender={gender} />
       </NameWrapper>
       <ContactsWrapper>
-        <PhoneWrapper>
-          <PhoneIcon />
-          <Text>{last_phone}</Text>
-          <CheckMarkIcon />
-        </PhoneWrapper>
+        {best_physician_phone && (
+          <PhoneWrapper>
+            <PhoneIcon />
+            <Text>{formatPhoneNumber(best_physician_phone)}</Text>
+            <CheckMarkIcon />
+          </PhoneWrapper>
+        )}
         <AddressWrapper>
           <PinIcon />
-          <Text>{address}</Text>
+          <Text>{full_adress}</Text>
         </AddressWrapper>
       </ContactsWrapper>
     </Header>
