@@ -23,10 +23,10 @@ import SearchIcon from '../../icons/search.svg';
 export const Container = styled.div`
   background: #f5f6fa;
   display: flex;
-  padding: 16px 20px;
   min-height: 322px;
   column-gap: 12px;
   height: 100%;
+  margin-top: 20px;
 `;
 
 export const Bold = styled.span`
@@ -43,6 +43,7 @@ export const Text = styled.span`
   line-height: 20px;
   letter-spacing: 0px;
   color: #5a607f;
+  margin-top: auto;
 `;
 
 export const Header = styled.div`
@@ -101,6 +102,7 @@ export const Search = styled(SearchIcon)`
 export const Stack = styled.div`
   display: flex;
   column-gap: 8px;
+  align-items: center;
 `;
 
 export const ItemHeader = styled.div`

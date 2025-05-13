@@ -16,33 +16,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
-import { Row } from 'react-table';
+import type { TimeseriesDataRecord } from '@superset-ui/core';
 
-export interface IDoctor {
-  address: string;
-  full_adress: string;
-  doctor_name: string;
-  gender: string;
-  graduation_year: number;
-  medical_degree: string;
-  medical_school: string;
-  npi: number;
-  primary_specialization: string;
-  count_phones: number;
-  last_phone: string;
-  other_specialization: string;
-  best_physician_phone: number;
-}
-
-export interface ListOfDoctorsProps {
-  data: Row<IDoctor>[];
+export interface MediacalStaffTabsProps {
+  data: TimeseriesDataRecord[];
+  mapboxApiKey: string;
   filterIdForDetails?: string;
   handleApply?: (
-    dataMask: unknown,
-    filterIdForDetails?: string,
-    callbackFn?: () => void,
+    dataMask: any,
+    filterIdForDetails: string,
+    callback: () => void,
   ) => void;
-  onChangeParentTab?: (tabId: number) => void;
+  onChangeParentTab?: (tab: number) => void;
 }

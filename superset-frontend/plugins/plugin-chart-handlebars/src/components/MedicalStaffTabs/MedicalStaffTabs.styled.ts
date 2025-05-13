@@ -1,3 +1,4 @@
+/* eslint-disable theme-colors/no-literal-colors */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,33 +17,28 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
-import { Row } from 'react-table';
+import { styled } from '@superset-ui/core';
 
-export interface IDoctor {
-  address: string;
-  full_adress: string;
-  doctor_name: string;
-  gender: string;
-  graduation_year: number;
-  medical_degree: string;
-  medical_school: string;
-  npi: number;
-  primary_specialization: string;
-  count_phones: number;
-  last_phone: string;
-  other_specialization: string;
-  best_physician_phone: number;
-}
+export const Container = styled.div`
+  display: flex;
+  background: #f5f6fa;
+  flex-direction: column;
+  padding: 16px 20px;
+`;
 
-export interface ListOfDoctorsProps {
-  data: Row<IDoctor>[];
-  filterIdForDetails?: string;
-  handleApply?: (
-    dataMask: unknown,
-    filterIdForDetails?: string,
-    callbackFn?: () => void,
-  ) => void;
-  onChangeParentTab?: (tabId: number) => void;
-}
+export const TabsWrapper = styled.div`
+  display: flex;
+  column-gap: 40px;
+  border-bottom: 1px solid #eff1f4;
+`;
+
+export const Tab = styled.button<{ active: boolean }>`
+  display: flex;
+  background: transparent;
+  border: none;
+  color: ${({ active }) => (active ? '#3876F6' : '#5A607F')};
+  border-bottom: ${({ active }) => (active ? '2px solid #3876F6' : 'none')};
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0px 0px 8px 0px;
+`;

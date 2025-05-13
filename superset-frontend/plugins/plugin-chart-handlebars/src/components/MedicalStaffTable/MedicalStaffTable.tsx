@@ -19,6 +19,7 @@
 import React, { useCallback, useState, useMemo, type FC } from 'react';
 // components
 import PinIcon from '../../icons/pin.svg';
+import VerifieldIcon from '../../icons/verified.svg';
 import CallIcon from '../../icons/call.svg';
 import Map from '../Map';
 // utils
@@ -46,6 +47,7 @@ import {
 // types
 import type { ClinicItem } from '../Map/Map.interface';
 import type { MedicalStaffTableProps } from './MedicalStaffTable.interface';
+import { formatPhoneNumber } from '../../utils/formatPhoneNumber';
 
 const ITEMS_PER_PAGE = 3;
 
@@ -106,7 +108,6 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
       <TableWrapper>
         <Header>
           <HeaderLeftPart>
-            <Bold>Practice</Bold>
             <Text>{`Found results: ${data.length}`}</Text>
           </HeaderLeftPart>
           <InputWrapper>
@@ -129,12 +130,15 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
               <ItemContent>
                 <Stack>
                   <PinIcon />
-                  {item?.address}
+                  {item?.full_adress}
                 </Stack>
-                <Stack>
-                  <CallIcon />
-                  {item?.phone}
-                </Stack>
+                {item.best_physician_phone && (
+                  <Stack>
+                    <CallIcon />
+                    {formatPhoneNumber(item.best_physician_phone as number)}
+                    <VerifieldIcon />
+                  </Stack>
+                )}
               </ItemContent>
             </Item>
           ))}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /**
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,33 +17,4 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
-import { Row } from 'react-table';
-
-export interface IDoctor {
-  address: string;
-  full_adress: string;
-  doctor_name: string;
-  gender: string;
-  graduation_year: number;
-  medical_degree: string;
-  medical_school: string;
-  npi: number;
-  primary_specialization: string;
-  count_phones: number;
-  last_phone: string;
-  other_specialization: string;
-  best_physician_phone: number;
-}
-
-export interface ListOfDoctorsProps {
-  data: Row<IDoctor>[];
-  filterIdForDetails?: string;
-  handleApply?: (
-    dataMask: unknown,
-    filterIdForDetails?: string,
-    callbackFn?: () => void,
-  ) => void;
-  onChangeParentTab?: (tabId: number) => void;
-}
+export { default } from './MedicalStaffContacts';
