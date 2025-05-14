@@ -17,5 +17,4 @@
  * under the License.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from 'react';
 export { default } from './GenderChip';
