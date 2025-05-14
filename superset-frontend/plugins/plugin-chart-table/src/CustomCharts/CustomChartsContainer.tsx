@@ -48,7 +48,7 @@ const CustomChartsContainer = <D extends object>({
         filterIdForDetails={filterIdForDetails}
         onChangeParentTab={onChangeParentTab}
         handleApply={handleApply}
-        data={page as Row<IDoctor>[]}
+        data={page as unknown as Row<IDoctor>[]}
       />
     )}
   </>

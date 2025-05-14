@@ -17,7 +17,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React from 'react';
 import { styled } from '@superset-ui/core';
 
 export const Wrapper = styled.div`
