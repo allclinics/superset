@@ -20,6 +20,7 @@ import type { TimeseriesDataRecord } from '@superset-ui/core';
 
 export interface MediacalStaffTabsProps {
   data: TimeseriesDataRecord[];
+  isMobile: boolean;
   mapboxApiKey: string;
   filterIdForDetails?: string;
   handleApply?: (

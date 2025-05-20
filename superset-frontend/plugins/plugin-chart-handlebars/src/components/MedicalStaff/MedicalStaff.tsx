@@ -29,6 +29,7 @@ import { Root } from './MedicalStaff.styled';
 
 const MedicalStaff: FC<MedicalStaffProps> = ({
   data,
+  isMobile,
   mapboxApiKey,
   filterIdForDetails,
   isMedicalStaffOverview,
@@ -39,9 +40,11 @@ const MedicalStaff: FC<MedicalStaffProps> = ({
   handleApply,
 }) => (
   <Root>
-    {isMedicalStaffOverview && <MedicalStaffOverview data={data} />}
+    {isMedicalStaffOverview && (
+      <MedicalStaffOverview isMobile={isMobile} data={data} />
+    )}
     {isMedicalStaffPerformedProcedures && (
-      <MedicalStaffPerformedProcedures data={data} />
+      <MedicalStaffPerformedProcedures isMobile={isMobile} data={data} />
     )}
     {isMedicalStaffScoresControl && <MedicalStaffScores data={data} />}
     {isMedicalStaffTableControl && (
@@ -51,6 +54,7 @@ const MedicalStaff: FC<MedicalStaffProps> = ({
         data={data}
         onChangeParentTab={onChangeParentTab}
         handleApply={handleApply}
+        isMobile={isMobile}
       />
     )}
   </Root>

@@ -23,6 +23,7 @@ import { Root } from './ListOfDoctors.styled';
 
 const ListOfDoctors: FC<ListOfDoctorsProps> = ({
   data,
+  isMobile,
   filterIdForDetails,
   handleApply,
   onChangeParentTab,
@@ -63,10 +64,14 @@ const ListOfDoctors: FC<ListOfDoctorsProps> = ({
   );
 
   return (
-    <Root>
+    <Root isMobile={isMobile}>
       {data.map(item => (
         <Fragment key={item.id}>
-          <DoctorItem {...item.original} onOpenDoctor={handleOpenDoctor} />
+          <DoctorItem
+            {...item.original}
+            isMobile={isMobile}
+            onOpenDoctor={handleOpenDoctor}
+          />
         </Fragment>
       ))}
     </Root>

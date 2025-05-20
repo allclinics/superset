@@ -32,6 +32,7 @@ enum Tabs {
 
 const MediacalStaffTabs: FC<MediacalStaffTabsProps> = ({
   data,
+  isMobile,
   filterIdForDetails,
   mapboxApiKey,
   handleApply,
@@ -68,6 +69,7 @@ const MediacalStaffTabs: FC<MediacalStaffTabsProps> = ({
             filterIdForDetails={filterIdForDetails}
             mapboxApiKey={mapboxApiKey}
             data={data}
+            isMobile={isMobile}
             onChangeParentTab={onChangeParentTab}
             handleApply={handleApply}
           />
@@ -80,6 +82,7 @@ const MediacalStaffTabs: FC<MediacalStaffTabsProps> = ({
   }, [
     activeTabId,
     data,
+    isMobile,
     filterIdForDetails,
     handleApply,
     mapboxApiKey,

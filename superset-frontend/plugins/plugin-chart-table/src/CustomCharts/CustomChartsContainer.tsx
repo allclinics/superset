@@ -25,6 +25,7 @@ import type { IDoctor } from './ListOfDoctors/ListOfDoctors.interface';
 
 interface CustomChartsContaineProps<D extends object> {
   page: Row<D>[];
+  isMobile: boolean;
   filterIdForDetails?: string;
   customDisplayChart: string;
   onChangeParentTab?: (tabId: number) => void;
@@ -37,6 +38,7 @@ interface CustomChartsContaineProps<D extends object> {
 
 const CustomChartsContainer = <D extends object>({
   page,
+  isMobile,
   filterIdForDetails,
   handleApply,
   onChangeParentTab,
@@ -45,6 +47,7 @@ const CustomChartsContainer = <D extends object>({
   <>
     {customDisplayChart === 'listOfDoctors' && (
       <ListOfDoctors
+        isMobile={isMobile}
         filterIdForDetails={filterIdForDetails}
         onChangeParentTab={onChangeParentTab}
         handleApply={handleApply}

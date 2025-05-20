@@ -19,13 +19,16 @@
  */
 import { styled } from '@superset-ui/core';
 
-export const Root = styled.div`
+export const Root = styled.div<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
   display: flex;
   background: #f5f6fa;
   border-radius: 20px;
   padding: 20px 16px;
   flex-direction: column;
   cursor: pointer;
+  width: ${isMobile ? '100%' : 'calc(50% - 8px)'};
+  `}
 `;
 
 export const Header = styled.div`
@@ -65,10 +68,10 @@ export const AddressWrapper = styled.div`
   align-items: center;
 `;
 
-export const Text = styled.span`
-  font-size: 14px;
-  line-height: 20px;
-  color: #5a607f;
+export const Value = styled.span`
+  font-size: 12px;
+
+  color: #a8adc6;
 `;
 
 export const InfoItem = styled.div`
@@ -77,7 +80,6 @@ export const InfoItem = styled.div`
 
 export const Key = styled.span`
   font-size: 14px;
-  line-height: 20px;
   color: #5a607f;
   font-weight: 700;
   margin-right: 10px;
@@ -112,4 +114,31 @@ export const ChipsList = styled.div`
   flex-wrap: wrap;
   row-gap: 8px;
   column-gap: 8px;
+`;
+
+export const CountsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #e6e9f4;
+`;
+
+export const CountItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  width: 100%;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #e6e9f4;
+`;
+
+export const Number = styled.span`
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  color: #5a607f;
 `;

@@ -20,33 +20,61 @@
 /* eslint-disable theme-colors/no-literal-colors */
 import React, { type FC } from 'react';
 import GenderChip from '../GenderChip';
+/* import VerifieldIcon from '../../icons/verified.svg'; */
 import type { MedicalStaffOverviewProps } from './MedicalStaffOverview.interface';
 import {
   Chip,
+  /* Item, */
   List,
   Title,
   Value,
   Option,
   Header,
   Content,
+  LeftPart,
   KeyValue,
   Container,
   ChipsList,
+  RightPart,
 } from './MedicalStaffOverview.styled';
 // types
 import { IStaff } from '../../types';
 
-const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({ data }) => {
+const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({
+  data,
+  isMobile,
+}) => {
   const overviewData = data[0] as unknown as IStaff;
 
   return (
     <Container>
-      <Header>
-        <Title>{overviewData?.doctor_name}</Title>
-        <GenderChip gender={overviewData?.gender} />
-      </Header>
-      <Content>
-        <List>
+      <Content isMobile={isMobile}>
+        <LeftPart isMobile={isMobile}>
+          <Header>
+            <Title>{overviewData?.doctor_name}</Title>
+            <GenderChip gender={overviewData?.gender} />
+          </Header>
+          {/* <Item>
+            <Value>(879) 543-23-41</Value>
+            <VerifieldIcon />
+          </Item>
+          <Item>
+            <Value>jason.felton@direct.myteamcare.com</Value>
+            <VerifieldIcon />
+          </Item>
+          <Item>
+            <Value>LinkedIn Profile</Value>
+            <VerifieldIcon />
+          </Item> */}
+        </LeftPart>
+        <RightPart isMobile={isMobile}>
+          {overviewData?.graduation_year && (
+            <Option>
+              <KeyValue>
+                Graduation year: <Value>{overviewData.graduation_year}</Value>
+              </KeyValue>
+            </Option>
+          )}
           {overviewData?.medical_degree && (
             <Option>
               <KeyValue>
@@ -61,32 +89,27 @@ const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({ data }) => {
               </KeyValue>
             </Option>
           )}
-          {overviewData?.graduation_year && (
-            <Option>
-              <KeyValue>
-                Graduation year: <Value>{overviewData.graduation_year}</Value>
-              </KeyValue>
-            </Option>
-          )}
-        </List>
-        <List>
-          {overviewData.primary_specialization && (
-            <Option>
-              <KeyValue isRightSpace>Primary specialization:</KeyValue>
-              <Chip color="green">{overviewData?.primary_specialization}</Chip>
-            </Option>
-          )}
-          {overviewData.other_specialization && (
-            <Option>
-              <KeyValue isRightSpace>Other specializations:</KeyValue>
-              <ChipsList>
-                {overviewData.other_specialization.split(',').map(item => (
-                  <Chip color="blue">{item.trim()}</Chip>
-                ))}
-              </ChipsList>
-            </Option>
-          )}
-        </List>
+          <List>
+            {overviewData.primary_specialization && (
+              <Option>
+                <KeyValue isRightSpace>Primary specialization:</KeyValue>
+                <Chip color="green">
+                  {overviewData?.primary_specialization}
+                </Chip>
+              </Option>
+            )}
+            {overviewData.other_specialization && (
+              <Option>
+                <KeyValue isRightSpace>Other specializations:</KeyValue>
+                <ChipsList>
+                  {overviewData.other_specialization.split(',').map(item => (
+                    <Chip color="blue">{item.trim()}</Chip>
+                  ))}
+                </ChipsList>
+              </Option>
+            )}
+          </List>
+        </RightPart>
       </Content>
     </Container>
   );

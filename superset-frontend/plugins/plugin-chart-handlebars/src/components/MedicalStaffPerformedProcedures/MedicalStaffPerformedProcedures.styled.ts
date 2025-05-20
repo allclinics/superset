@@ -84,18 +84,24 @@ export const CircleColor = styled.div<{ color?: string }>`
   `}
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
   display: flex;
   column-gap: 40px;
   margin-top: 36px;
   align-items: center;
-  margin-bottom: 36px;
+  margin-bottom: ${isMobile ? '0px' : '36px'};
+  flex-direction: ${isMobile ? 'column' : 'row'};
+  `}
 `;
 
-export const CircleWrapper = styled.div`
+export const CircleWrapper = styled.div<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
   display: flex;
   position: relative;
-  margin-left: 40px;
+  margin-left: ${isMobile ? '0px' : '40px'};
+  margin-bottom: ${isMobile ? '20px' : '0px'};
+  `}
 `;
 
 export const TotalWrapper = styled.div`

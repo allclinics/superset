@@ -28,7 +28,8 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   display: flex;
-  column-gap: 10px;
+  column-gap: 8px;
+  margin-bottom: 8px;
 `;
 
 export const Title = styled.span`
@@ -38,13 +39,12 @@ export const Title = styled.span`
   color: #31323f;
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<{ isMobile?: boolean }>`
+  ${({ isMobile }) => `
   display: flex;
-  padding-top: 10px;
-  margin-top: 16px;
-  border-top: 1px solid #e6e9f4;
-  column-gap: 10px;
   width: 100%;
+  flex-direction: ${isMobile ? 'column' : 'row'};
+  `}
 `;
 
 export const KeyValue = styled.span<{ isRightSpace?: boolean }>`
@@ -96,4 +96,30 @@ export const ChipsList = styled.div`
   flex-wrap: wrap;
   row-gap: 8px;
   column-gap: 8px;
+`;
+
+export const LeftPart = styled.span<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
+  display: flex;
+  row-gap: 8px;
+  flex-direction: column;
+  border-right: ${isMobile ? 'none' : '1px solid #e6e9f4'};
+  padding-right: ${isMobile ? '0px' : '16px'};
+  margin-bottom: ${isMobile ? '8px' : '0px'};
+  `}
+`;
+
+export const RightPart = styled.span<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
+  display: flex;
+  row-gap: 8px;
+  flex-direction: column;
+  padding-left: ${isMobile ? '0px' : '16px'};
+  `}
+`;
+
+export const Item = styled.div`
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
 `;

@@ -19,11 +19,16 @@
  */
 import { styled } from '@superset-ui/core';
 
-export const Root = styled.div`
+export const Root = styled.div<{ isMobile: boolean }>`
+  ${({ isMobile }) => `
   display: flex;
   width: 100%;
-  flex-direction: column;
   row-gap: 12px;
   height: calc(100% - 150px);
   overflow: auto;
+  flex-wrap: ${isMobile ? 'nowrap' : 'wrap'};
+  column-gap: 16px;
+  row-gap: 16px;
+  flex-direction: ${isMobile ? 'column' : 'row'};
+  `}
 `;

@@ -20,4 +20,5 @@ import type { TimeseriesDataRecord } from '@superset-ui/core';
 
 export interface MedicalStaffPerformedProceduresProps {
   data: TimeseriesDataRecord[];
+  isMobile: boolean;
 }
