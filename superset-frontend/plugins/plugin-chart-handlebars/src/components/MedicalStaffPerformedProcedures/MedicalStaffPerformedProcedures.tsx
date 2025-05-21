@@ -37,7 +37,7 @@ import { PERFORMED_PROCEDURES } from '../../consts';
 
 const MedicalStaffPerformedProcedures: FC<
   MedicalStaffPerformedProceduresProps
-> = ({ data }) => {
+> = ({ data, isMobile }) => {
   const colorMap = Object.fromEntries(
     PERFORMED_PROCEDURES.map(p => [p.name, p.color]),
   );
@@ -65,8 +65,8 @@ const MedicalStaffPerformedProcedures: FC<
   return (
     <Container>
       <Title>Performed Procedures</Title>
-      <Content>
-        <CircleWrapper>
+      <Content isMobile={isMobile}>
+        <CircleWrapper isMobile={isMobile}>
           <TotalWrapper>
             <TotalCount>{totalCount}</TotalCount>
             <TotalText>performed procedures</TotalText>

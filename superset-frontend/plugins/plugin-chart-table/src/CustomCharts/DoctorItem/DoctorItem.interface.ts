@@ -20,5 +20,6 @@
 import { IDoctor } from '../ListOfDoctors/ListOfDoctors.interface';
 
 export interface DoctorItemProps extends IDoctor {
+  isMobile: boolean;
   onOpenDoctor: (npi: number) => void;
 }

@@ -20,6 +20,7 @@ import { TimeseriesDataRecord } from '@superset-ui/core';
 
 export interface MedicalStaffProps {
   data: TimeseriesDataRecord[];
+  isMobile: boolean;
   isMedicalStaffOverview: boolean;
   isMedicalStaffTableControl: boolean;
   isMedicalStaffScoresControl: boolean;

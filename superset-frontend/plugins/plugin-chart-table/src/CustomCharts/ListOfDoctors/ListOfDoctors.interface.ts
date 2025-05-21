@@ -33,10 +33,15 @@ export interface IDoctor {
   last_phone: string;
   other_specialization: string;
   best_physician_phone: number;
+  unique_city_count: number;
+  unique_hospitals_present: number;
+  unique_phone_count: number;
+  unique_state_count: number;
 }
 
 export interface ListOfDoctorsProps {
   data: Row<IDoctor>[];
+  isMobile: boolean;
   filterIdForDetails?: string;
   handleApply?: (
     dataMask: unknown,

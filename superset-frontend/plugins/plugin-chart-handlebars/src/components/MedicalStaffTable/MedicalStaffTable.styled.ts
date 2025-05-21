@@ -20,13 +20,14 @@
 import { styled } from '@superset-ui/core';
 import SearchIcon from '../../icons/search.svg';
 
-export const Container = styled.div`
+export const Container = styled.div<{ isMobile: boolean }>`
   background: #f5f6fa;
   display: flex;
   min-height: 322px;
   column-gap: 12px;
   height: 100%;
   margin-top: 20px;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
 `;
 
 export const Bold = styled.span`
@@ -80,11 +81,13 @@ export const Item = styled.div`
   width: 100%;
 `;
 
-export const ItemContent = styled.div`
+export const ItemContent = styled.div<{ isMobile: boolean }>`
   display: flex;
   padding: 16px 20px;
   border-top: 1px solid #e6e9f4;
   column-gap: 8px;
+  row-gap: 8px;
+  flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
 `;
 
 export const HeaderLeftPart = styled.div`

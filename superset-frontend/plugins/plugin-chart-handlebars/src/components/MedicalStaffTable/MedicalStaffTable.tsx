@@ -53,6 +53,7 @@ const ITEMS_PER_PAGE = 3;
 
 const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
   data,
+  isMobile,
   mapboxApiKey,
   filterIdForDetails,
   handleApply,
@@ -104,7 +105,7 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
   );
 
   return (
-    <Container>
+    <Container isMobile={isMobile}>
       <TableWrapper>
         <Header>
           <HeaderLeftPart>
@@ -127,7 +128,7 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
               <ItemHeader>
                 <Bold>{item.hospital_name}</Bold>
               </ItemHeader>
-              <ItemContent>
+              <ItemContent isMobile={isMobile}>
                 <Stack>
                   <PinIcon />
                   {item?.full_adress}

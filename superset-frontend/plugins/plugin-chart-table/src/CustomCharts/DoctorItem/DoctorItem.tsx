@@ -16,80 +16,99 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import React, { type FC } from 'react';
+import React, { useMemo, type FC } from 'react';
 // components
 import GenderChip from '../GenderChip';
-// assets
-import PhoneIcon from '../icons/call.svg';
-import PinIcon from '../icons/pin.svg';
-import CheckMarkIcon from '../icons/checkmark.svg';
 // types
 import { DoctorItemProps } from './DoctorItem.interface';
 // styles
 import {
   Key,
   Chip,
-  Text,
+  Value,
   Root,
   Name,
   Header,
+  Number,
   InfoItem,
+  CountItem,
   NameWrapper,
-  ContactsWrapper,
-  PhoneWrapper,
-  AddressWrapper,
   InfoWrapper,
   ChipsList,
+  CountsWrapper,
 } from './DoctorItem.styled';
-import { formatPhoneNumber } from '../../utils/formatPhoneNumber';
 
 const DoctorItem: FC<DoctorItemProps> = ({
   npi,
-  full_adress,
   gender,
   doctor_name,
-  best_physician_phone,
   other_specialization,
   primary_specialization,
+  unique_state_count,
+  unique_phone_count,
+  isMobile,
+  unique_hospitals_present,
   onOpenDoctor,
-}) => (
-  <Root onClick={() => onOpenDoctor(npi)}>
-    <Header>
-      <NameWrapper>
-        <Name>{doctor_name}</Name>
-        <GenderChip gender={gender} />
-      </NameWrapper>
-      <ContactsWrapper>
-        {best_physician_phone && (
-          <PhoneWrapper>
-            <PhoneIcon />
-            <Text>{formatPhoneNumber(best_physician_phone)}</Text>
-            <CheckMarkIcon />
-          </PhoneWrapper>
-        )}
-        <AddressWrapper>
-          <PinIcon />
-          <Text>{full_adress}</Text>
-        </AddressWrapper>
-      </ContactsWrapper>
-    </Header>
-    <InfoWrapper>
-      <InfoItem>
-        <Key>Primary specialization:</Key>
-        <Chip color="green">{primary_specialization}</Chip>
-      </InfoItem>
-      {other_specialization && (
+}) => {
+  const uniqueCounts = useMemo(
+    () => [
+      {
+        id: 1,
+        name: 'states',
+        value: unique_state_count,
+      },
+      {
+        id: 2,
+        name: 'hospitals',
+        value: unique_hospitals_present,
+      },
+      {
+        id: 3,
+        name: 'phone numbers',
+        value: unique_phone_count,
+      },
+      {
+        id: 4,
+        name: 'emails',
+        value: 0,
+      },
+    ],
+    [unique_hospitals_present, unique_phone_count, unique_state_count],
+  );
+
+  return (
+    <Root isMobile={isMobile} onClick={() => onOpenDoctor(npi)}>
+      <Header>
+        <NameWrapper>
+          <Name>{doctor_name}</Name>
+          <GenderChip gender={gender} />
+        </NameWrapper>
+      </Header>
+      <InfoWrapper>
         <InfoItem>
-          <Key>Other specializations:</Key>
+          <Key>Specializations:</Key>
           <ChipsList>
-            {other_specialization.split(',').map(item => (
-              <Chip color="blue">{item.trim()}</Chip>
-            ))}
+            <Chip color="green">{primary_specialization}</Chip>
+            {other_specialization && (
+              <>
+                {other_specialization.split(',').map(item => (
+                  <Chip color="blue">{item.trim()}</Chip>
+                ))}
+              </>
+            )}
           </ChipsList>
         </InfoItem>
-      )}
-    </InfoWrapper>
-  </Root>
-);
+      </InfoWrapper>
+      <CountsWrapper>
+        {uniqueCounts.map((item, index) => (
+          <CountItem key={index}>
+            <Number>{item.value}</Number>
+            <Value>{item.name}</Value>
+          </CountItem>
+        ))}
+      </CountsWrapper>
+    </Root>
+  );
+};
 
 export default DoctorItem;

@@ -489,6 +489,7 @@ export default typedMemo(function DataTable<D extends object>({
             page={page}
             filterIdForDetails={filterIdForDetails}
             handleApply={handleApply}
+            isMobile={!!isMobile}
             onChangeParentTab={onChangeParentTab}
             customDisplayChart={customDisplayChart}
           />
