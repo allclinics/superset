@@ -44,27 +44,35 @@ import {
 } from './MedicalStaffContacts.styled';
 
 const MedicalStaffContacts: FC<MedicalStaffContactsProps> = ({ data }) => {
-  const phonesList = useMemo(
-    () =>
-      data
-        .filter(item => item.physician_phone)
-        .map(item => ({
+  const phonesList = useMemo(() => {
+    const map = new Map();
+
+    data.forEach(item => {
+      if (item.physician_phone) {
+        map.set(item.physician_phone, {
           physician_phone: item.physician_phone,
           physician_phone_status: item.physician_phone_status,
-        })),
-    [data],
-  );
+        });
+      }
+    });
 
-  const emailsList = useMemo(
-    () =>
-      data
-        .filter(item => item.physician_email)
-        .map(item => ({
+    return Array.from(map.values());
+  }, [data]);
+
+  const emailsList = useMemo(() => {
+    const map = new Map();
+
+    data.forEach(item => {
+      if (item.physician_email) {
+        map.set(item.physician_email, {
           physician_email: item.physician_email,
           physician_email_status: item.physician_email_status,
-        })),
-    [data],
-  );
+        });
+      }
+    });
+
+    return Array.from(map.values());
+  }, [data]);
 
   const renderVerifiedIcon = useCallback((status: STATUS) => {
     switch (status) {

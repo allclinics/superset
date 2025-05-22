@@ -21,7 +21,7 @@ import React, { useCallback, useState, useMemo, type FC } from 'react';
 import PinIcon from '../../icons/pin.svg';
 import VerifieldIcon from '../../icons/verified.svg';
 import CallIcon from '../../icons/call.svg';
-import Map from '../Map';
+import MapBox from '../Map';
 // utils
 import { getPageNumbers } from '../../utils/get-page-number';
 // styles
@@ -62,13 +62,27 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const uniqueHospitals = useMemo(() => {
+    const map = new Map();
+
+    data.forEach(item => {
+      if (!map.has(item.hospital_name)) {
+        map.set(item.hospital_name, item);
+      }
+    });
+
+    return Array.from(map.values()).sort((a, b) =>
+      a.hospital_name.localeCompare(b.hospital_name),
+    );
+  }, [data]);
+
   const filteredData = useMemo(
     () =>
-      data.filter(item => {
+      uniqueHospitals.filter(item => {
         const hospitalName = item.hospital_name as string;
         return hospitalName?.toLowerCase().includes(searchQuery.toLowerCase());
       }),
-    [data, searchQuery],
+    [uniqueHospitals, searchQuery],
   );
 
   const totalPages = useMemo(
@@ -109,7 +123,7 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
       <TableWrapper>
         <Header>
           <HeaderLeftPart>
-            <Text>{`Found results: ${data.length}`}</Text>
+            <Text>{`Found results: ${filteredData.length}`}</Text>
           </HeaderLeftPart>
           <InputWrapper>
             <Search />
@@ -172,7 +186,7 @@ const MedicalStaffTable: FC<MedicalStaffTableProps> = ({
       </TableWrapper>
       {mapList.length && (
         <div>
-          <Map
+          <MapBox
             list={mapList as unknown as ClinicItem[]}
             width="334px"
             height="100%"

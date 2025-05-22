@@ -79,4 +79,6 @@ export interface IStaff {
   medical_school?: string;
   other_specialization?: string;
   primary_specialization?: string;
+  best_physician_phone?: number;
+  best_physician_email?: string;
 }

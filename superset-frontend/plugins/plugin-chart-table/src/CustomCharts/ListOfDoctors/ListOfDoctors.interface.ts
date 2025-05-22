@@ -37,6 +37,7 @@ export interface IDoctor {
   unique_hospitals_present: number;
   unique_phone_count: number;
   unique_state_count: number;
+  unique_email_count: number;
 }
 
 export interface ListOfDoctorsProps {

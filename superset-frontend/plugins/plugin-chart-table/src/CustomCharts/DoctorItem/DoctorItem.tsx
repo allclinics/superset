@@ -46,6 +46,7 @@ const DoctorItem: FC<DoctorItemProps> = ({
   primary_specialization,
   unique_state_count,
   unique_phone_count,
+  unique_email_count,
   isMobile,
   unique_hospitals_present,
   onOpenDoctor,
@@ -70,10 +71,15 @@ const DoctorItem: FC<DoctorItemProps> = ({
       {
         id: 4,
         name: 'emails',
-        value: 0,
+        value: unique_email_count,
       },
     ],
-    [unique_hospitals_present, unique_phone_count, unique_state_count],
+    [
+      unique_hospitals_present,
+      unique_email_count,
+      unique_phone_count,
+      unique_state_count,
+    ],
   );
 
   return (
