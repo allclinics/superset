@@ -20,11 +20,12 @@
 /* eslint-disable theme-colors/no-literal-colors */
 import React, { type FC } from 'react';
 import GenderChip from '../GenderChip';
-/* import VerifieldIcon from '../../icons/verified.svg'; */
+import VerifieldIcon from '../../icons/verified.svg';
+import { formatPhoneNumber } from '../../utils/formatPhoneNumber';
 import type { MedicalStaffOverviewProps } from './MedicalStaffOverview.interface';
 import {
   Chip,
-  /* Item, */
+  Item,
   List,
   Title,
   Value,
@@ -37,7 +38,6 @@ import {
   ChipsList,
   RightPart,
 } from './MedicalStaffOverview.styled';
-// types
 import { IStaff } from '../../types';
 
 const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({
@@ -54,18 +54,20 @@ const MedicalStaffOverview: FC<MedicalStaffOverviewProps> = ({
             <Title>{overviewData?.doctor_name}</Title>
             <GenderChip gender={overviewData?.gender} />
           </Header>
-          {/* <Item>
-            <Value>(879) 543-23-41</Value>
-            <VerifieldIcon />
-          </Item>
-          <Item>
-            <Value>jason.felton@direct.myteamcare.com</Value>
-            <VerifieldIcon />
-          </Item>
-          <Item>
-            <Value>LinkedIn Profile</Value>
-            <VerifieldIcon />
-          </Item> */}
+          {overviewData?.best_physician_phone && (
+            <Item>
+              <Value>
+                {formatPhoneNumber(overviewData.best_physician_phone)}
+              </Value>
+              <VerifieldIcon />
+            </Item>
+          )}
+          {overviewData?.best_physician_email && (
+            <Item>
+              <Value>{overviewData?.best_physician_email}</Value>
+              <VerifieldIcon />
+            </Item>
+          )}
         </LeftPart>
         <RightPart isMobile={isMobile}>
           {overviewData?.graduation_year && (
